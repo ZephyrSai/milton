@@ -354,6 +354,8 @@ function renderTranscript(entries, view) {
 
 function renderOptions(view) {
   elements.optionList.innerHTML = "";
+  elements.terminalHasOptions = view.options.length > 0 ? "true" : "false";
+  document.body.dataset.hasOptions = view.options.length > 0 ? "true" : "false";
 
   if (view.options.length > 0) {
     elements.statusLine.textContent = "Select a response. Number keys 1-9 also work.";
