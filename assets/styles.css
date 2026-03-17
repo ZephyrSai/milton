@@ -536,7 +536,7 @@ button {
   }
 
   .composer {
-    padding: 8px 10px 10px;
+    padding: 8px 10px calc(14px + env(safe-area-inset-bottom, 0px));
   }
 
   .status-line {
@@ -545,9 +545,9 @@ button {
 
   .option-list {
     grid-template-columns: 1fr;
-    max-height: 46vh;
-    min-height: 24vh;
-    padding-bottom: 8px;
+    max-height: 40vh;
+    min-height: 22vh;
+    padding-bottom: calc(14px + env(safe-area-inset-bottom, 0px));
   }
 
   .option {
