@@ -382,6 +382,8 @@ button {
   background: transparent;
   max-width: min(760px, calc(100vw - 24px));
   width: 100%;
+  max-height: calc(100vh - 24px);
+  margin: auto;
 }
 
 .reference-dialog::backdrop {
@@ -394,6 +396,8 @@ button {
   background: rgba(3, 16, 10, 0.96);
   color: var(--text);
   padding: 18px;
+  max-height: calc(100vh - 24px);
+  overflow: hidden;
 }
 
 .reference-dialog__header {
@@ -409,7 +413,7 @@ button {
   white-space: pre-wrap;
   line-height: 1.6;
   color: var(--text-dim);
-  max-height: 70vh;
+  max-height: min(70vh, calc(100vh - 140px));
   overflow: auto;
 }
 
@@ -476,10 +480,80 @@ button {
 
   .topbar-actions .ghost-button {
     flex: 1 1 auto;
+    min-height: 34px;
+    padding: 6px 8px;
+  }
+
+  .topbar h1 {
+    font-size: 1.6rem;
+  }
+
+  .eyebrow {
+    font-size: 0.66rem;
+    letter-spacing: 0.16em;
+  }
+
+  .terminal-header {
+    padding: 10px 12px;
+    gap: 8px;
+  }
+
+  .transcript {
+    padding: 12px;
+    padding-bottom: 18px;
+  }
+
+  .message {
+    padding: 6px 8px;
+  }
+
+  .message__body {
+    font-size: 1.3rem;
+    line-height: 1.02;
+  }
+
+  .composer {
+    padding: 8px 10px 10px;
   }
 
   .option-list {
     grid-template-columns: 1fr;
-    max-height: 30vh;
+    max-height: 42vh;
+    min-height: 22vh;
+    padding-bottom: 8px;
+  }
+
+  .option {
+    padding: 8px 9px;
+  }
+
+  .option__text {
+    font-size: 1.2rem;
+  }
+
+  .reference-dialog {
+    max-width: calc(100vw - 12px);
+    max-height: calc(100vh - 12px);
+  }
+
+  .reference-dialog__card,
+  .utility-card {
+    width: calc(100vw - 12px);
+    max-height: calc(100vh - 12px);
+    padding: 12px;
+  }
+
+  .reference-dialog__header {
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: center;
+  }
+
+  .reference-dialog__header .ghost-button {
+    flex: 0 0 auto;
+  }
+
+  .reference-dialog__body {
+    max-height: calc(100vh - 110px);
   }
 }
