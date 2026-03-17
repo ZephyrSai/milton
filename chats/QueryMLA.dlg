@@ -1,0 +1,225 @@
+﻿##This is the second main interaction
+#Triggered by running MLA after having restored it.
+terminal when (RunMLA and MLAIntro_PhaseQuery){
+notext
+setlocal: CLI_Blocked
+clear: CLI_Enabled
+set: QueryMLA_ON
+goto: QueryMLA_START
+}
+
+terminal when (QueryMLA_START){
+prompt:[[TTRS:TermDlg.QueryMLA.Ln0014.0.text.LibraryAssistantFilesHaveBeen=Loading Milton Library Assistant%w5.%w5.%w5.Done%w1
+Initiating plain language interface%w5.%w5.%w5.Done%w1
+Support session opened.%w3
+
+Hello, guest. How can I help you today?
+
+Your query? : ]]
+options:{
+"TTRS:TermDlg.Common.Asdfa=asdfa" next: Nonsense_QueryMLA
+"TTRS:TermDlg.Common.List=list" next: MoreSpecific
+"TTRS:TermDlg.Common.Help=help" next: MoreSpecific
+"TTRS:TermDlg.QueryMLA.Ln0026.0.option.DoYouUnderstandWhatIm=Do you understand what I'm saying?" next: Understand_QueryMLA
+"TTRS:TermDlg.Common.Exit=exit" clear: QueryMLA_ON next: CLI_Resume
+}}
+
+terminal when (Nonsense_QueryMLA){
+prompt:[[TTRS:TermDlg.QueryMLA.Ln0031.0.text.ImSorryButWhatYou=I'm sorry, but what you just wrote was nonsense. I respond best to subject-verb-object syntax.
+
+Your query? : ]]
+options:{
+"TTRS:TermDlg.QueryMLA.Ln0035.0.option.CanYouHelpMe=Can you help me?" next: WhatHelp
+"TTRS:TermDlg.QueryMLA.Ln0036.0.option.DoYouUnderstandWhatIm=Do you understand what I'm saying?" next: Understand_QueryMLA
+"TTRS:TermDlg.Common.Exit=exit"  clear: QueryMLA_ON next: CLI_Resume
+}}
+
+terminal when (MoreSpecific){
+prompt:[[TTRS:TermDlg.QueryMLA.Ln0041.0.text.YoullHaveToBeMore=You'll have to be more specific than that. I respond best to subject-verb-object syntax.
+
+Your query? : ]]
+options:{
+"TTRS:TermDlg.QueryMLA.Ln0045.0.option.CanYouHelpMe=Can you help me?" next: WhatHelp
+"TTRS:TermDlg.QueryMLA.Ln0046.0.option.DoYouUnderstandWhatIm=Do you understand what I'm saying?" next: Understand_QueryMLA
+"TTRS:TermDlg.Common.Exit=exit"  clear: QueryMLA_ON next: CLI_Resume
+}}
+
+terminal when (WhatHelp){
+prompt:[[TTRS:TermDlg.QueryMLA.Ln0051.0.text.ThatIsWhatImHere=That is what I'm here for. What would you like help with?
+
+Your query? : ]]
+set: EngagedMLA_QueryMLA
+}
+
+terminal when (Understand_QueryMLA){
+prompt:[[TTRS:TermDlg.QueryMLA.Ln0058.0.text.UnderstandIsAStrongWay='Understand' is a strong way to put it, but yes.
+
+Your query? : ]]
+set: EngagedMLA_QueryMLA
+}
+
+terminal when (QueryFailed){
+prompt:[[TTRS:TermDlg.QueryMLA.Ln0065.0.text.ImSorryIAmOnly=I'm sorry, I am only able to process and respond to basic subject-verb-object syntax.
+
+Your query? : ]]}
+
+player when (QueryMLA_ON and QueryMLA_ON and EngagedMLA_QueryMLA and not FirstWord_DONE){
+text: "TTRS:TermDlg.QueryMLA.Ln0070.0.text.WhatWasTheFirstWord=What was the first word of the last sentence you wrote?"
+set: FirstWord_DONE
+next: QueryFailed
+}
+
+player when (QueryMLA_ON and QueryMLA_ON and EngagedMLA_QueryMLA and not Offence_DONE){
+text: "TTRS:TermDlg.QueryMLA.Ln0076.0.text.AreYouAbleToTake=Are you able to take offence, you pointless contraption?"
+set: Offence_DONE
+next: Offence
+}
+
+terminal when (Offence){
+prompt:[[TTRS:TermDlg.QueryMLA.Ln0082.0.text.YouCannotInsultMe=You cannot insult me.
+
+Your query? : ]]
+}
+
+player when (QueryMLA_ON and EngagedMLA_QueryMLA and not Describe_DONE){
+text: "TTRS:TermDlg.QueryMLA.Ln0088.0.text.DescribeYourFunctions=Describe your functions."
+set: Describe_DONE
+next: Describe
+}
+
+terminal when (Describe){
+prompt:[[TTRS:TermDlg.QueryMLA.Ln0094.0.text.TheMiltonLibraryAssistantIs=The Milton Library Assistant is designed primarily to sort and classify data in the library archive. 
+
+Secondarily, it facilitates user interaction with library resources via an intuitive human language interface.
+
+It also provides powerful networking and troubleshooting functions.
+
+Your query? : ]]
+}
+
+##Once player has had Milton describe his functions:
+
+player when (QueryMLA_ON and Describe_DONE and not HowOld_DONE){
+text: "TTRS:TermDlg.QueryMLA.Ln0106.0.text.HowOldAreTheLibrary=How old are the library archives?"
+set: HowOld_DONE
+next: HowOld
+}
+
+terminal when (HowOld){
+prompt: [[TTRS:TermDlg.QueryMLA.Ln0112.0.text.LibraryResourcePublishingDatesRange=Library resource publishing dates range from [1st July 1995 - 27th June 203f].
+
+Your query? : ]]
+}
+
+player when (QueryMLA_ON and Describe_DONE and not WhatTerminal_DONE){
+text: "TTRS:TermDlg.QueryMLA.Ln0118.0.text.WhatAreTheseTerminals=What are these terminals?"
+set: WhatTerminal_DONE
+next: WhatTerminal
+}
+
+terminal when (WhatTerminal){
+prompt: [[TTRS:TermDlg.QueryMLA.Ln0124.0.text.TerminalsProvideAccessToThe=Terminals provide access to the library resource archive.
+
+Your query? : ]]
+}
+
+player when (QueryMLA_ON and Describe_DONE and not HowLong_DONE){
+text: "TTRS:TermDlg.QueryMLA.Ln0130.0.text.HowLongHasThisSystem=How long has this system been running?"
+set: HowLong_DONE
+next: HowLong
+}
+
+terminal when (HowLong){
+prompt: [[TTRS:TermDlg.QueryMLA.Ln0136.0.text.TheSystemHasBeenActive=The system has been active for [9999e] years.
+
+Your query? : ]]
+}
+
+player when (QueryMLA_ON and Describe_DONE and not WhatStatus_DONE){
+text: "TTRS:TermDlg.QueryMLA.Ln0142.0.text.WhatIsTheCurrentStatus=What is the current status of the library archive?"
+set: WhatStatus_DONE
+next: WhatStatus
+}
+
+terminal when (WhatStatus){
+prompt: [[TTRS:TermDlg.QueryMLA.Ln0148.0.text.ThereAre47MillionResources=There are 47 million resources in archive, taking up 5.4212750 petabytes of disk space. 
+
+That is approximately the size of:
+	- 30 billion photos
+	- 7 million minutes of HD video
+	- the entire internet in 2003
+
+However, the majority of library resources are corrupted or invalid.
+10.6954751 gigabytes of uncorrupted resources are indexed.
+
+Your query? : ]]
+}
+
+player when (QueryMLA_ON and WhatStatus_DONE and not Corruption_DONE){
+text: "TTRS:TermDlg.QueryMLA.Ln0162.0.text.WhatCausedTheDataCorruption=What caused the data corruption?"
+set: Corruption_DONE
+next: Corruption
+}
+
+terminal when (Corruption){
+prompt: [[TTRS:TermDlg.QueryMLA.Ln0168.0.text.ProgressiveDataCorruptionIsInevitable=Progressive data corruption is inevitable in any system over time. Additionally, a large number of inconsistencies were detected during sorting, leading to greater than average data invalidation.
+
+Your query? : ]]
+}
+
+##Once player has asked one question about the library
+player when (QueryMLA_ON and not OutsideWorld_DONE and (HowOld_DONE or WhatTerminal_DONE or HowLong_DONE or WhatStatus_DONE)){
+text:"TTRS:TermDlg.QueryMLA.Ln0175.0.text.ForgetTheLibraryCanYou=Forget the library, can you respond to queries on the outside world?"
+next: OutsideWorld
+set: OutsideWorld_DONE
+}
+
+terminal when (OutsideWorld){
+prompt:[[TTRS:TermDlg.QueryMLA.Ln0181.0.text.MyKnowledgeIsLimitedTo=My knowledge is limited to the data in the library archive. You can ask about other topics, but my responses may be limited.
+
+Your query? : ]]
+}
+
+player when (QueryMLA_ON and OutsideWorld_DONE and not WhoElohimQuery_DONE){
+text: "TTRS:TermDlg.QueryMLA.Ln0187.0.text.WhoIsElohim=Who is Elohim?"
+set: WhoElohimQuery_DONE
+next: WhoElohimQuery
+}
+
+terminal when (WhoElohimQuery){
+prompt:[[TTRS:TermDlg.QueryMLA.Ln0193.0.text.ElohimIsTheNounFor=Elohim is the noun for "god" or "gods" in modern and ancient Hebrew.
+
+Your query? : ]]
+}
+
+player when (QueryMLA_ON and OutsideWorld_DONE and not WhatAmIQuery_DONE){
+text: "TTRS:TermDlg.QueryMLA.Ln0199.0.text.WhatAmI=What am I?"
+set: WhatAmIQuery_DONE
+next: WhatAmIQuery
+}
+
+terminal when (WhatAmIQuery){
+prompt:[[TTRS:TermDlg.QueryMLA.Ln0205.0.text.YouAreLoggedInWith=You are logged in with a guest account.
+
+Your query? : ]]
+}
+
+player when (QueryMLA_ON and OutsideWorld_DONE and not WhereAmIQuery_DONE){
+text: "TTRS:TermDlg.QueryMLA.Ln0211.0.text.WhereAmI=Where am I?"
+set: WhereAmIQuery_DONE
+next: WhereAmIQuery
+}
+
+terminal when (WhereAmIQuery){
+prompt:[[TTRS:TermDlg.QueryMLA.Ln0217.0.text.YouAreCurrentlyInThe=You are currently in a support session with the MLA human language interface module. Your library archive session may be resumed at any time.
+
+Your query? : ]]
+}
+
+player when (QueryMLA_ON and Describe_DONE){
+text: "TTRS:TermDlg.Common.Exit=exit"
+clear: QueryMLA_ON
+clear: MLAIntro_PhaseQuery
+set: MLAIntro_PhaseBusy
+next: CLI_Resume
+}

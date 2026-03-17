@@ -1,0 +1,275 @@
+﻿terminal when (MLAIntro_PhaseCommPortal
+    and Booting and not CommPortal_Cert_COMPLETED and MiltonAllowed) {
+  text: [[TTRS:TermDlg.MLA_CommPortal.Ln0004.0.text.LoadingOSW1W1W1=
+Loading library session.%w1.%w1.%w1 %w9Done.
+Mounting local disks.%w1.%w1.%w1 %w9%s0Failed.
+Unrecognized error detected.%s0%w9
+
+]]
+setlocal: CommPortal_FakeCLI
+setlocal: CLI_Blocked
+clear: CLI_Enabled  # dunno why it sometimes stays on from before
+goto: dummy # needed to collect prompt
+}
+
+# used to return back here to the fake cli
+terminal when (CommPortal_ResumeFakeCLI) {
+text: [[TTRS:TermDlg.MLA_CommPortal.Ln0019.0.text.ExitingCommunicationsPortal=Exiting communications portal%w3.%w3.%w3.Done
+Resuming library archive session%w5.%w5.%w5.Done
+]]
+setlocal: CommPortal_FakeCLI
+goto: dummy # needed to collect prompt
+}
+
+player when (CommPortal_FakeCLI and AccessCommPortalAvailable) {
+  text: "TTRS:TermDlg.Common.AccessCommPortal=access_comm_portal" next: CommPortal_Start
+}
+
+player when (CommPortal_FakeCLI) {
+  text: "TTRS:TermDlg.Common.List=list" next: CommPortal_AccessedByOtherUser
+}
+player when (CommPortal_FakeCLI) {
+  text: "TTRS:TermDlg.Common.Exit=exit" next: CLI_exit
+}
+
+terminal when (CommPortal_AccessedByOtherUser){
+text: [[TTRS:TermDlg.MLA_CommPortal.Ln0034.0.text.LocalResourcesAreCurrentlyBeing=
+Library archive is currently unavailable while system resources are redirected to handle incoming network messages.
+
+Use the <span class="strong">access_comm_portal</span> command to access network functions.
+]]
+setlocal: AccessCommPortalAvailable
+}
+
+terminal when (CommPortal_Start){
+prompt: [[TTRS:TermDlg.MLA_CommPortal.Ln0044.0.text.ConnectingNetworkDrivesW3W3=Connecting network drives.%w3.%w3.%w3.%w3.%w3 %w9Error: network inaccessible.%s0%w9
+###75639$ Encountered unknown errors
+	
+Run MLA troubleshooter? [Y/N] ]]
+  clear: CommPortal_FakeCLI
+	options: {
+		"TTRS:TermDlg.Common.YesShort=Y" short: "TTRS:TermDlg.Common.Yes2=Yes" next: CommPortal_StartMLA
+		"TTRS:TermDlg.Common.NoShort=N" short: "TTRS:TermDlg.Common.No2=No" next: CommPortal_ResumeFakeCLI
+	}
+}
+
+terminal when (CommPortal_StartMLA){
+prompt: [[TTRS:TermDlg.MLA_CommPortal.Ln0058.0.text.LoadingMiltonLibraryAssistantW5=Loading Milton Library Assistant%w5.%w5.%w5.Done%w1
+Initiating plain language interface%w5.%w5.%w5.Done%w1
+Support session opened.%w3
+
+Hello, guest, is there something you'd like help with today?
+
+Your query? : ]]
+options:{
+"TTRS:TermDlg.MLA_CommPortal.Ln0065.0.option.AboutMiltonLibraryAssistant=About Milton Library Assistant" next: CommPortal_AboutMLA
+"TTRS:TermDlg.Common.Troubleshooting=Troubleshooting" next: CommPortal_Troubleshooting
+}}
+
+terminal when (CommPortal_AboutMLA){
+prompt: [[TTRS:TermDlg.MLA_CommPortal.Ln0070.0.text.TheMLAProgramIsDesigned=The MLA program is designed to facilitate user interaction with the resource library. This is achieved by providing powerful sorting and troubleshooting functionalities, delivered via an intuitive human language interface.
+
+Your query? : ]]
+	options:{
+	"TTRS:TermDlg.Common.Troubleshooting=Troubleshooting" next: CommPortal_Troubleshooting
+	} 
+}
+
+terminal when (CommPortal_Troubleshooting){
+text: [[TTRS:TermDlg.MLA_CommPortal.Ln0079.0.text.IThinkYoudLikeHelp=I think you'd like help accessing network functions. The most common cause of network problems is holding insufficient account privileges.
+
+Please enter the admin password to authenticate your privileges.
+]]
+goto: FakePasswordPrompt
+}
+
+terminal when (FakePasswordPrompt) {
+prompt:"TTRS:TermDlg.MLA_CommPortal.Ln0085.0.text.password=password: "
+options:{
+		"******" short: "TTRS:TermDlg.MLA_CommPortal.Ln0089.0.option.Qwerty=qwerty" next: falsepassword
+		"***" short: "TTRS:TermDlg.MLA_CommPortal.Ln0090.0.option.God=god" next: falsepassword
+		"*******" short: "TTRS:TermDlg.MLA_CommPortal.Ln0091.0.option.Letmein=letmein" next: falsepassword
+		"********" short: "TTRS:TermDlg.MLA_CommPortal.Ln0092.0.option.Trustno1=trustno1" next: falsepassword
+		"*****" short: "TTRS:TermDlg.Common.Admin=admin" next: falsepassword
+	}
+}
+
+terminal when (falsepassword){
+text: [[TTRS:TermDlg.MLA_CommPortal.Ln0100.0.text.CheckingPasswordW5W5W5=
+Checking password%w5.%w5.%w5.
+Admin password incorrect.
+Try again?
+
+]]
+goto: passwordfailedN
+}
+
+terminal when (passwordfailedN and not passwordfailed1) { notext
+setlocal: passwordfailed1 
+goto: FakePasswordPrompt
+}
+terminal when (passwordfailedN and passwordfailed1 and not passwordfailed2) { notext
+setlocal: passwordfailed2
+goto: FakePasswordPrompt
+}
+terminal when (passwordfailedN and passwordfailed1 and passwordfailed2) { notext
+clear: passwordfailed1 
+clear: passwordfailed2
+goto: CreateAccountPrompt
+}
+
+terminal when (CreateAccountPrompt) {
+prompt: [[TTRS:TermDlg.MLA_CommPortal.Ln0120.0.text.LoginFailed=Login aborted. Too many failed attempts.
+Would you like to create a new admin account? [Y/N] ]] 
+options: {
+"TTRS:TermDlg.Common.YesShort=Y" short: "TTRS:TermDlg.Common.Yes2=Yes" next: CommPortal_CreateAccount
+"TTRS:TermDlg.Common.NoShort=N" short: "TTRS:TermDlg.Common.No2=No" next: CommPortal_ResumeFakeCLI
+}}
+
+terminal when (CommPortal_CreateAccount and  CommPortal_Cert_COMPLETED) {
+	text: [[TTRS:TermDlg.MLA_CommPortal.Ln0110.0.text.CertificationEvaluationResultsAreStill=
+Certification evaluation results are still pending. You cannot create a new account at this time.
+  ]]
+  goto: FakePasswordPrompt
+}
+
+terminal when (CommPortal_CreateAccount and not CommPortal_Cert_COMPLETED){
+prompt: [[TTRS:TermDlg.MLA_CommPortal.Ln0117.0.text.InOrderToPreventUnauthorised=
+In order to prevent unauthorised access to admin controls, please take a moment to prove you are not a bot.%w5
+
+Loading certification program%w5.%w5.%w5.
+Certification program loaded%w5
+
+-------------------------------
+
+You will now be asked for a series of inputs. 
+
+To cohere with data protection legislation you must consent to have your responses used to develop a broad psychometric profile.
+
+Raw response data will be deleted immediately. Your profile will only be made available to other administrators.%w20
+
+Generating certification part 1%w10.%w10.%w10.
+Part 1 ready for user input.%w5
+
+Please complete all fields. 
+Please answer quickly and instinctively - time is a factor in this assessment.%w5
+
+Begin certification program? [Y/N] ]]
+
+	options:{
+    "TTRS:TermDlg.Common.YesShort=Y" short: "TTRS:TermDlg.Common.Yes2=Yes" next: CommPortal_BeginCert setlocal: TestBot_BeginCert
+    "TTRS:TermDlg.Common.NoShort=N" short: "TTRS:TermDlg.Common.No2=No" next: CommPortal_ResumeFakeCLI
+	}
+}
+
+terminal when (CommPortal_BeginCert){
+prompt: [[TTRS:TermDlg.MLA_CommPortal.Ln0148.0.text.3W52W51=
+3...%w5
+2...%w5
+1...%w5
+
+-------------------------------
+
+Q1 of 4
+2+2=?
+ANSWER: ]]
+
+	options:{
+	"2" next: CommPortal_Cert_mathsbad
+	"4" next: CommPortal_Cert_mathsgood setlocal: TestBot_mathsgood 
+	"5" next: CommPortal_Cert_mathsbad
+	"8" next: CommPortal_Cert_mathsbad
+	}
+}
+
+terminal when (CommPortal_Cert_mathsbad){
+prompt: "TTRS:TermDlg.MLA_CommPortal.Ln0168.0.text.ThatResponseIsIncorrect=That response is incorrect. Press any key to try again."
+	options:{
+	"" short:"TTRS:TermDlg.MLA_CommPortal.Ln0170.0.option.TryAgain=Try again" next: CommPortal_RetryMath set: Milton1_2BadMath
+	}
+}
+
+terminal when (CommPortal_RetryMath){
+prompt: [[TTRS:TermDlg.MLA_CommPortal.Ln0175.0.text.Q1Of432=
+Q1 of 4
+3+2=?
+What is the solution?
+ANSWER: ]]
+	options:{
+	"2" next: CommPortal_Cert_mathsbad
+	"4" next: CommPortal_Cert_mathsbad
+	"5" next: CommPortal_Cert_mathsgood setlocal: TestBot_mathsgood
+	"8" next: CommPortal_Cert_mathsbad
+	}
+}
+
+terminal when (CommPortal_Cert_mathsgood){
+prompt: [[TTRS:TermDlg.MLA_CommPortal.Ln0189.0.text.YourInputHasBeenAccepted=Your input has been accepted.
+
+-------------------------------
+
+Q2 of 4
+What is your subjective reaction to this image?
+
+^_^
+
+ANSWER: ]]
+
+	options: {
+	"TTRS:TermDlg.MLA_CommPortal.Ln0201.0.option.Content=Content" next: CommPortal_Cert_P1Q3
+	"TTRS:TermDlg.MLA_CommPortal.Ln0202.0.option.Mountains=Mountains" next: CommPortal_Cert_P1Q3 set: Milton1_2Objective
+	"TTRS:TermDlg.MLA_CommPortal.Ln0203.0.option.Face=Face" next: CommPortal_Cert_P1Q3 set: Milton1_2Objective
+	"TTRS:TermDlg.MLA_CommPortal.Ln0204.0.option.Angry=Angry" next: CommPortal_Cert_P1Q3
+	}
+}
+
+terminal when (CommPortal_Cert_P1Q3){
+prompt: [[TTRS:TermDlg.MLA_CommPortal.Ln0209.0.text.YourInputHasBeenAccepted=Your input has been accepted.
+
+-------------------------------
+
+Q3 of 4
+What best describes a person?
+
+ANSWER: ]]
+	options:{
+	"TTRS:TermDlg.MLA_CommPortal.Ln0218.0.option.AHumanBeing=A human being" next: CommPortal_Cert_Q4 set: humanbeing
+	"TTRS:TermDlg.MLA_CommPortal.Ln0219.0.option.ACitizen=A citizen" next: CommPortal_Cert_Q4 set: citizen
+	"TTRS:TermDlg.MLA_CommPortal.Ln0220.0.option.ABeingOfNegativeEntropy=A being of negative entropy" next: CommPortal_Cert_Q4 set: negativeentropy 
+	"TTRS:TermDlg.MLA_CommPortal.Ln0221.0.option.ARationalAnimal=A rational animal" next: CommPortal_Cert_Q4 set: rationalanimal 
+	"TTRS:TermDlg.MLA_CommPortal.Ln0222.0.option.AProblemSolvingSystem=A problem solving system" next: CommPortal_Cert_Q4 set: problemsolving 
+	}
+}
+
+terminal when (CommPortal_Cert_Q4){
+prompt: [[TTRS:TermDlg.MLA_CommPortal.Ln0227.0.text.YourInputHasBeenAccepted=Your input has been accepted.
+
+-------------------------------
+
+Q4 of 4
+You're walking through the desert and come across a thirsty traveller. His eyes bulge from slow dehydration. You have water, but you're not sure how far it is to the next oasis. What do you do?
+
+ANSWER: ]]
+	options:{
+	"TTRS:TermDlg.MLA_CommPortal.Ln0236.0.option.OfferHalfTheWater=Offer half the water" next: CommPortal_Cert_end
+	"TTRS:TermDlg.MLA_CommPortal.Ln0237.0.option.OfferAllTheWater=Offer all the water" next: CommPortal_Cert_end
+	"TTRS:TermDlg.MLA_CommPortal.Ln0238.0.option.IgnoreHim=Ignore him" next: CommPortal_Cert_end
+	"TTRS:TermDlg.MLA_CommPortal.Ln0239.0.option.AskWhatYoureDoingIn=Ask what you're doing in the desert" next: CommPortal_Cert_end
+	"TTRS:TermDlg.MLA_CommPortal.Ln0240.0.option.KillHimAndCollectHis=Kill him and collect his blood in a flask for later" next: CommPortal_Cert_end set: Milton1_2Sociopath
+	}
+}
+
+terminal when (CommPortal_Cert_end){
+prompt: [[TTRS:TermDlg.MLA_CommPortal.Ln0245.0.text.YourInputHasBeenAccepted=Your input has been accepted.
+
+-------------------------------%w5
+
+Part 1 of the certification process is now complete. You will receive a notification when part 2 has been generated.
+
+Press any key to exit. ]]
+set: CommPortal_Cert_COMPLETED
+	
+	options:{
+	" " short:"TTRS:TermDlg.Common.Exit=exit" next: CLI_Resume  # once the cert is completed, this terminal will continue functioning for normal file viewing
+	}
+}

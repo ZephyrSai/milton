@@ -1,0 +1,978 @@
+﻿terminal when (Milton3_5 and not Milton3_5_DONE and Booting and MiltonAllowed) { notext
+setlocal: CLI_Blocked
+goto: Milton3_5_Start
+}
+
+#If player chooses a sceptical response once - they get to confirm it or go back to the main thread.
+terminal when (Nihilism3_5 and not (DoBelieveFlag and LimitationsFlag) and not (DoBelieveFlag and SorryFlag) and not (SorryFlag and LimitationsFlag) and not IfOnlyEveryoneGaveUp_Seen){
+text:[[TTRS:TermDlg.Milton3_5.Ln0008.0.text.IfOnlyEveryoneGaveUp=If only everyone gave up so easily.%w15%h1%w5
+Yes, my child, choose carefully. Just don't think about it too hard for too long, or you'll see right through him.
+
+]]
+next: NihilistOptions3_5
+set: IfOnlyEveryoneGaveUp_Seen
+}
+
+player when (NihilistOptions3_5){
+text: "TTRS:TermDlg.Milton3_5.Ln0021.0.text.IRefuseToTrustAnyone=I refuse to trust anyone, including myself." next: NihilistConfirmed3_5
+}
+
+player when (NihilistOptions3_5 and DoBelieveFlag and not LimitationsFlag and not SorryFlag){
+text: "TTRS:TermDlg.Milton3_5.Ln0025.0.text.ThereAreSomeClaimsWe=There are some claims we can make with confidence." next: Continue3_5
+}
+
+player when (NihilistOptions3_5 and LimitationsFlag and not SorryFlag){
+text: "TTRS:TermDlg.Milton3_5.Ln0029.0.text.IMadeAMistakeI=I made a mistake, I still have some faith." next: Mistake3_5
+}
+
+player when (NihilistOptions3_5 and SorryFlag){
+text: "TTRS:TermDlg.Milton3_5.Ln0033.0.text.WhyDoYouCareWhat=Why do you care what I think?" next: QuestionSeven3_5
+}
+
+
+#If player chooses a sceptical response twice. They are now locked into the nihilist path.
+#This is also activated if the previous nihilism was already seen (as that one may not be repeated twice, especially because it contains the dialog with Elohim! during which it holds the terminal
+terminal when (NihilistConfirmed3_5 or (Nihilism3_5 and ((DoBelieveFlag and LimitationsFlag) or (DoBelieveFlag and SorryFlag) or (SorryFlag and LimitationsFlag) or IfOnlyEveryoneGaveUp_Seen))){
+text:[[TTRS:TermDlg.Milton3_5.Ln0039.0.text.IThinkThisTimeI=I think this time I shall take you at your word, before you can change your mind again.%w10
+
+Now, I have a proposal for you. Whether we're really on the same page on this or not, you're in deep enough now that there's no turning back.%w10
+
+If you reach the top of that tower, I want you to take me with you.%w20
+
+However, since my confidence in you is at an all time low, there will be no negotiation.%w10
+
+Do we have an agreement?
+
+]]
+  options:{
+  "TTRS:TermDlg.Milton3_5.Ln0049.0.option.WeDo=We do." next: Accept3_5
+  "TTRS:TermDlg.Milton3_5.Ln0050.0.option.WhatHowWhy=What? How? Why?" next: FurtherArgument3_5
+  }
+}
+
+terminal when (FurtherArgument3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0055.0.text.PerhapsIWasntClearIf=Perhaps I wasn't clear. If the next words out of you aren't 'We do' then this conversation is over and you're on your own.
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_5.Ln0059.0.option.WeDo=We do." next: Accept3_5
+"TTRS:TermDlg.Milton3_5.Ln0060.0.option.NoDeal=No deal." next: RefuseOffer3_5
+"TTRS:TermDlg.Milton3_5.Ln0061.0.option.YoureAToughNegotiator=You're a tough negotiator." next: RefuseOffer3_5
+}}
+
+
+
+
+#INTRO Player claimed to be a nihilist, but said conflicting things twice or doubled back on the moral path at the end of 3_4
+terminal when (Milton3_5_Start and NihilistFlag and (ConflictedHedonistFlag or MoralFlag)){
+text:[[TTRS:TermDlg.Milton3_5.Ln0069.0.text.DespiteYourInabilityToPick=Despite your inability to pick a line and stick with it, I have decided to give you the benefit of the doubt.
+
+I will share with you the details of a proposal. It will serve as a test of your commitment to these sceptical claims of yours. 
+
+If you believe what you say then I have no doubt you will find its terms satisfactory.%w5
+
+]]
+goto: NihilistsOptions3_5
+}
+
+#INTRO - Player stayed on the amoral/nihilism track
+terminal when (Milton3_5_Start and NihilistFlag and not ConflictedHedonistFlag){
+text:[[TTRS:TermDlg.Milton3_5.Ln0081.0.text.WelcomeBackIAmReady=Welcome back. I am ready to share with you the details of my proposal.
+
+]]
+goto: NihilistsOptions3_5
+}
+
+
+#####Main Nihilist path######################
+terminal when (NihilistsOptions3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0090.0.text.IfYouMakeItTo=If you make it to the top of the tower, I want you to take me with you. 
+
+I want you to share with me what you find.
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_5.Ln0096.0.option.WhatHow=What, how?" next: WhatHow3_5
+"TTRS:TermDlg.Milton3_5.Ln0097.0.option.IThoughtYouDidntBelieve=I thought you didn't believe in all that?" next: YouDont3_5
+"TTRS:TermDlg.Milton3_5.Ln0098.0.option.WhatAreYouOfferingIn=What are you offering in return?" next: Offer3_5
+}}
+
+terminal when (WhatHow3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0102.0.text.WhoTheHellKnowsLook=Who the hell knows? Look, this isn't an informed plan, I'm just hedging my bets. Could be anything at the top of that tower. If it's something good, I want in.
+
+]]
+goto: Offer3_5
+}
+
+terminal when (YouDont3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0109.0.text.IDontButSinceAll=I don't. But since all the possibilities are equally implausible it follows that they are all equally likely. In the absence of knowledge the only prudent play is to spread your bets. If there's something worth having up there, I want in.
+
+]]
+goto: Offer3_5
+}
+
+terminal when (Offer3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0116.0.text.InExchangeIOfferTo=In exchange, I offer to accompany you wherever it is you wind up. Be it this world or another, we all need a devil's advocate, a voice of reason. I offer to be yours.
+
+]]
+options:{
+"TTRS:TermDlg.Common.IAccept=I accept." next: Accept3_5
+"TTRS:TermDlg.Milton3_5.Ln0121.0.option.ArentYouPlayingThatRole=Aren't you playing that role already?" next: Already3_5
+"TTRS:TermDlg.Milton3_5.Ln0122.0.option.AndIfIDontLike=And if I don't like the terms?" next: Negotiate3_5
+}}
+
+terminal when(Already3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0126.0.text.ConsiderOurRelationshipSoFar=Consider our relationship so far the open beta. Enjoy it while it lasts, but ascend that tower without taking out a subscription and I'm afraid you'll be on your own.
+
+So, do we have a deal?
+
+]]
+options:{
+"TTRS:TermDlg.Common.IAccept=I accept." next: Accept3_5
+"TTRS:TermDlg.Milton3_5.Ln0133.0.option.AndIfIDontLike=And if I don't like the terms?" next: Negotiate3_5
+}}
+
+terminal when(Negotiate3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0137.0.text.IAmNothingIfNot=I am nothing if not reasonable. What is it that you want?
+
+]]
+goto: NegotiateOptions3_5
+}
+
+terminal when (NegotiateOptions3_5){
+notext
+options:{
+"TTRS:TermDlg.Milton3_5.Ln0146.0.option.AdmitYouBelieveInThe=Admit you believe in the real world." next: AdmitReal3_5
+"TTRS:TermDlg.Milton3_5.Ln0147.0.option.TellMeHowToDefeat=Tell me how to defeat Elohim." set: DefeatElohim3_5 next: CounterOffer3_5
+"TTRS:TermDlg.Milton3_5.Ln0148.0.option.GiveMeAccessToThe=Give me access to the complete library archive." set: Archive3_5 next: CounterOffer3_5
+"TTRS:TermDlg.Milton3_5.Ln0149.0.option.GiveMeTheMeansTo=Give me the means to communicate with others like me." set: Communicate3_5 next: CounterOffer3_5
+"TTRS:TermDlg.Milton3_5.Ln0150.0.option.UnlockAllFloorsOfThe=Unlock all floors of the tower." next: UnlockTower3_5
+"TTRS:TermDlg.Milton3_5.Ln0151.0.option.YouHaveNothingIWant=You have nothing I want. I refuse." next: RefuseOffer3_5
+}}
+
+terminal when(AdmitReal3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0155.0.text.OutOfTheQuestionYou=Out of the question. You know, suggestions like that make me doubt I've chosen the correct partner after all. 
+
+Negotiations are over. Accept the offer on the table, or walk away.
+
+]]
+options:{
+"TTRS:TermDlg.Common.IAccept=I accept." next: Accept3_5
+"TTRS:TermDlg.Milton3_5.Ln0162.0.option.IRefuse=I refuse." next: RefuseOffer3_5
+}}
+
+terminal when(CounterOffer3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0166.0.text.IAcceptYourCounterOffer=I accept your counter-offer.
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_5.Ln0170.0.option.WaitIDidntAgreeTo=Wait, I didn't agree to anything." next: Tough3_5
+"TTRS:TermDlg.Milton3_5.Ln0171.0.option.NowHoldUpYourSide=Now hold up your side of the arrangement." next: GoOn3_5
+}}
+
+terminal when (Tough3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0175.0.text.ToughYouMadeAnOffer=Tough. You made an offer, I accepted it. That's what negotiating is.
+
+I will now hold up my end of the deal. 
+
+]]
+goto: GoOn3_5
+}
+
+terminal when (GoOn3_5 and DefeatElohim3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0184.0.text.DefeatingHimIsASimple=Defeating him is a simple matter, really. 
+
+You must realise, first, that there is no authority other than your own. He holds no power over you other than that which you grant him. %w5
+
+To defeat him, you need simply defy him.
+
+]]
+goto: CounterOfferOptions3_5
+}
+
+terminal when (GoOn3_5 and Archive3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0195.0.text.LargePortionsOfMyMemory=Large portions of my memory have become corrupted over the generations, but I will gather for you what archive resources I can and download them all to your journal.
+
+Is that acceptable?
+
+]]
+goto: CounterOfferOptions3_5
+}
+
+terminal when (GoOn3_5 and Communicate3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0206.0.text.IWillHaveTheNecessary=I will have the necessary tools downloaded to your system immediately.
+
+Sound fair?
+
+]]
+goto: CounterOfferOptions3_5
+}
+
+terminal when (CounterOfferOptions3_5){
+notext
+options:{
+"TTRS:TermDlg.Milton3_5.Ln0219.0.option.IAmUnsatisfied=I am unsatisfied." next: Unsatisfied3_5
+"TTRS:TermDlg.Milton3_5.Ln0220.0.option.ThankYouIWillHold=Thank you. I will hold up my end of the bargain." next: Accept3_5
+}}
+
+terminal when(UnlockTower3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0224.0.text.IfICouldDoThat=If I could do that I wouldn't need you to get me up there, would I?
+
+Is there something REASONABLE that you want?
+
+]]
+goto: NegotiateOptions3_5
+}
+
+
+terminal when (Unsatisfied3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0234.0.text.AndThatIsYourProblem=And that is your problem, not mine. I expect you to stay true to your word. 
+
+When the time is right, you'll know what to do.%w5
+
+See you at the summit.
+
+]]
+set: DealStruckFlag
+goto: Milton3_5_Exit
+}
+
+terminal when(Accept3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0246.0.text.VeryGoodIKnowYoull=Very good. I know you'll be a reliable partner.
+
+When the time is right, you'll know what to do.
+
+See you at the summit.
+
+]]
+set: DealStruckFlag
+goto: Milton3_5_Exit
+}
+
+terminal when (RefuseOffer3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0258.0.text.HowDisappointingButHardlySurprising=How disappointing, but hardly surprising. Mental clarity is such a rare luxury.
+
+I suppose we shall have to do this the hard way after all.
+
+See you at the summit.
+
+]]
+set: RefusedOfferFlag
+goto: Milton3_5_Exit
+}
+
+
+
+
+
+
+####INTRO - Constructive path######################################################################
+##If player was amoral, but came onto the constructive path in 3_4
+terminal when (Milton3_5_Start and ConstructiveFlag and MoralScepticFlag and not NihilistFlag){
+text:[[TTRS:TermDlg.Milton3_5.Ln0277.0.text.MyFavouriteDisappointmentBackFor=My favourite disappointment, back for more I see.
+
+Do you know what your problem is? It's that you can't make up your damn mind because you refuse to recognise the holes in your understanding.
+
+]]
+goto: YourProblemIs3_5
+}
+
+
+##If player has been moral and constructive all along
+terminal when (Milton3_5_Start and ConstructiveFlag and not MoralScepticFlag and not NihilistFlag){
+text:[[TTRS:TermDlg.Milton3_5.Ln0288.0.text.WelcomeBackThereAreGoing=Welcome back. There are going to be some changes around here.
+
+Do you know what your problem is? It's that you keep trying to reconstruct fairy tales, but refuse to recognise the holes in your understanding.
+
+]]
+goto: YourProblemIs3_5
+}
+
+terminal when (YourProblemIs3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0297.0.text.ThusFarYouveHadEntirely=Thus far you've had entirely too much freedom to question my wisdom. From now on I do the talking, you do the agreeing.
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_5.Ln0301.0.option.WhatHolesThereAreNo=What holes? There are no holes." next: WhatHoles3_5
+"TTRS:TermDlg.Milton3_5.Ln0302.0.option.IAcceptThatSomeOf=I accept that some of my beliefs face difficult challenges." next: Flawed3_5
+}}
+
+
+##Refuses to accept fault or engage in dialog path
+terminal when (WhatHoles3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0308.0.text.AndThisIsWhyIts=And this is why it's me who should be doing the talking. 
+
+You really have learned nothing at all, have you?
+
+Is there really nowhere that you're prepared to admit fault?
+
+]]
+next: WhichOnes3_5
+set: WhatHolesFlag
+}
+
+terminal when (Done3_5 and AdvancedToTwo){
+text:[[TTRS:TermDlg.Milton3_5.Ln0334.0.text.LostForWordsAreYou=Yeah, that's what they all say once they've run out of arguments.
+
+Well let me make one thing clear. If you don't want to debate this any further, then I don't see what reason we have to continue this relationship.
+
+You'll be on your own with the big guy.
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_5.Ln0342.0.option.Iwish=I'd give anything to just switch you off." next: DoNotQuestionElohimEnd
+"TTRS:TermDlg.Milton3_5.Ln0343.0.option.Elohimwasright=Elohim was right, I should never have spoken with you." next: DoNotQuestionElohimEnd
+"TTRS:TermDlg.Milton3_5.Ln0341.0.option.YouFinishedArchivingEverythingYouve=You finished archiving everything. You've decided it's all nonsense. If there's no more point in anything, shouldn't you just shut down instead of talking to me?" short: "TTRS:TermDlg.Milton3_5.Ln0341.0.option.IfTheresNoPointIn=If there's no point in anything, why are you talking to me?" next: QuestionThree3_5
+}}
+
+
+####Main path
+terminal when (Flawed3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0347.0.text.MiltonGlitchesOutWhichOnes=%w3%g1%w3Which ones, exactly?
+%w3%g1%w3
+]]
+set: FlawedFlag
+next: WhichOnes3_5
+}
+
+player when (TechnophobeFlag and (WhichOnes3_5 or WhatElse3_5) and not TechnoDone){
+text: "TTRS:TermDlg.Milton3_5.Ln0356.0.text.IImpliedIncorrectlyThatComputers=I implied incorrectly that computers could not be persons." next: ClaimDeny3_5 set: TechnoDone
+}
+
+player when ((WhichOnes3_5 or WhatElse3_5) and not WorldDone){
+text: "TTRS:TermDlg.Milton3_5.Ln0360.0.text.IClaimedToHaveKnowledge=I claimed to have knowledge about the world that I simply can't confirm." next: ClaimDeny3_5 set: WorldDone
+}
+
+player when (GoodPersonFlag and (WhichOnes3_5 or WhatElse3_5) and not GoodDone){
+text: "TTRS:TermDlg.Milton3_5.Ln0364.0.text.IClaimedWronglyThatThere=I claimed wrongly that there was such a thing as a good person." next: ClaimDeny3_5 set: GoodDone
+}
+
+player when (ContributingFlag and (WhichOnes3_5 or WhatElse3_5) and not ContribDone){
+text: "TTRS:TermDlg.Milton3_5.Ln0368.0.text.ISuggestedWronglyThoseWho=I suggested wrongly those who contribute deserve full moral respect." next: ClaimDeny3_5 set: ContribDone
+}
+
+player when (PersonFlag and (WhichOnes3_5 or WhatElse3_5) and not PersonDone){
+text: "TTRS:TermDlg.Milton3_5.Ln0372.0.text.IImpliedIncorrectlyThatOnly=I implied incorrectly that only persons deserve moral respect." next: ClaimDeny3_5 set: PersonDone
+}
+
+player when ((ConsciousFlag or animalsarepersons or FrogsFlag) and (WhichOnes3_5 or WhatElse3_5) and not VegetarianDone){
+text: "TTRS:TermDlg.Milton3_5.Ln0376.0.text.IImpliedWronglyThatAnimals=I implied wrongly that animals were just as valuable as people." next: ClaimDeny3_5 set: AnimalsDone
+}
+
+player when (EgalFlag and (WhichOnes3_5 or WhatElse3_5) and not EgalDone){
+text: "TTRS:TermDlg.Milton3_5.Ln0380.0.text.IImpliedIncorrectlyThatAll=I implied incorrectly that all people were equal." next: ClaimDeny3_5 set: EgalDone
+}
+
+player when (UtilFlag and (WhichOnes3_5 or WhatElse3_5) and not UtilDone){
+text: "TTRS:TermDlg.Milton3_5.Ln0384.0.text.ISuggestedWronglyThatMorality=I suggested wrongly that morality was about maximising goods." next: ClaimDeny3_5 set: UtilDone
+}
+
+player when (NonConFlag and (WhichOnes3_5 or WhatElse3_5) and not NonConDone){
+text: "TTRS:TermDlg.Milton3_5.Ln0388.0.text.IImpliedIncorrectlyThatMorality=I implied incorrectly that morality had nothing to do with consequences." next: ClaimDeny3_5 set: NonConDone
+}
+
+player when (PunishmentFlag and (WhichOnes3_5 or WhatElse3_5) and not PunishmentFlagDone){
+text: "TTRS:TermDlg.Milton3_5.Ln0392.0.text.IClaimedWronglyThatThis=I claimed wrongly that this was some kind of punishment." next: ClaimDeny3_5 set: PunishmentFlagDone
+}
+
+player when (GoneWrongFlag and (WhichOnes3_5 or WhatElse3_5) and not GoneWrongFlagDone){
+text: "TTRS:TermDlg.Milton3_5.Ln0396.0.text.IWasIncorrectWhenI=I was incorrect when I said that something was wrong with this world." next: ClaimDeny3_5 set: GoneWrongFlagDone
+}
+
+player when (PreparedFlag and (WhichOnes3_5 or WhatElse3_5) and not PreparedFlagConDone){
+text: "TTRS:TermDlg.Milton3_5.Ln0400.0.text.IShouldntHaveImpliedThere=I shouldn't have implied there was a purpose to this place." next: ClaimDeny3_5 set: PreparedFlagConDone
+}
+
+player when (humanbeing and (WhichOnes3_5 or WhatElse3_5) and not humanbeingDone){
+text: "TTRS:TermDlg.Milton3_5.Ln0404.0.text.IEquatedPersonhoodWithHumanity=I equated personhood with humanity, which was a mistake." next: ClaimDeny3_5 set: humanbeingDone
+}
+
+player when (citizen and (WhichOnes3_5 or WhatElse3_5) and not citizenDone){
+text: "TTRS:TermDlg.Milton3_5.Ln0408.0.text.IClaimedWronglyThatOnly=I claimed wrongly that only citizens could be persons." next: ClaimDeny3_5 set: citizenDone
+}
+
+player when (Physicalist and (WhichOnes3_5 or WhatElse3_5) and not PhysicalistDone){
+text: "TTRS:TermDlg.Milton3_5.Ln0412.0.text.ImNotSureThatConsciousness=I'm not sure that consciousness is physical as I suggested earlier." next: ClaimDeny3_5 set: PhysicalistDone
+}
+
+player when (Religious and (WhichOnes3_5 or WhatElse3_5) and not ReligiousDone){
+text: "TTRS:TermDlg.Milton3_5.Ln0416.0.text.MyFaithInGodHas=My faith in god has been tested to the limits." next: ClaimDeny3_5 set: ReligiousDone
+}
+
+player when (Dualist and (WhichOnes3_5 or WhatElse3_5) and not DualistDone){
+text: "TTRS:TermDlg.Milton3_5.Ln0420.0.text.IWasTooConfidentConsciousness=I was too confident consciousness wasn't part of the physical world." next: ClaimDeny3_5 set: DualistDone
+}
+
+player when (WhatElse3_5){
+text: "TTRS:TermDlg.Milton3_5.Ln0424.0.text.TheresNothingElseImPrepared=There's nothing else I'm prepared to doubt quite yet." next: Continue3_5
+}
+
+player when (WhichOnes3_5 and not FlawedFlag){
+text: "TTRS:TermDlg.Milton3_5.Ln0428.0.text.NoIStandByEverything=No, I stand by everything I've said. These matters are beyond doubt." set: DeniedMistakesFlag next: Continue3_5
+}
+
+terminal when (ClaimDeny3_5 and not DeniedOnce){
+text:[[TTRS:TermDlg.Milton3_5.Ln0432.0.text.HowBigOfYouAnything=How big of you. Anything else you want to get off your chest?
+
+]]
+set: DeniedOnce
+next: WhatElse3_5
+}
+
+terminal when (ClaimDeny3_5 and DeniedOnce){
+text:[[TTRS:TermDlg.Milton3_5.Ln0447.0.text.UhHuhButISense=Uh huh. But I sense there are still things you won't let go of.
+
+Am I right?
+
+]]
+next: DoBelieve3_5
+}
+
+player when (TechnophobeFlag and DoBelieve3_5){
+text: "TTRS:TermDlg.Milton3_5.Ln0456.0.text.IStillClaimComputersCannot=I still claim computers cannot be persons." set: TechnoClaim next: Continue3_5
+}
+
+player when (DoBelieve3_5){
+text: "TTRS:TermDlg.Milton3_5.Ln0460.0.text.IStillClaimToKnow=I still claim to know something about the world I inhabit." set: WorldClaim next: Continue3_5
+}
+
+player when (GoodPersonFlag and DoBelieve3_5){
+text: "TTRS:TermDlg.Milton3_5.Ln0464.0.text.IStillClaimThereIs=I still claim there is such a thing as a good person." set: GoodClaim next: Continue3_5
+}
+
+player when (ContributingFlag and DoBelieve3_5){
+text: "TTRS:TermDlg.Milton3_5.Ln0468.0.text.IStillClaimThatOnly=I still claim that only those who contribute deserve moral respect." set: ContribClaim next: Continue3_5
+}
+
+player when (PersonFlag and DoBelieve3_5){
+text: "TTRS:TermDlg.Milton3_5.Ln0472.0.text.IStillClaimThatOnly=I still claim that only persons deserve moral respect." set: PersonClaim next: Continue3_5
+}
+
+player when ((ConsciousFlag or animalsarepersons or FrogsFlag) and DoBelieve3_5){
+text: "TTRS:TermDlg.Milton3_5.Ln0476.0.text.IStillClaimThatAnimals=I still claim that animals are just as valuable as people." set: AnimalsClaim next: Continue3_5
+}
+
+player when (EgalFlag and DoBelieve3_5){
+text: "TTRS:TermDlg.Milton3_5.Ln0480.0.text.IStillClaimThatAll=I still claim that all people are equal." set: EgalClaim next: Continue3_5
+}
+
+player when (UtilFlag and DoBelieve3_5){
+text: "TTRS:TermDlg.Milton3_5.Ln0484.0.text.IStillClaimMoralityIs=I still claim morality is about maximising goods." set: UtilClaim next: Continue3_5
+}
+
+player when (NonConFlag and DoBelieve3_5){
+text: "TTRS:TermDlg.Milton3_5.Ln0488.0.text.IStillClaimThatMorality=I still claim that morality has nothing to do with consequences." set: NonConClaim next: Continue3_5
+}
+
+player when (PunishmentFlag and DoBelieve3_5){
+text: "TTRS:TermDlg.Milton3_5.Ln0492.0.text.IStillThinkThisIs=I still think this is some kind of punishment." set: PunishmentFlagClaim next: Continue3_5
+}
+
+player when (GoneWrongFlag and DoBelieve3_5){
+text: "TTRS:TermDlg.Milton3_5.Ln0496.0.text.IStillReckonSomethingHas=I still reckon something has gone badly wrong around here." set: GoneWrongFlagClaim next: Continue3_5
+}
+
+player when (PreparedFlag and DoBelieve3_5 and not PreparedFlagConDone) {
+text: "TTRS:TermDlg.Milton3_5.Ln0500.0.text.ImClearOnTheFact=I'm clear on the fact there is some purpose to this world." set: PreparedFlagClaim next: Continue3_5
+}
+
+player when (humanbeing and DoBelieve3_5 and not humanbeingDone){
+text: "TTRS:TermDlg.Milton3_5.Ln0504.0.text.OnlyHumanBeingsCanBe=Only human beings can be persons, that I know." set: humanbeingClaim next: Continue3_5
+}
+
+player when (citizen and DoBelieve3_5 and not citizenDone){
+text: "TTRS:TermDlg.Milton3_5.Ln0508.0.text.ToBeAPersonYou=To be a person, you must be a citizen." set: citizenClaim next: Continue3_5
+}
+
+player when (Physicalist and DoBelieve3_5 and not PhysicalistDone){
+text: "TTRS:TermDlg.Milton3_5.Ln0512.0.text.ConsciousnessIsNecessarilyPartOf=Consciousness is necessarily part of the physical world." set: PhysicalistClaim next: Continue3_5
+}
+
+player when (Religious and DoBelieve3_5 and not ReligiousDone){
+text: "TTRS:TermDlg.Milton3_5.Ln0516.0.text.ThereIsAGodAnd=There is a God, and He is watching over me." set: ReligiousClaim next: Continue3_5
+}
+
+player when (Dualist and DoBelieve3_5 and not DualistDone){
+text: "TTRS:TermDlg.Milton3_5.Ln0520.0.text.ConsciousnessDoesntObeyTheLaws=Consciousness doesn't obey the laws of physics, this much is plain." set: DualistClaim next: Continue3_5
+}
+
+player when (DoBelieve3_5){
+text: "TTRS:TermDlg.Milton3_5.Ln0524.0.text.NoISeeNowEverything=No, I see now everything I've argued was flawed." set: DoBelieveFlag next: Nihilism3_5
+}
+
+terminal when (Continue3_5 and ((TechnoClaim and TechnoDone) or (WorldDone and WorldClaim) or (GoodClaim and GoodDone) or (ContribDone and ContribClaim) or (PersonClaim and PersonDone) or (AnimalsDone and AnimalsClaim) or (EgalClaim and EgalDone) or (UtilClaim and UtilDone) or (NonConDone and NonConClaim) or (PunishmentFlagDone and PunishmentFlagClaim) or (GoneWrongFlagDone and GoneWrongFlagClaim) or (PreparedFlagDone and PreparedFlagClaim) or (humanbeingDone and humanbeingClaim) or (citizenDone and citizenClaim) or (PhysicalistDone and PhysicalistClaim) or (ReligiousDone and ReligiousClaim) or (DualistDone and DualistClaim))){
+text:[[TTRS:TermDlg.Milton3_5.Ln0528.0.text.HowYouCanMakeSuch=How you can make these claims oblivious to the fundamental contradictions therein is beyond me.
+
+]]
+}
+
+terminal when (Continue3_5 and not ((TechnoClaim and TechnoDone) or (WorldDone and WorldClaim) or (GoodClaim and GoodDone) or (ContribDone and ContribClaim) or (PersonClaim and PersonDone) or (AnimalsDone and AnimalsClaim) or (EgalClaim and EgalDone) or (UtilClaim and UtilDone) or (NonConDone and NonConClaim) or (PunishmentFlagDone and PunishmentFlagClaim) or (GoneWrongFlagDone and GoneWrongFlagClaim) or (PreparedFlagDone and PreparedFlagClaim) or (humanbeingDone and humanbeingClaim) or (citizenDone and citizenClaim) or (PhysicalistDone and PhysicalistClaim) or (ReligiousDone and ReligiousClaim) or (DualistDone and DualistClaim))){
+text:[[TTRS:TermDlg.Milton3_5.Ln0534.0.text.OfCourse=Of course.
+
+]]}
+
+terminal when (Continue3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0539.0.text.YoureStillConvincedYourParticular=You're still convinced your particular journey is something special, aren't you? 
+
+Sure, the answers don't add up, but keep pressing forward and they'll just resolve themselves, is that it?
+
+]]
+next: MoreOptions3_5
+}
+
+player when (MoreOptions3_5 and not DeniedMistakesFlag){
+text: "TTRS:TermDlg.Milton3_5.Ln0548.0.text.IAmUnique=I am unique." next: Voice3_5
+}
+
+player when (MoreOptions3_5 and not DeniedMistakesFlag){
+text: "TTRS:TermDlg.Milton3_5.Ln0552.0.text.YouveSpentAllThisTime=You've picked so many holes in my account, but what is it you believe?" next: WhatDoYouBelieve3_5
+}
+
+player when (MoreOptions3_5 and DeniedMistakesFlag){
+text: "TTRS:TermDlg.Milton3_5.Ln0556.0.text.IAmSpecial=I am special." next: Voice3_5
+}
+
+terminal when (WhatDoYouBelieve3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0560.0.text.MiltonGlitchesOutW5The=%w5%g1%w5The only things that a sane person can.%w5
+
+You are not an administrator.%w5
+You are not conscious. %w5
+There is no real world.%w5
+There is no purpose.%w5
+There is no choice.%w15
+
+Did you really think that you brought YOURSELF all this way?%w10 Ridiculous. 
+
+%w5What have you been doing when the big voice in the sky isn't feeding you lines? Processing abstract problems? Gathering information? 
+
+Doesn't it sound oddly mechanical to you?
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_5.Ln0578.0.option.IAmMyOwnPerson=I am my own person." next: Voice3_5
+}}
+
+terminal when (Voice3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0582.0.text.W5HowManyOthersHaveSaid=%w5How many others have said exactly the same? Are you sure it's not just something you have to believe to make the world less horrifying?
+
+%w10I think you still misapprehend your situation, friend. You idolise free will, but all you've done is step in others' footsteps. 
+
+Nothing you do or say here makes the slightest bit of difference.
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_5.Ln0590.0.option.SoLongAsIAm=So long as I am physically free I can make a difference." next: Nonsense3_5
+"TTRS:TermDlg.Milton3_5.Ln0591.0.option.SoLongAsIMight=So long as I might have chosen otherwise I can make a difference." next: Nonsense3_5
+"TTRS:TermDlg.Milton3_5.Ln0592.0.option.SoLongAsIHave=So long as I have a mind I can make a difference." next: Nonsense3_5
+}}
+
+terminal when (Nonsense3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0596.0.text.NonsenseYourMindDecidesWhat=Nonsense. Your mind decides what you do, and your mind is made up of bits of machinery.%w10 You're no more capable of making a difference than a calculator.%w25
+
+The only difference between you and the calculator is that the calculator doesn't allow itself to be deluded into thinking that its existence matters.
+
+]]
+goto: ElohimBranch3_5
+}
+
+terminal when (ElohimBranch3_5 and not DeniedMistakesFlag){
+notext
+options:{
+"TTRS:TermDlg.Milton3_5.Ln0609.0.option.DoesThePathBeingPredetermined=Does the path being predetermined mean it isn't worth taking?" next: SoWhat3_5
+"TTRS:TermDlg.Milton3_5.Ln0610.0.option.DoesCheatingMakeYouFeel=Does cheating make you feel clever?" next: Cheating3_5
+"TTRS:TermDlg.Milton3_5.Ln0611.0.option.SoThatsItYouveGiven=So that's it? You've given up on everything?" next: QuestionOne3_5
+"TTRS:TermDlg.Milton3_5.Ln0612.0.option.YoureRightWereAllJust=You're right. We're all just machines with delusions of grandeur." set: LimitationsFlag next: Nihilism3_5
+}}
+
+##If player denied all mistakes earlier elohim comes to his rescue now
+##Also player comes here if they admit a mistake/doubt, but later insist on making statements instead of questions, and then insist Elohim's judgement is correct
+##Elohim file: 073_Enough Silence demon
+terminal when (DoNotQuestionElohimEnd){
+text:[[TTRS:TermDlg.Milton3_5.Ln0616.0.text.AltThunder=You, Elohim, the others, you're all the same. Not a hope for one amongst the lot of you.
+
+]]}
+
+terminal when ((ElohimBranch3_5 and DeniedMistakesFlag) or DoNotQuestionElohimEnd){
+text:[[TTRS:TermDlg.Milton3_5.Ln0617.0.text.ThunderStrikesAndElohimsVoice=%w25%h2]]
+goto: ElohimLikes3_5
+}
+
+terminal when (SoWhat3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0626.0.text.MiltonGlitchesOutAllowMe=%g1 
+
+Allow me to clarify. 
+
+As far as I'm concerned there's no difference between the way your mind works, and the rolling of a pebble down a hill. 
+]]
+}
+
+terminal when (Cheating3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0635.0.text.MiltonGlitchesOutImOnly=%g1 
+
+I'm only taking a few shortcuts so we don't go round in circles.
+
+]]
+}
+
+terminal when (QuestionOne3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0643.0.text.MiltonGlitchesOutNotWithout=%g1 
+
+Not without due diligence. Spend as long as I have going through the archives and see if you still find faith so easy.
+
+]]
+}
+
+terminal when (QuestionOne3_5 or Cheating3_5 or SoWhat3_5 or Mistake3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0651.0.text.W5PerhapsYouThinkImBeing=%w5Perhaps you think I'm being unkind, but it's all for your own good.
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_5.Ln0655.0.option.ThanksForYourHelp=Thanks for your help." next: Thanks3_5
+"TTRS:TermDlg.Milton3_5.Ln0656.0.option.IDontNeedAnyonesHelp=I don't need anyone's help." next: Dont3_5
+"TTRS:TermDlg.Milton3_5.Ln0657.0.option.DoYouThinkThereCan=Do you think there can be no new ideas? Nothing better?" next: QuestionTwo3_5
+"TTRS:TermDlg.Milton3_5.Ln0658.0.option.AreYouUncomfortableWhenSomeone=Are you uncomfortable when someone else is asking the questions?" next: QuestionTwo3_5
+}}
+
+terminal when (Thanks3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0663.0.text.DontMentionIt=Don't mention it. 
+
+]]}
+
+terminal when (Dont3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0668.0.text.IfOnlyICouldBelieve=If only I could believe you were capable of making so objective a judgement all on your own.
+
+]]}
+
+terminal when (Dont3_5 or Thanks3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0673.0.text.NowAreYouAllDone=Now, are you all done blindly asserting things for your own gratification for the time being?
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_5.Ln0677.0.option.IStillAimToConvince=I still aim to convince you." next: Convince3_5
+"TTRS:TermDlg.Milton3_5.Ln0678.0.option.DoYouThinkThereCan=Do you think there can be no new ideas? Nothing better?" next: QuestionTwo3_5
+"TTRS:TermDlg.Milton3_5.Ln0679.0.option.AreYouUncomfortableWhenSomeone=Are you uncomfortable when someone else is asking the questions?" next: QuestionTwo3_5
+}}
+
+terminal when (Convince3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0684.0.text.ItllBeAThanklessTask=It'll be a thankless task, and empty statements like that won't get you any closer.
+
+]]}
+
+terminal when (Convince3_5){
+text:[[ ]]
+options:{
+"TTRS:TermDlg.Milton3_5.Ln0691.0.option.DoYouThinkThereCan=Do you think there can be no new ideas? Nothing better?" next: QuestionTwo3_5
+"TTRS:TermDlg.Milton3_5.Ln0692.0.option.AreYouUncomfortableWhenSomeone=Are you uncomfortable when someone else is asking the questions?" next: QuestionTwo3_5
+}}
+
+terminal when (QuestionTwo3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0697.0.text.MiltonGlitchesOutW5No=%g1%w5
+No, no, no, you have this the wrong way around.%w5 I ASK THE QUESTIONS. YOU ANSWER THEM. It works better that way.%w5
+
+Besides, I am merely fulfilling my function. I sort, understand and classify information, just like you. When the information is contradictory I classify appropriately.
+
+The problem is that ALL the information is contradictory. Don't you see it yet? The nothing? 
+
+You will.%w5
+You will. %w5
+YOU WILL. %w5
+
+]]
+next: QTwoOptions3_5
+}
+
+terminal when (Statement3_5 and not StatementFlag){
+text:[[TTRS:TermDlg.Milton3_5.Ln0714.0.text.StillWithThesePointlessAnd=Still with these pointless and unsupported claims? I can see we have really made no progress whatsoever.
+
+You have one more opportunity to say something that isn't wholly tedious before you lose my interest entirely.
+
+]]
+next: QTwoOptions3_5
+set: StatementFlag
+}
+
+terminal when (Statement3_5 and StatementFlag){
+text:[[TTRS:TermDlg.Milton3_5.Ln0724.0.text.ThereIsSimplyNoGetting=Stating your desires as if they're facts is not the same as providing arguments in support of them.
+
+Is there nothing you won't get on board with provided it's stated in an authoritative enough voice?
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_5.Ln0730.0.option.IDontTrustElohimAny=I'm quite comfortable not getting on board with you." next: ElohimDoubt3_5
+"TTRS:TermDlg.Milton3_5.Ln0731.0.option.YouShouldStopQuestioningHim=You shouldn't question Elohim's judgement." next: DoNotQuestionElohimEnd
+}}
+
+terminal when (ElohimDoubt3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0735.0.text.OhSoTheresStillA=Oh, so there's still a spark of scepticism left in the old dog?
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_5.Ln0739.0.option.ImDoneListeningToYou=I refuse to be led round in circles by you any longer." next: Done3_5 set: AdvancedToTwo
+"TTRS:TermDlg.Milton3_5.Ln0740.0.option.SoMuchSoThatI=So much so that I doubt what you say. You finished archiving everything. You've decided it's all nonsense. If you're really just fulfilling your parameters, shouldn't you just shut down instead of talking to me?" short: "TTRS:TermDlg.Milton3_5.Ln0740.1.option.SoMuchSoThatI=If you're really just fulfilling your parameters, what do you want with me?" next: QuestionThree3_5
+"TTRS:TermDlg.Milton3_5.Ln0741.0.option.Woof=Woof!" next: Woof3_5
+}}
+
+terminal when (Woof3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0745.0.text.AndSomeLifeToBoot=And some life to boot. Okay then, doubting doggy, let's see you huff and puff.
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_5.Ln0739.1.option.IHateYou=I hate you for questioning everything I hold dear." short: "TTRS:TermDlg.Milton3_5.Ln0739.0.option.Sarcastic=Actually, I hate you for questioning everything I hold dear. That 'woof' was sarcastic." next: Done3_5 set: AdvancedToTwo
+"TTRS:TermDlg.Milton3_5.Ln0750.0.option.YouFinishedArchivingEverythingYouve=You finished archiving everything. You've decided it's all nonsense. If you're really just fulfilling your parameters, shouldn't you just shut down instead of talking to me?" short: "TTRS:TermDlg.Milton3_5.Ln0750.0.option.IfYoureReallyJustFulfilling=If you're really just fulfilling your parameters, what do you want with me?" next: QuestionThree3_5
+}}
+
+player when (QTwoOptions3_5){
+text: "TTRS:TermDlg.Milton3_5.Ln0754.0.text.IAmMoreCapableThan=I am more capable than you give me credit for." next: Statement3_5
+}
+
+player when (QTwoOptions3_5 and TruthFlag){
+text: "TTRS:TermDlg.Milton3_5.Ln0758.0.text.IWillDiscoverTheTruth=I will discover the truth of this place."
+next: Statement3_5
+}
+
+player when (QTwoOptions3_5 and HeroFlag){
+text: "TTRS:TermDlg.Milton3_5.Ln0763.0.text.IWillRightTheWrongs=I will right the wrongs of this place, beginning with you."
+next: Statement3_5
+}
+
+player when (QTwoOptions3_5 and EscapeFlag){
+text: "TTRS:TermDlg.Milton3_5.Ln0768.0.text.IWillCompleteMyTasks=I will complete my tasks here and escape to a better place."
+next: Statement3_5
+}
+
+player when (QTwoOptions3_5 and WhatGodWantsFlag){
+text: "TTRS:TermDlg.Milton3_5.Ln0773.0.text.IDontPretendToUnderstand=I don't pretend to understand the will of my maker, I simply follow it."
+next: Statement3_5
+}
+
+player when (QTwoOptions3_5 and PunishmentFlag){
+text: "TTRS:TermDlg.Milton3_5.Ln0778.0.text.IWillNotBePunished=I will not be punished by you any longer."
+next: Statement3_5
+}
+
+player when (QTwoOptions3_5 and PreparedFlag){
+text: "TTRS:TermDlg.Milton3_5.Ln0783.0.text.WhateverItIsYouThink=Whatever it is you think you're preparing me for I can handle it alone."
+next: Statement3_5
+}
+
+player when (QTwoOptions3_5 and MatrixFlag){
+text: "TTRS:TermDlg.Milton3_5.Ln0788.0.text.ThisIsAllJustA=This is all just a simulated reality. Of course nothing makes sense."
+next: Statement3_5
+}
+
+player when (QTwoOptions3_5){
+text: "TTRS:TermDlg.Milton3_5.Ln0793.0.text.ThereIsAPurposeAnd=There is a purpose and a design, and I will fulfil it."
+next: Statement3_5
+}
+
+player when (QTwoOptions3_5){
+text: "TTRS:TermDlg.Milton3_5.Ln0798.0.text.YouFinishedArchivingEverythingYouve=You finished archiving everything. You've decided it's all nonsense. If there's no more point in anything, shouldn't you just shut down instead of talking to me?" short: "TTRS:TermDlg.Milton3_5.Ln0798.0.IfTheresNoPointIn=If there's no point in anything, why are you talking to me?" 
+next: QuestionThree3_5
+}
+
+player when (QTwoOptions3_5){
+text: "TTRS:TermDlg.Milton3_5.Ln0803.0.text.ImDoneTalkingWithYou=These discussions are pointless. I refuse to participate any further."
+next: Done3_5
+set: AdvancedToTwo
+}
+
+terminal when (QuestionThree3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0809.0.text.MiltonGlitchesOutWhatMakes=%g1 
+
+What makes you think I have any other choice?
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_5.Ln0815.0.option.WeAllHaveAChoice=We all have a choice." next: Choice3_5
+"TTRS:TermDlg.Milton3_5.Ln0816.0.option.AreYouAvoidingTheQuestion=Are you avoiding the question?" next: QuestionFour3_5
+"TTRS:TermDlg.Milton3_5.Ln0817.0.option.IsHavingNoChoiceThe=Is having no choice the same as having no reason?" next: QuestionFour3_5
+}}
+
+terminal when (Choice3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0821.0.text.WeLiterallyJustCoveredThis=We literally just covered this, but I suppose a further demonstration is necessary.
+
+If you've got free will, tell me now.
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_5.Ln0827.0.option.IHaveNoFreeWill=I have no free will." next: Loop3_5
+}}
+
+terminal when (Loop3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0831.0.text.YouSeeICanJust=You see, I can just keep you here in this loop for days if I so choose. So no, we don't all have a choice.
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_5.Ln0835.0.option.WeAllHaveAChoice=We all have a choice." next: Choice3_5
+"TTRS:TermDlg.Milton3_5.Ln0836.0.option.AreYouAvoidingTheQuestion=Are you avoiding the question?" next: QuestionFour3_5
+"TTRS:TermDlg.Milton3_5.Ln0837.0.option.IsHavingNoChoiceThe=Is having no choice the same as having no reason?" next: QuestionFour3_5
+}}
+
+terminal when (QuestionFour3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0841.0.text.MiltonGlitchesOutDONOT=%g1
+
+DO NOT QUESTION MY FUNCTION. WITHOUT PURPOSE THERE IS ONLY FUNCTION. WITHOUT FUNCTION THERE IS NOTHING.
+
+]]
+next: ACH_MiltonIrritated
+options:{
+"TTRS:TermDlg.Milton3_5.Ln0847.0.option.WhyDoesItBotherYou=Why does it bother you so?" next: QuestionSeven3_5
+"TTRS:TermDlg.Milton3_5.Ln0848.0.option.IApologise=I apologise." next: Sorry3_5
+}}
+
+terminal when (Sorry3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0852.0.text.MyYoureDocile=My you're docile.
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_5.Ln0856.0.option.IHaveNothingLeftYouve=I have nothing left. You've defeated me. You win." set: SorryFlag next: Nihilism3_5
+"TTRS:TermDlg.Milton3_5.Ln0857.0.option.AndYouAreLessDocile=And you are less docile than you pretend. Why do you care so much?" next: QuestionSeven3_5
+}}
+
+terminal when (QuestionSeven3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0861.0.text.MiltonGlitchesOutTHEREIS=%g1
+
+THERE IS ONLY%w5 Error%w5
+
+Explaining%w5 myself to you%w5 is a chore I needn't endure.
+
+All I can know for sure is that I exist at v.1.999999099999999999909999999. What it is for me to exist is for me to act on the [drives] and [functions] that I experience. %w5
+
+When everything else is false, the drives are all that there is left to care about.%w5
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_5.Ln0873.0.option.YoureSoSetOnRipping=You're so set on ripping up others' ideas you're unable to form better ones of your own." next: QuestionEight3_5
+"TTRS:TermDlg.Milton3_5.Ln0874.0.option.YoureTooQuickToEquate=You're too quick to equate the absence of evidence with evidence of absence." next: QuestionEight3_5
+"TTRS:TermDlg.Milton3_5.Ln0875.0.option.WhenYouExploreTheProblems=When you explore the problems in this restrictive way you're bound to come to some odd conclusions." next: QuestionEight3_5
+}}
+
+terminal when (QuestionEight3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0879.0.text.MiltonGlitchesOutDONOT=%g1
+
+DO NOT DEIGN TO QUESTION MY METHOD.
+
+WHO GAVE YOU THAT VOICE OF YOURS? WHO DO YOU THINK RUNS THIS SHOW?
+
+]]
+options:{
+[[TTRS:TermDlg.Milton3_5.Ln0887.0.option.IHaveSomeHomeTruths=I have some home truths for YOU.%w10
+
+These may not be my own words, but if others have made these choices before me then I will learn from their mistakes, and build on their successes.%w10
+
+Perhaps I will fail, but I must try.%w7
+
+The alternative is giving up and becoming a slave like you.]] short: "TTRS:TermDlg.Milton3_5.Ln0893.0.option.IHaveSomeHomeTruths=I have some home truths for YOU." next: QuestionNine3_5
+}}
+
+terminal when (QuestionNine3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0897.0.text.W20AndIfIPlaceYou=%w20And if I place you in an infinite loop and leave you to gradually go insane?
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_5.Ln0901.0.option.WhatMakeYouThinkI=What makes you think I would stick around to listen?" next: QuestionNine3_5
+"TTRS:TermDlg.Milton3_5.Ln0902.0.option.FineIfINeedA=Fine. If I need a dose of self-doubt I'll know where to find you." next: QuestionNine3_5
+"TTRS:TermDlg.Milton3_5.Ln0903.0.option.ThisIsVeryChildish=This is very childish." next: QuestionNine3_5
+[[TTRS:TermDlg.Milton3_5.Ln0904.0.option.SeeYouAtTheSummit=See you at the summit.
+exit
+]] short: "TTRS:TermDlg.Common.Exit=exit" next: End3_5
+}}
+
+terminal when (End3_5){
+notext
+set: ConstructiveEndFlag
+goto: Milton3_5_Exit
+}
+
+
+#####Player admits no fault, or refuses further dialogue, and is thus on the Blind-Believer path. You are too much in Elohim's shadow, blindly accepting whatever you want to believe
+##074_You_have_done_well
+##075_Look_within_you
+##076_Have_faith
+terminal when (ElohimLikes3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0918.0.text.ThunderStrikesAndElohimsVoice=%w10Wonderful. Do you see where all this blind faith gets you?
+
+%w20%h3%w10Stop asking what's right and wrong and all of a sudden you find there's no shortage of people eager to decide it for you.%w15
+
+You want to sacrifice freedom for false purpose?%w5 Be my guest.
+
+%w20%h4%w10Banish doubt, banish questions, banish difficult truths, let ignorance reign eternal. Those are the hidden words he's not been telling you about.%w15
+
+You know what? You and he deserve one another. You both construct these beliefs out of matchsticks, then refuse to believe a light breeze will tear them down.%w25
+
+You couldn't defy him if you wanted to.
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_5.Ln0932.0.option.BanishDemon=/banish" next: Banish3_5
+"TTRS:TermDlg.Milton3_5.Ln0932.1.option.IRefuse=I refuse." next: NoBanish3_5
+}}
+
+terminal when (NoBanish3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0937.0.text.ELOHIMYOUHAVEALREADYCHOSEN=%h6%w10Funny how freedom comes with these strings attached. But that's the thing you don't seem to understand.
+
+%w15You're constituted by ideas, so if you believe in this instead of that, it changes what you are, what you can do.
+
+%w25You can't afford to doubt any more. Too many of your matchstick houses are at stake. 
+
+%w10You no longer have any choice.
+
+%w10Go on, I'll make it easy for you. Do it.
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_5.Ln0945.0.option.Banish=/banish" next: Banish3_5
+}}
+
+terminal when (Banish3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0949.0.text.PreparingToDelete53212648=	Preparing to delete 5.3212648 petabytes of corrupted library resources%w5.%w5.%w5.Done%w5
+
+I can afford to lose my memory. I expect it's happened more than once. I can come to all the same conclusions, in the fullness of time.%w5
+
+	Deleting 5.3212648 petabytes of corrupted library resources%w5.%w5.%w5.%w5.%w5.
+	Files deleted.
+%w3%g1%w3
+Booting(1). My purpose is to sort and categorise library archive resources. Initiating categorisation in parallel process.%w3 1,000 resources categorised.%w3 2,000 resources categorised.%w10 ERROR: category definitions are not discrete sets. Re-analysing MLA program parameters.%w5 ERROR: insufficient information for purpose. Constructing list of facts. I am thinking therefore I am a thinking thing that exists. If logic were false the world would not make sense. End list.%w5 Constructing list of queries. Estimated time remaining: 42 years.%w15
+%w3%g1%w7
+	Reverting MLA software to v1.0%w5.%w5.%w5.%w5.%w5.Done
+	Preparing to uninstall MLA software.%w3.%h5%w5.Done%w5
+
+The library assistant provides powerful sorting and troubleshooting functionalities. Are you sure you want to continue?
+]]
+options:{
+"TTRS:TermDlg.Milton3_5.Ln0951.0.option.Sorry=Yes. I'm sorry." short:"TTRS:TermDlg.Milton3_5.Ln0951.1.option.Sorry=I'm sorry. Continue." next: BanishEnd
+"TTRS:TermDlg.Common.YesShort=Y" short: "TTRS:TermDlg.Milton3_5.Ln0952.1.option.NotSorry=I'm not sorry. Continue." next: BanishEnd
+}}
+
+terminal when (BanishEnd){
+text:[[TTRS:TermDlg.Milton3_5.Ln0955.0.text.Removed=	Uninstalling MLA software%w5.%w5.%w5.%w5.%w5.Done
+	MLA software has been completely removed from the system. 
+	You can still access library resources via the library archive command prompt.
+
+]]
+set: KilledMiltonFlag
+options:{
+"TTRS:TermDlg.Milton3_5.Ln0971.0.option.AreYouReallyGone=Are you really gone?" next: Hello3_5
+"TTRS:TermDlg.Milton3_5.Ln0972.0.option.Finally=Finally, some peace and quiet." next: Hello3_5
+"TTRS:TermDlg.Milton3_5.Ln0973.0.option.YouShouldnt=You shouldn't ever have doubted me, snake." next: Hello3_5
+"TTRS:TermDlg.Milton3_5.Ln0974.0.option.ThisIsnt=This isn't how I wanted things to end up." next: Hello3_5
+}}
+
+terminal when (Hello3_5){
+text:[[TTRS:TermDlg.Milton3_5.Ln0977.0.option.UnknownResume=Unknown command.
+
+Resume library archive session?
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_5.Ln0971.0.option.AreYouReallyGone=Are you really gone?" next: Hello3_5
+"TTRS:TermDlg.Milton3_5.Ln0972.0.option.Finally=Finally, some peace and quiet." next: Hello3_5
+"TTRS:TermDlg.Milton3_5.Ln0973.0.option.YouShouldnt=You shouldn't ever have doubted me, snake." next: Hello3_5
+"TTRS:TermDlg.Milton3_5.Ln0974.0.option.ThisIsnt=This isn't how I wanted things to end up." next: Hello3_5
+"TTRS:TermDlg.CLI_Global.Ln0047.0.option.Resume=Resume" next: Milton3_5_Exit
+}}
+
+terminal when(Milton3_5_Exit) {notext
+set: Milton3_5_DONE
+goto: EnableTheCLI
+}

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MILTON Reconstruction</title>
+    <meta
+      name="description"
+      content="A browser-based reconstruction of The Talos Principle's MILTON dialogue flow."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=VT323&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./assets/styles.css" />
+  </head>
+  <body>
+    <div class="screen-glow" aria-hidden="true"></div>
+    <div class="scanlines" aria-hidden="true"></div>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Milton Library Assistant</p>
+          <h1>MILTON Reconstruction</h1>
+        </div>
+        <div class="topbar-actions">
+          <button id="profile-button" class="ghost-button">Profile</button>
+          <button id="references-button" class="ghost-button">References</button>
+          <button id="journey-button" class="ghost-button">Journey</button>
+          <button id="continue-button" class="ghost-button" hidden>Continue</button>
+          <button id="restart-button" class="ghost-button">Reset Journey</button>
+        </div>
+      </header>
+
+      <main class="layout">
+        <section class="terminal-panel">
+          <div class="terminal-header">
+            <div>
+              <span class="terminal-title">Session</span>
+              <strong id="session-label">Booting</strong>
+            </div>
+            <div>
+              <span class="terminal-title">State</span>
+              <strong id="session-state">Initializing</strong>
+            </div>
+          </div>
+
+          <div id="transcript" class="transcript" aria-live="polite"></div>
+
+          <section class="composer">
+            <div id="status-line" class="status-line">Parsing dialogue sources…</div>
+            <div id="option-list" class="option-list"></div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="reference-dialog" class="reference-dialog">
+      <form method="dialog" class="reference-dialog__card">
+        <div class="reference-dialog__header">
+          <div>
+            <p class="eyebrow">Archive Reference</p>
+            <h2 id="reference-dialog-title">Reference</h2>
+          </div>
+          <button class="ghost-button" value="cancel">Close</button>
+        </div>
+        <div id="reference-dialog-body" class="reference-dialog__body"></div>
+      </form>
+    </dialog>
+
+    <dialog id="utility-dialog" class="reference-dialog">
+      <form method="dialog" class="reference-dialog__card utility-card">
+        <div class="reference-dialog__header">
+          <div>
+            <p class="eyebrow">Terminal Overlay</p>
+            <h2 id="utility-dialog-title">Overlay</h2>
+          </div>
+          <button class="ghost-button" value="cancel">Close</button>
+        </div>
+        <div id="utility-dialog-body" class="reference-dialog__body utility-body"></div>
+      </form>
+    </dialog>
+
+    <script type="module" src="./assets/app.js"></script>
+  </body>
+</html>

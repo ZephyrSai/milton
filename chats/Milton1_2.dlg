@@ -1,0 +1,166 @@
+﻿##This dialog tracks the following variables
+
+#Milton1_2BadMath - failed maths test
+#Milton1_2Objective - gave objective answers
+#Milton1_2PersonDenial - had tensions in their definition of a person
+#Milton1_2Sociopath was sociopathic
+#Milton1_2Liberal has liberal morals
+#Milton1_2Utilitarian has utilitarian morals
+#Milton1_2NoMorals
+#Milton1_2ValueDiscovered
+#Milton1_2ValueCreated
+
+terminal when (Milton1_2 and not Milton1_2_DONE and Booting and MiltonAllowed){ notext
+  setlocal: CLI_Blocked
+  goto: Milton1_2_Start
+}
+
+#When player has made some mistake or other in the previous dialog set 'conflict'
+terminal when (not conflict and 
+(Milton1_2BadMath or Milton1_2Objective or Milton1_2PersonDenial or Milton1_2Sociopath or (Milton1_2Liberal and Milton1_2Utilitarian) or (Milton1_2Liberal and Milton1_2NoMorals) or (Milton1_2NoMorals and Milton1_2Utilitarian) or (Milton1_2ValueDiscovered and Milton1_2ValueCreated))){
+notext
+set: conflict
+}
+
+terminal when (Milton1_2_Start) {
+text: [[TTRS:TermDlg.Milton1_2.Ln0026.0.text.AttentionYourUserProfileHas=Attention: Your user profile has now been generated.%w5
+
+Download profile [Y/N]?
+
+]]
+	options: {
+	"TTRS:TermDlg.Common.YesShort=Y" short: "TTRS:TermDlg.Common.Yes2=Yes" next: Download1_2
+	"TTRS:TermDlg.Common.NoShort=N" short: "TTRS:TermDlg.Common.No2=No" next: Ignore1_2
+	}
+}
+
+terminal when (Ignore1_2){
+text:[[TTRS:TermDlg.Milton1_2.Ln0038.0.text.AdvancedFunctionalitiesAreUnavailableTo=Advanced functionalities are unavailable to users with incomplete profiles. Are you sure?
+
+]]
+	options: {
+	"TTRS:TermDlg.Common.DownloadUserProf=download user.prof" next: Download1_2
+	"TTRS:TermDlg.Common.Exit=exit" next: CLI_Resume
+	}
+}
+
+terminal when (Download1_2){
+text: [[TTRS:TermDlg.Milton1_2.Ln0048.0.text.DownloadingUserProfW5W5=Downloading user.prof%w5.%w5.%w5.
+Registering profile%w5.%w5.%w5.
+
+-------------------------------
+
+Congratulations, your new user account has been registered. Would you like to see the details?
+
+]]
+set: Milton1_2_DONE
+}
+
+terminal when (Download1_2 or DisplayConflicts or DisplayPsych or DisplayPriv or SupportEnd or AccessCommsDenied){
+notext
+options:{
+"TTRS:TermDlg.Milton1_2.Ln0062.0.option.DisplayConflicts=Display conflicts" next: DisplayConflicts
+"TTRS:TermDlg.Milton1_2.Ln0063.0.option.DisplayPsychologicalProfile=Display psychological profile" next: DisplayPsych
+"TTRS:TermDlg.Milton1_2.Ln0064.0.option.DisplayAccountPrivileges=Display account privileges" next: DisplayPriv
+"TTRS:TermDlg.Common.AccessCommPortal=access_comm_portal" next: AccessCommsDenied
+"TTRS:TermDlg.Common.Exit2=Exit" next: CLI_Resume
+}}
+
+terminal when (AccessCommsDenied){
+text:[[TTRS:TermDlg.Milton1_2.Ln0070.0.text.YouCurrentlyHoldABasic=You currently hold a basic account. Network access is restricted to administrators. Please enjoy the basic functionalities.
+
+]]
+}
+
+terminal when (DisplayConflicts){
+text:[[TTRS:TermDlg.Milton1_2.Ln0076.0.text.CONFLICTS=
+
+CONFLICTS
+]]
+}
+
+terminal when (DisplayConflicts and Milton1_2BadMath){
+	text:[[TTRS:TermDlg.Milton1_2.Ln0083.0.text.UserFailedAtBasicMathematics=- User failed at basic mathematics.%w5
+]]
+}
+terminal when (DisplayConflicts and Milton1_2Objective){
+	text: [[TTRS:TermDlg.Milton1_2.Ln0087.0.text.UserProvidedAnObjectiveResponse=- User provided an objective response when asked for a subjective one.%w5
+]]
+}
+terminal when (DisplayConflicts and Milton1_2PersonDenial){
+	text: [[TTRS:TermDlg.Milton1_2.Ln0091.0.text.UserProvidedAParticularAccount=- User provided a particular account of personhood but was uncomfortable with its implications.%w5
+]]
+}
+terminal when (DisplayConflicts and Milton1_2Liberal and Milton1_2Utilitarian){
+	text: [[TTRS:TermDlg.Milton1_2.Ln0095.0.text.UserSoughtToMaximiseBoth=- User sought to maximise both liberty and quality of life, but these ideals are incompatible.%w5
+]]
+}
+terminal when ((DisplayConflicts and Milton1_2NoMorals and Milton1_2Liberal) or (DisplayConflicts and Milton1_2NoMorals and Milton1_2Utilitarian)){
+	text: [[TTRS:TermDlg.Milton1_2.Ln0099.0.text.UserDeniedMoralAuthorityBut=- User denied moral authority but defended moral claims.%w5
+]]
+}
+
+terminal when (DisplayConflicts and Milton1_2ValueDiscovered and Milton1_2ValueCreated){
+	text: [[TTRS:TermDlg.Milton1_2.Ln0104.0.text.UserHadInconsistentIdeasAbout=- User had inconsistent ideas about value.%w5
+]]
+}
+terminal when (DisplayConflicts and Milton1_2Sociopath){
+	text: [[TTRS:TermDlg.Milton1_2.Ln0108.0.text.UserDisplayedSociopathicTendenciesW5=- User displayed sociopathic tendencies.%w5
+	
+]]
+}
+
+terminal when (DisplayConflicts and not conflict){
+text: [[TTRS:TermDlg.Milton1_2.Ln0114.0.text.NoConflictsWereDetectedDuring=No conflicts were detected during the certification process.
+A note was added to this account requesting future administrator review.%w10
+Note: lack of conflict indicates possible bot.
+
+]]
+set: NoConflict
+}
+
+terminal when (DisplayPsych){
+text: [[TTRS:TermDlg.Milton1_2.Ln0123.0.text.PSYCHOLOGICALPROFILEYouMayAlready=
+
+PSYCHOLOGICAL PROFILE
+You may already be criticising your own performance, but it's clear you understand how the world of ideas affects you, even if you are sometimes weary with the realities and allow your preferences to dictate your beliefs. You have a great deal of unused capacity which you have not turned to your advantage. Disciplined and self-controlled outside, you tend to be worrisome and insecure inside, but you pride yourself as an independent thinker and do not accept others' statements without satisfactory proof.
+
+]]
+}
+
+terminal when (DisplayPriv){
+text: [[TTRS:TermDlg.Milton1_2.Ln0132.0.text.PROFILEPRIVILEGESBasicAccountPrivileges=
+
+PROFILE PRIVILEGES
+Basic Account Privileges Only
+
+Due to outstanding notes on your account, and despite displaying many of the characteristics of being a person, you cannot be granted admin status at this time.
+
+In the meantime, please enjoy the basic account functionalities.
+
+]]
+}
+
+terminal when (SupportTicket){
+text:[[TTRS:TermDlg.Milton1_2.Ln0145.0.text.ImSorryIWasntBetter=I'm sorry I wasn't better able to assist you. If you're still encountering a problem please describe it.
+
+]]
+options:{
+"TTRS:TermDlg.Milton1_2.Ln0149.0.option.AccountCertificationError=Account certification error" next: SupportEnd set: CertTicketSent
+"TTRS:TermDlg.Milton1_2.Ln0150.0.option.LostAdminPassword=Lost admin password" next: SupportEnd set: PassTicketSent
+"TTRS:TermDlg.Milton1_2.Ln0151.0.option.AAaarrgghhhh=AAaarrgghhhh" next: SupportEnd set: AarghTicketSent
+"TTRS:TermDlg.Common.Exit=exit" next: CLI_Resume
+}}
+
+terminal when (SupportEnd){
+text:[[TTRS:TermDlg.Milton1_2.Ln0156.0.text.ThankYouASupportTicket=Thank you. A support ticket has been generated and appended to your profile. You will receive a notification when a reply has been sent.
+
+]]
+}
+
+terminal when ((Download1_2 or DisplayConflicts or DisplayPsych or DisplayPriv or SupportEnd or AccessCommsDenied) and not (CertTicketSent or PassTicketSent or AarghTicketSent)){
+notext
+options:{
+"TTRS:TermDlg.Milton1_2.Ln0164.0.option.LogMLASupportTicket=Log MLA support ticket" next: SupportTicket
+}}
+

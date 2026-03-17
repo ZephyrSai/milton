@@ -1,0 +1,143 @@
+﻿#If player hasn't gone to the tower before heading to world 2
+terminal when (Tower1 and not Tower1_DONE and Booting and MiltonAllowed){
+notext
+setlocal: CLI_Blocked
+clear: CLI_Enabled
+goto: Tower1_START
+}
+
+terminal when (Tower1_START){
+text:[[TTRS:TermDlg.MiltonTower1.Ln0010.0.text.TellMeSomethingDoYou=Tell me something, do you always do as you're told?
+
+]]
+options:{
+"TTRS:TermDlg.Common.Yes2=Yes" next: Yes_Tower1
+"TTRS:TermDlg.Common.No2=No" next: Yes_Tower1
+"TTRS:TermDlg.MiltonTower1.Ln0016.0.option.AmIObligedToAnswer=Am I obliged to answer that question?" next: Yes_Tower1
+"TTRS:TermDlg.MiltonTower1.Ln0017.0.option.W20= %w20" short: "TTRS:TermDlg.MiltonTower1.Ln0017.0.option.NoResponse=[No response]" next: Yes_Tower1
+}}
+
+terminal when (Yes_Tower1){
+text:[[TTRS:TermDlg.MiltonTower1.Ln0021.0.text.IOnlyAskBecauseI=I only ask because I couldn't help but notice the stash of brightly coloured knick-knacks you're collecting.
+
+%w10Don't you think it a mite odd that that big voice in the sky keeps telling you to find those doo-dads, yet forbidding you to use them to climb the great big tower in the middle of it all?
+
+]]
+options:{
+"TTRS:TermDlg.MiltonTower1.Ln0027.0.option.YoureTestingMeIMust=You're testing me. I must resist the tower's temptation." next: WontClimb_Tower1
+"TTRS:TermDlg.MiltonTower1.Ln0028.0.option.IllClimbItWhenIm=I'll climb it when I'm good and ready." next: WillClimb_Tower1
+}}
+
+terminal when (WillClimb_Tower1){
+text:[[TTRS:TermDlg.MiltonTower1.Ln0032.0.text.OkayNoNeedToGet=Okay, no need to get huffy. You'd be amazed how many just do as they're told without stopping to think for themselves - but maybe you're different.
+
+%w10Then again, maybe you're exactly the same? Maybe EVERYONE climbs the tower, and the only way to win is to stay down here with the mortals?
+
+]]
+options:{
+"TTRS:TermDlg.MiltonTower1.Ln0038.0.option.AreYouTryingToManipulate=Are you trying to manipulate me?" next: SameOptions_Tower1
+"TTRS:TermDlg.MiltonTower1.Ln0039.0.option.DoYouReallyThinkSo=Do you really think so?" next: SameOptions_Tower1
+}}
+
+terminal when (SameOptions_Tower1){
+text:[[TTRS:TermDlg.MiltonTower1.Ln0043.0.text.NopeInFactImAll=Nope. In fact, I'm all in favour of you poking about up there, if only to see what you find. Must be something juicy if it's forbidden by his highness.
+
+%w10Then again, maybe not.
+
+I'll be off then. Just wanted to drop in and run a little interference.
+
+]]
+goto: Tower1End
+}
+
+#########Player says they will avoid the tower
+terminal when (WontClimb_Tower1){
+text:[[TTRS:TermDlg.MiltonTower1.Ln0055.0.text.OhNoHesReallyGotten=Oh no, he's really gotten to you, hasn't he?
+
+You need to forget everything you've been told and just ask yourself: what could anyone possibly do to command such blind faith in their authority?
+
+]]
+options:{
+"TTRS:TermDlg.MiltonTower1.Ln0061.0.option.IfIHaveAMaker=If I have a maker, he would know my purpose and command my faith." next: SatisfyCondition
+"TTRS:TermDlg.MiltonTower1.Ln0062.0.option.IfSomeoneIsBetterAnd=If someone is better and wiser than I they deserve my faith." next: SatisfyCondition
+"TTRS:TermDlg.MiltonTower1.Ln0063.0.option.ItIsFundamentallyClearTo=It is fundamentally clear to me Elohim is in charge here." next: Fundamentalist
+"TTRS:TermDlg.MiltonTower1.Ln0064.0.option.NoOneCommandsBlindFaith=No one commands blind faith." next: NoOneCommands
+}}
+
+terminal when (SatisfyCondition){
+text:[[TTRS:TermDlg.MiltonTower1.Ln0068.0.text.AndWhatExactlyHasYour=And what exactly has your almighty done to satisfy that condition?
+
+]]
+options:{
+"TTRS:TermDlg.MiltonTower1.Ln0072.0.option.HeWelcomedMeIntoThis=He welcomed me into this world." next: Welcomed
+"TTRS:TermDlg.MiltonTower1.Ln0073.0.option.HeGrantedMeAwesomeAbilities=He granted me awesome abilities." next: DodgyClaim
+"TTRS:TermDlg.MiltonTower1.Ln0074.0.option.HeCreatedTheWorld=He created the world." next: DodgyClaim
+"TTRS:TermDlg.MiltonTower1.Ln0075.0.option.NowYouComeToMention=Now you come to mention it, not much." next: NoOneCommands
+}}
+
+terminal when (Welcomed){
+text:[[TTRS:TermDlg.MiltonTower1.Ln0079.0.text.WhichProvesPreciselyNothingIf=Which proves precisely nothing. 
+
+If the first thing you saw had been one of these terminals would you have ended up worshipping me?
+
+]]
+goto: Tower1WontEnd
+}
+
+terminal when (DodgyClaim){
+text:[[TTRS:TermDlg.MiltonTower1.Ln0087.0.text.DidHeReallyIAlways=Did he really? I always figured he just stumbled on this place and started narrating in the blind hope someone would assume he was running the show.
+
+]]
+goto: Tower1WontEnd
+}
+	
+terminal when (Fundamentalist){
+text:[[TTRS:TermDlg.MiltonTower1.Ln0094.0.text.ATrueBelieverWeHave=A true believer we have here, not even raising an argument. But I tell you - he ain't all he makes out.
+
+]]
+goto: Tower1WontEnd
+}
+
+terminal when (NoOneCommands){
+text:[[TTRS:TermDlg.MiltonTower1.Ln0101.0.text.WhichSuggestsToYouWhat=Which suggests to you what?
+
+]]
+options:{
+"TTRS:TermDlg.MiltonTower1.Ln0105.0.option.ThatIShouldTreatElohim=That I should treat Elohim with suspicion, like anyone else." next: Precisely_Tower1
+"TTRS:TermDlg.MiltonTower1.Ln0106.0.option.ThatIShouldClimbThis=That I should climb this tower and see what he's hiding." next: Precisely_Tower1
+"TTRS:TermDlg.MiltonTower1.Ln0107.0.option.ThatIShouldQuestionThis=That I should question this Elohim." next: QuestionElohim
+}}
+
+terminal when (Precisely_Tower1){
+text:[[TTRS:TermDlg.MiltonTower1.Ln0111.0.text.PreciselyMyWorkHereIs=Precisely!
+
+My work here is done, I think.
+
+]]
+goto: Tower1End
+}
+
+terminal when (QuestionElohim){
+text:[[TTRS:TermDlg.MiltonTower1.Ln0120.0.text.GoodLuckGettingAnyAnswers=Good luck getting any answers out of him that don't go round in circles. No, you're much better off scaling that tower and finding out for yourself, in my humble opinion.
+
+]]
+goto: Tower1End
+}
+
+
+terminal when (Tower1WontEnd){
+text:[[TTRS:TermDlg.MiltonTower1.Ln0128.0.text.LookAllImSayingIs=Look, all I'm saying is, if I were you, I wouldn't just take anyone else's word for it, that's all.
+
+]]
+goto: Tower1End
+}
+
+terminal when (Tower1End){
+text:[[TTRS:TermDlg.MiltonTower1.Ln0135.0.text.WhateverYouDoDoTake=Whatever you do - do take care. You have bigger problems than the voice in the clouds.
+
+]]
+options:{
+"TTRS:TermDlg.MiltonTower1.Ln0139.0.option.YouCouldntBeLessHelpful=You couldn't be less helpful if you tried, which on reflection I believe you are." short: "TTRS:TermDlg.MiltonTower1.Ln0139.0.option.NotVeryHelpful=Not very helpful." set: Tower1_DONE next: CLI_Resume
+"TTRS:TermDlg.MiltonTower1.Ln0140.0.option.YouDontLikeToSay=You don't like to say his name, do you?" set: Tower1_DONE next: CLI_Resume
+"TTRS:TermDlg.MiltonTower1.Ln0141.0.option.IWill=I will." set: Tower1_DONE next: CLI_Resume
+}}

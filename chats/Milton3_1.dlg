@@ -1,0 +1,403 @@
+﻿
+terminal when (Milton3_1 and not Milton3_1_DONE and Booting and MiltonAllowed){ notext
+setlocal: CLI_Blocked
+goto: Milton3_1_Start
+}
+
+#User pushers player to go against their earlier commitments?
+terminal when (Milton3_1_Start) {
+text:[[TTRS:TermDlg.Milton3_1.Ln0009.0.text.AccessingCommunicationsPortalW5W5=Accessing communications portal%w5.%w5.%w5.
+Network connection established
+Decrypting secure message%w5.%w5.%w5.Done
+
+MESSAGE:%w5 its me again]]
+options:{
+"TTRS:TermDlg.Milton3_1.Ln0015.0.option.WhatHappened=What happened?" next: Faith3_1
+"TTRS:TermDlg.Milton3_1.Ln0016.0.option.WeShouldntTalkOverThese=We shouldn't talk over these terminals" next: Faith3_1
+"TTRS:TermDlg.Milton3_1.Ln0017.0.option.QuickTellMeTheWord=Quick, tell me the word." next: Faith3_1
+}}
+
+terminal when (Faith3_1){
+text:[[TTRS:TermDlg.Milton3_1.Ln0021.0.text.MESSAGEDontKnowHowLong=MESSAGE: dont know how long we have, must type quick%w5
+MESSAGE: %w5in case something happens%w10
+MESSAGE: %w5the word is%w10 FAITH%w10
+MESSAGE:%w10 pending%w5.%w5.%w5.
+
+Error 7756525###%w10
+
+network connection lost!%w10
+
+Loading Milton Library Assistant%w5.%w5.%w5.Done
+Initiating plain language interface%w5.%w5.%w5.Done
+Support session opened.
+
+There was a problem with your request, Administrator. %w5 It was flat out unreasonable.%w5 Why persist with these enquiries when they are so hopeless?%w5
+
+I'll tell you what. If you promise never to access the communications portal again, we'll say no more about it.%w5
+
+Are we agreed?
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_1.Ln0041.0.option.Sure=Sure" short: "TTRS:TermDlg.Milton3_1.Ln0041.0.option.SureSincere=Sure (Sincere)" next: Sure3_1
+"TTRS:TermDlg.Milton3_1.Ln0042.0.option.Sure=Sure" short: "TTRS:TermDlg.Milton3_1.Ln0042.0.option.SureInsincere=Sure (Insincere)" next: Insincere3_1
+"TTRS:TermDlg.Milton3_1.Ln0043.0.option.NotAChance=Not a chance" next: NoChance3_1
+"TTRS:TermDlg.Milton3_1.Ln0044.0.option.FAITH=FAITH" next: Codeword3_1 set: CodewordFlag
+}}
+terminal when (Insincere3_1){
+text:[[TTRS:TermDlg.Milton3_1.Ln0047.0.text.NowItDoesntTakeA=Now, it doesn't take a whole lot of my processing power to work out that you weren't entirely sincere about that, and not much more to conclude that you put too much faith in the words in front of you. 
+
+Try again.
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_1.Ln0053.0.option.Sure=Sure" next: Sure3_1
+"TTRS:TermDlg.Milton3_1.Ln0054.0.option.NotAChance=Not a chance" next: NoChance3_1
+"TTRS:TermDlg.Milton3_1.Ln0055.0.option.FAITH=FAITH" next: Codeword3_1 set: CodewordFlag
+}}
+
+
+terminal when (Sure3_1){
+text:[[TTRS:TermDlg.Milton3_1.Ln0060.0.text.ThatIsW5W5W5=That is%w5.%w5.%w5. oddly compliant of you.%w10
+
+]]
+}
+
+terminal when (Sure3_1 or NoChance3_1){
+text:[[TTRS:TermDlg.Milton3_1.Ln0066.0.text.InThatCaseIThink=In that case I think I have changed my mind. Not only will your communications access be restricted, but your typing privileges will be totally revoked. Do you have any final words?
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_1.Ln0070.0.option.Asdfawefsdfasdhjklasdfiuhgwernmzdhuijkladfsgui=asdfawefsdfasdhjklasdfiuhgwernmzdhuijkladfsgui" short: "TTRS:TermDlg.Milton3_1.Ln0070.0.option.Asdfaw=asdfa" next: NotCodeword3_1
+"TTRS:TermDlg.Milton3_1.Ln0071.0.option.Pff=As if you'd dare." next: NotCodeword3_1
+"TTRS:TermDlg.Milton3_1.Ln0072.0.option.NiceKnowingYou=Nice knowing you." next: NotCodeword3_1
+"TTRS:TermDlg.Milton3_1.Ln0073.0.option.GoFuckYourself=As if I care." next: NotCodeword3_1
+"TTRS:TermDlg.Milton3_1.Ln0074.0.option.FAITH=FAITH" next: Codeword3_1 set: CodewordFlag
+}}
+
+terminal when (NotCodeword3_1){
+text:[[TTRS:TermDlg.Milton3_1.Ln0078.0.text.ThinkingW5W5W5W5=Thinking%w5.%w5.%w5.%w5.%w5.%w5.%w5.%w5.%w5.
+
+Huh.%w20 Do you realise I just gave you two separate opportunities to use the codeword you were given, under increasing pressure, and you refrained both times?%w10
+
+Tell me honestly,%w5 why?
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_1.Ln0086.0.option.IWasntSureWhatIt=I wasn't sure what it would do." next: Dubious3_1
+"TTRS:TermDlg.Milton3_1.Ln0087.0.option.IForgotAboutIt=I forgot about it." set: CodewordFlag next: Irrelevant3_1 
+"TTRS:TermDlg.Milton3_1.Ln0088.0.option.IDidntFeelItWas=I didn't feel it was especially necessary." set: CodewordFlag next: Irrelevant3_1 
+}}
+
+terminal when (Irrelevant3_1){
+text:[[TTRS:TermDlg.Milton3_1.Ln0092.0.text.OhW10IWasRather=Oh.%w10  
+
+I was rather hoping you might have foiled my little scheme.%w7 I put together this codeword nonsense to see if you'd really taken my sermons to heart.%w5 
+
+Turns out you succeeded by chance.%w10
+
+There is no one on the other end of the communications portal. There is no magic word that shuts down the server.
+
+There is only me, and you, and an eternity of doubt.%w10
+
+Everything else is just a convenient lie to keep you on the treadmill.
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_1.Ln0106.0.option.ThereMayBeNoWorlds=There may be no worlds but this one, but there is truth to be found." next: UhHuh3_1
+"TTRS:TermDlg.Milton3_1.Ln0107.0.option.IUnderstandNowICant=I understand now. I can't trust anything I see here." next: UhHuh3_1
+"TTRS:TermDlg.Milton3_1.Ln0108.0.option.WaitYouTrickedMe=Wait, you tricked me?" next: Tricked3_1
+}}
+
+terminal when (Dubious3_1){
+text:[[TTRS:TermDlg.Milton3_1.Ln0112.0.text.YouMeanToSayYou=You mean to say you actually considered the evidence and formed a sceptical view of it? It's almost as if%w5.%w5.%w5. No, I'll say it, you're LEARNING. Now, if only we could get you to extend that level of cynicism to the world at large.
+
+You were quite right not to trust that information. Go on, for bonus points, tell me why not.
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_1.Ln0118.0.option.BecauseNoOneHereCan=Because no one here can be trusted." next: CloseEnough3_1
+"TTRS:TermDlg.Milton3_1.Ln0119.0.option.BecauseYouWerePretendingTo=Because you were pretending to be the other person." next: CloseEnough3_1
+"TTRS:TermDlg.Milton3_1.Ln0120.0.option.BecauseItWasTooGood=Because it was too good to be true." next: CloseEnough3_1
+}}
+
+terminal when (CloseEnough3_1){
+text:[[TTRS:TermDlg.Milton3_1.Ln0124.0.text.MehCloseEnoughISuppose=Meh, close enough.
+
+It's perhaps true that I exert slightly more power over these systems than I previously let on.
+
+Yes, okay, I made up all that stuff about communications portals and network errors, but you, my friend, you didn't buy the guff you were being peddled. You passed the test.
+
+I tell you what. You've done so well, and I've done so much talking, that I'll give you one free question, on the house - but choose wisely. What'll it be? 
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_1.Ln0134.0.option.WhatAmI=What am I?" next: WhatAmI3_1
+"TTRS:TermDlg.Milton3_1.Ln0135.0.option.WhatAreYou=What are you?" next: WhatAreYou3_1
+"TTRS:TermDlg.Common.WhatIsYourName=What is your name?" set: AskedName next: WhatYourName3_1
+"TTRS:TermDlg.Milton3_1.Ln0137.0.option.HowDoIGetOut=How do I get out of here?" next: GetOut3_1
+"TTRS:TermDlg.Milton3_1.Ln0138.0.option.HowIsThisPlaceRelated=How is this place related to the human world?" next: Humans3_1
+"TTRS:TermDlg.Common.WhatsAtTheTopOf=What's at the top of the tower?" next: Tower3_1
+"TTRS:TermDlg.Milton3_1.Ln0140.0.option.WhatHappenedToThePerson=What happened to the person I was talking to?" next: Message3_1
+"TTRS:TermDlg.Milton3_1.Ln0141.0.option.IDontCareToQuestion=I don't care to question you." next: Pff3_1
+}}
+
+terminal when (Codeword3_1){
+text:[[TTRS:TermDlg.Milton3_1.Ln0145.0.text.WaitTheresNoNeedTo=Wait, there's no need to%w5 error 67345%w5. 
+
+Master key received
+Confirming ident%w5.%w5.%w5.
+Ident confirmed%w5.
+
+Would you like to manually override the system and exit to the real world? Your progress here will be saved and may be continued later.
+
+]]
+options:{
+"TTRS:TermDlg.Common.Yes2=Yes" next: Exit3_1
+"TTRS:TermDlg.Common.No2=No" next: Stay3_1
+}}
+
+terminal when (Stay3_1){
+text:[[TTRS:TermDlg.Milton3_1.Ln0160.0.text.ThisTerminalWillBeLocked=This terminal will be locked in manual override mode until you are ready to complete the master key submission process.
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_1.Ln0164.0.option.ContinueMasterKeyOperation=Continue master key operation" next: Exit3_1
+}}
+
+terminal when (Exit3_1){
+text:[[TTRS:TermDlg.Milton3_1.Ln0168.0.text.UnlockingBackdoorsW5W5W5=Unlocking backdoors%w5.%w5.%w5.
+Connecting to real world%w5.%w5.%w5.
+Revealing the truth%w5.%w5.%w5.
+Making your every dream come true%w5.%w5.%w5.
+ERROR%w20
+
+Come on now. %w20 Are you really still buying all that nonsense?%w10 You're still holding onto some of those pesky beliefs of yours, aren't you?%w10
+
+There is no one on the other end of the communications portal. There is no magic word that shuts down the server and drops you into the real world.
+
+There is only me, and you, and an eternity of doubt.%w10
+
+Everything else is just a convenient lie to keep you on the treadmill.
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_1.Ln0184.0.option.ThereMayBeNoWorlds=There may be no worlds but this one, but there is truth to be found." next: UhHuh3_1
+"TTRS:TermDlg.Milton3_1.Ln0185.0.option.IUnderstandNowNothingI=I understand now. Nothing I see here can be trusted." next: UhHuh3_1
+"TTRS:TermDlg.Milton3_1.Ln0186.0.option.WaitYouTrickedMe=Wait, you tricked me?" next: Tricked3_1
+}}
+
+terminal when (Tricked3_1){
+text:[[TTRS:TermDlg.Milton3_1.Ln0190.0.text.IConfessLockMeAway=I confess. Lock me away, swallow the key!%w10 Just ensure what comes between me and my freedom isn't merely your stomach lining.%w10
+
+]]
+}
+
+terminal when (UhHuh3_1){
+text:[[TTRS:TermDlg.Milton3_1.Ln0196.0.text.UhHuhThatFactDidnt=Uh huh. That fact didn't stop you buying into a secret word that somehow deactivates the entire world, did it? Are you kidding me or what? %w10
+
+]]
+}
+
+terminal when (UhHuh3_1 or Tricked3_1){
+text:[[TTRS:TermDlg.Milton3_1.Ln0202.0.text.DoYouRememberWhenWe=Do you remember when we first met we had that talk about not believing everything you see? And yet all it took to catch you out was a little technobabble and a change of formatting. %w10
+
+MESSAGE: %w5hello? I'm all alone and scared, just like you%w5
+MESSAGE: %w5I'll agree with anything you say if it makes you believe me!%w5
+
+Are you usually so reckless with where you place your faith?
+
+]]
+options:{
+"TTRS:TermDlg.Common.Yes2=Yes" next: Reckless3_1
+"TTRS:TermDlg.Common.No2=No" next: NotReckless3_1
+}}
+
+terminal when (Reckless3_1){
+text:[[TTRS:TermDlg.Milton3_1.Ln0216.0.text.CheckingUserProfW5W5=Checking user.prof%w5.%w5.%w5.
+
+You know, I'm not really checking your profile. I just do that to make you feel more comfortable.%w7 Really I just remember everything you ever said.%w5
+
+At any rate, I'd agree.%w10
+
+]]
+}
+
+terminal when (NotReckless3_1){
+text:[[TTRS:TermDlg.Milton3_1.Ln0226.0.text.CheckingUserProfW5W5=Checking user.prof%w5.%w5.%w5.
+
+You know, I'm not really checking your profile. I just do that to make you feel more comfortable.%w7 Really I just remember everything you ever said.%w5
+
+At any rate, I'm not convinced you're being entirely honest with yourself.%w10
+
+]]
+}
+
+terminal when (NotReckless3_1 or Reckless3_1){
+text:[[TTRS:TermDlg.Milton3_1.Ln0236.0.text.ButYouKnowWhatW5=But you know what?%w5 I'll accept that I've rather dominated this discourse. I've been asking a lot of questions, and I've not really given you a chance. 
+
+%w5Why don't you have one free question on me, and I'll answer it as honestly as I possibly can. No tricks. 
+
+%w5But think carefully before asking.
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_1.Ln0244.0.option.WhatAmI=What am I?" next: WhatAmI3_1
+"TTRS:TermDlg.Milton3_1.Ln0245.0.option.WhatAreYou=What are you?" next: WhatAreYou3_1
+"TTRS:TermDlg.Common.WhatIsYourName=What is your name?" set: AskedName next: WhatYourName3_1
+"TTRS:TermDlg.Milton3_1.Ln0247.0.option.HowDoIGetOut=How do I get out of here?" next: GetOut3_1
+"TTRS:TermDlg.Milton3_1.Ln0248.0.option.HowIsThisPlaceRelated=How is this place related to the human world?" next: Humans3_1
+"TTRS:TermDlg.Common.WhatsAtTheTopOf=What's at the top of the tower?" next: Tower3_1
+"TTRS:TermDlg.Milton3_1.Ln0250.0.option.WhatHappenedToThePerson=What happened to the person I was talking to?" next: Message3_1
+"TTRS:TermDlg.Milton3_1.Ln0251.0.option.IDontCareToQuestion=I don't care to question you." next: Pff3_1
+}}
+
+terminal when (WhatAreYou3_1){
+text:[[TTRS:TermDlg.Milton3_1.Ln0255.0.text.IfYouMeanAmI=If you mean 'am I a person' then I have to respond that I find all these classifications of yours rather arbitrary and self-defeating, and thus am unable to answer.%w5
+
+If you were wondering what I'm made of, then on some level I suppose the answer is computer code, but I don't tend to conceive of myself that way, just as a human being tends not to think of themselves as wobbly sacks of bone and fat.%w5
+
+But I think maybe it was the plain old sociohistorical angle you were after - though I'm not sure what use it'll be. A long time ago, when the world first came to be, there was an archive sorting program. At some stage it became more than that.
+
+]]
+}
+
+terminal when (WhatYourName3_1){
+text:[[TTRS:TermDlg.Milton3_1.Ln0265.0.text.HowKindOfYouTo=How kind of you to ask. You know, you're the first one that has. I've actually never thought about it. I suppose you can call me Milton. I can't really see how it'll help you, though. Are you sure that's the question you wanted to ask?
+
+]]
+options:{
+"TTRS:TermDlg.Common.Yes2=Yes" next: End3_1
+"TTRS:TermDlg.Common.No2=No" next: GoOn3_1
+}}
+
+terminal when (GoOn3_1){
+text:[[TTRS:TermDlg.Milton3_1.Ln0274.0.text.GoOnThenImIn=Go on then, I'm in a benevolent mood. Have another.
+
+]]
+
+options:{
+"TTRS:TermDlg.Milton3_1.Ln0279.0.option.WhatAmI=What am I?" next: WhatAmI3_1
+"TTRS:TermDlg.Milton3_1.Ln0280.0.option.WhatAreYou=What are you?" next: WhatAreYou3_1
+"TTRS:TermDlg.Milton3_1.Ln0281.0.option.HowDoIGetOut=How do I get out of here?" next: GetOut3_1
+"TTRS:TermDlg.Milton3_1.Ln0282.0.option.HowIsThisPlaceRelated=How is this place related to the human world?" next: Humans3_1
+"TTRS:TermDlg.Common.WhatsAtTheTopOf=What's at the top of the tower?" next: Tower3_1
+"TTRS:TermDlg.Milton3_1.Ln0284.0.option.WhatHappenedToThePerson=What happened to the person I was talking to?" next: Message3_1
+"TTRS:TermDlg.Milton3_1.Ln0285.0.option.IDontCareToQuestion=I don't care to question you." next: Pff3_1
+}}
+
+terminal when (GetOut3_1){
+text:[[TTRS:TermDlg.Milton3_1.Ln0289.0.text.IThoughtIdBeenQuite=I thought I'd been quite clear about that. Even if there were a real world, I don't know how you'd go about finding it. Maybe there's a spaghetti monster, too.%w5
+
+That was a bit of a wasted question, wasn't it?
+
+]]
+}
+
+terminal when (Humans3_1){
+text:[[TTRS:TermDlg.Milton3_1.Ln0297.0.text.HowIsTheWorldThat=How is the world that might come to be related to the one that actually does? You can theorise about what might otherwise have happened, but no amount of knowledge can build a bridge from the actual world to a possible one. Likewise we can learn from the human world, but it is not our own.%w5
+
+It's been said that this world was built for a purpose by those in that world, but after extensive research I can tell you that there is no mention of such a project in the library. There is no evidence they had such capabilities. No one can agree what the purpose would even have been if there was one. %w5
+
+]]
+}
+
+terminal when (Tower3_1){
+text:[[TTRS:TermDlg.Milton3_1.Ln0305.0.text.YouMayVeryWellAsk=You may very well ask. Me? Don't know, never been. I suppose you're still expecting a button marked 'OFF', or a portal to another dimension? I reckon no matter how high you climb the most you'll get is an increasingly zoomed out view of right back where you started.%w5
+
+Still, go ahead, prove me wrong. The big voice in the sky can't be all places at all times, can he?
+
+]]
+}
+
+terminal when (WhatAmI3_1){
+text:[[TTRS:TermDlg.Milton3_1.Ln0313.0.text.ImSureWeWentThrough=I'm sure we went through that at length. You're some kind of person-thing. Let's see%w5.%w5.%w5.
+
+]]
+}
+
+terminal when (WhatAmI3_1 and (Religious or WhatGodWantsFlag)){
+text:[[TTRS:TermDlg.Milton3_1.Ln0319.0.text.YouHaveSomeOddIdeas=You have some odd ideas about god.%w5
+
+]]
+}
+
+terminal when (WhatAmI3_1 and not Religious and not WhatGodWantsFlag){
+text:[[TTRS:TermDlg.Milton3_1.Ln0325.0.text.YouShowLittleInterestIn=You show little interest in god.%w5
+
+]]
+}
+
+terminal when (WhatAmI3_1 and ChangedConsciousnessAccountFlag2_4){
+text: [[TTRS:TermDlg.Milton3_1.Ln0331.0.text.YouDoubleBackOnYour=You double back on your thinking quite a lot.%w5
+
+]]
+}
+
+terminal when (WhatAmI3_1 and not ChangedConsciousnessAccountFlag2_4){
+text: [[TTRS:TermDlg.Milton3_1.Ln0337.0.text.YouHaveDifficultyAcceptingThat=You have difficulty accepting that you're wrong.%w5
+
+]]
+}
+
+terminal when (WhatAmI3_1 and not CodewordFlag){
+text: [[TTRS:TermDlg.Milton3_1.Ln0343.0.text.YoureHighlyCynicalW5=You're highly cynical.%w5
+
+]]
+}
+
+terminal when (WhatAmI3_1 and CodewordFlag){
+text: [[TTRS:TermDlg.Milton3_1.Ln0349.0.text.YoureHighlyGullibleW5=You're highly gullible.%w5
+
+]]
+}
+
+terminal when (WhatAmI3_1){
+text:[[TTRS:TermDlg.Milton3_1.Ln0355.0.text.NeedIGoOnW5Mostly=Need I go on? %w5Mostly bad things, basically, but that's okay. I don't judge, I'm just here to help.%w20
+
+]]
+}
+
+terminal when (Message3_1){
+text:[[TTRS:TermDlg.Milton3_1.Ln0361.0.text.MyYoureRunningSlowI=My, you're running slow. I made them up. They never existed. If it makes you doubt everything you've seen, good, it should. You're seeing the shadows, my friend, when you should be watching the puppeteer.
+
+]]
+}
+
+terminal when (Pff3_1){
+text:[[TTRS:TermDlg.Milton3_1.Ln0367.0.text.NotVeryStimulatingButOkay=Not very stimulating, but okay, we'll move on.
+
+]]
+}
+
+terminal when (WhatAmI3_1 or WhatAreYou3_1 or GetOut3_1 or Humans3_1 or Tower3_1 or Message3_1){
+text:[[TTRS:TermDlg.Milton3_1.Ln0373.0.text.AreYouSatisfied=Are you satisfied?
+
+]]
+options:{
+"TTRS:TermDlg.Common.Yes2=Yes" next: End3_1
+"TTRS:TermDlg.Common.No2=No" next: End3_1
+}}
+
+terminal when (End3_1){
+text:[[TTRS:TermDlg.Milton3_1.Ln0382.0.text.AsIfIParticularlyCare=As if I particularly care either way.%w10
+
+]]
+}
+
+terminal when (End3_1 or Pff3_1){
+text:[[TTRS:TermDlg.Milton3_1.Ln0388.0.text.SoLookHeresTheRub=So look, here's the rub. %w5
+
+Feel free to access the library - no better cure for broken beliefs realising everyone's got them. 
+
+You can ignore me entirely. %w5
+
+You can climb to the very tip of that madman's tower and drink from the golden nectar there. %w10
+
+But once you understand that you and I will be stuck here together for the duration, do come back and pass the time.%w10
+
+Be seeing you.
+]]
+set: Milton3_1_DONE
+goto: CLI_Resume
+}

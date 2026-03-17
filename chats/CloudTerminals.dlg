@@ -1,0 +1,341 @@
+﻿#
+#          ROME
+#
+
+player when((CLI_Enabled and TextsAvailable and InTerminal_Cloud_1_01) or (InTerminal_Journal and Cloud_1_01_SeenTexts)) {options:{
+  header: "TTRS:TermDlg.JournalHeader.Cloud_1_01=A01"
+  file: "TTRS:TermDlg.FoundTexts.IAN.Welcome.Name=welcome.eml" user: "TTRS:TermDlg.UserName.Local=loc" date: "0000/07/01"
+  file: "TTRS:TermDlg.FoundTexts.Athena.Chapter006.Name=athena6.txt" user: "TTRS:TermDlg.UserName.LitArch=lit_arch" date: "TTRS:TermDlg.Date.1912CE=1912 CE"
+  file: "TTRS:TermDlg.FoundTexts.General.FigureItOut.Name=figure_it_out.eml" user: "TTRS:TermDlg.UserName.EP_Archive=EP_arch" date: "2032/02/19"
+}}
+
+player when((CLI_Enabled and TextsAvailable and InTerminal_Cloud_1_02) or (InTerminal_Journal and Cloud_1_02_SeenTexts)) {
+options:{
+  header: "TTRS:TermDlg.JournalHeader.Cloud_1_02=A02"
+  file: "TTRS:TermDlg.FoundTexts.IAN.FirstDay.Name=IAN.eml" user: "TTRS:TermDlg.UserName.Local=loc" date: "0000/01/21"
+  file: "TTRS:TermDlg.FoundTexts.Athena.Analysis.Name=athena_analysis.html" user: "TTRS:TermDlg.UserName.Webcrawl=webcrawl" date: "2031/03/13"
+  file: "TTRS:TermDlg.FoundTexts.Straton.Talos.Name=talos_principle.txt" user: "TTRS:TermDlg.UserName.CL_Archive=CL_arch" date: "TTRS:TermDlg.Date.260BCE=260 BCE"
+}}
+
+# Rome extra terminal 1 - Rome 2
+player when((CLI_Enabled and TextsAvailable and InTerminal_Cloud_1_02_Extra) or (InTerminal_Journal and Cloud_1_02_Extra_SeenTexts)) {options:{
+  header: "TTRS:TermDlg.JournalHeader.Cloud_1_02_Extra=A02 Extra"
+  file: "TTRS:TermDlg.FoundTexts.Milton.ErrorLog.Name=error.log" user: "TTRS:TermDlg.UserName.Temp=temp" date: "0000/00/00"
+  file: "TTRS:TermDlg.FoundTexts.General.HumanMachine.Name=the_human_machine.html" user: "TTRS:TermDlg.UserName.Webcrawl=webcrawl" date: "2019/01/30"
+  file: "TTRS:TermDlg.FoundTexts.IAN.ArghSolutions.Name=ARGH_solutions.eml" user: "TTRS:TermDlg.UserName.EP_Archive=EP_arch" date: "0000/06/29"
+}}
+
+player when((CLI_Enabled and TextsAvailable and InTerminal_Cloud_1_03) or (InTerminal_Journal and Cloud_1_03_SeenTexts)) {options:{
+  header: "TTRS:TermDlg.JournalHeader.Cloud_1_03=A03"
+  file: "TTRS:TermDlg.FoundTexts.Alexandra.AI_feedback.Name=AI_feedback.eml" user: "TTRS:TermDlg.UserName.EP_Archive=EP_arch" date: "9999/99/99"
+  file: "TTRS:TermDlg.FoundTexts.IAN.TeamLeads.Name=team_leads.eml" user: "TTRS:TermDlg.UserName.Local=loc" date: "0000/07/05"
+  file: "TTRS:TermDlg.FoundTexts.Straton.Wiki.Name=straton_of_stageira.wiki" user: "TTRS:TermDlg.UserName.Webcrawl=webcrawl" date: "2019/12/03"
+}}
+
+player when((CLI_Enabled and TextsAvailable and InTerminal_Cloud_1_04) or (InTerminal_Journal and Cloud_1_04_SeenTexts)) {options:{
+  header: "TTRS:TermDlg.JournalHeader.Cloud_1_04=A04"
+  file: "TTRS:TermDlg.FoundTexts.IAN.Progress001.Name=progress_rep1.eml" user: "TTRS:TermDlg.UserName.Local=loc" date: "0000/07/02"
+  file: "TTRS:TermDlg.FoundTexts.Arkady.MailError.Name=mail_error.dat" user: "TTRS:TermDlg.UserName.Local=loc" date: "0000/06/03"
+  file: "TTRS:TermDlg.FoundTexts.Straton.Beginnings.Name=beginnings.txt" user: "TTRS:TermDlg.UserName.CL_Archive=CL_arch" date: "TTRS:TermDlg.Date.260BCE=260 BCE"
+}}
+
+# READTEXT conditions are added so that the image does not appear in the journal immediately when the pictures are unlocked
+player when(UnlockedKittenPictures and ((CLI_Enabled and TextsAvailable and InTerminal_Cloud_1_04) or (InTerminal_Journal and Cloud_1_04_SeenTexts and "READTEXT^kitten1.img"))) {options:{
+  file: "TTRS:TermDlg.CatPicures.Kitten1.Name=kitten1.img" user: "TTRS:TermDlg.UserName.Webcrawl=webcrawl" date: "0000/00/00"
+}}
+player when(UnlockedKittenPictures and ((CLI_Enabled and TextsAvailable and InTerminal_Cloud_1_04) or (InTerminal_Journal and Cloud_1_04_SeenTexts and "READTEXT^kitten2.img"))) {options:{
+  file: "TTRS:TermDlg.CatPicures.Kitten2.Name=kitten2.img" user: "TTRS:TermDlg.UserName.Webcrawl=webcrawl" date: "0000/00/00"
+}}
+player when(UnlockedKittenPictures and ((CLI_Enabled and TextsAvailable and InTerminal_Cloud_1_04) or (InTerminal_Journal and Cloud_1_04_SeenTexts and "READTEXT^kitten3.img"))) {options:{
+  file: "TTRS:TermDlg.CatPicures.Kitten3.Name=kitten3.img" user: "TTRS:TermDlg.UserName.Webcrawl=webcrawl" date: "0000/00/00"
+}}
+terminal when ("kitten1.img") { show_image: "Content/Talos/Models/EasterEggs/KittenBW01.tex" notext }
+terminal when ("kitten2.img") { show_image: "Content/Talos/Models/EasterEggs/KittenBW02.tex" notext }
+terminal when ("kitten3.img") { show_image: "Content/Talos/Models/EasterEggs/KittenBW03.tex" notext }
+
+player when((CLI_Enabled and TextsAvailable and InTerminal_Cloud_1_05) or (InTerminal_Journal and Cloud_1_05_SeenTexts)) {options:{
+  header: "TTRS:TermDlg.JournalHeader.Cloud_1_05=A05"
+  file: "TTRS:TermDlg.FoundTexts.IAN.EL.Name=EL.html" user: "TTRS:TermDlg.UserName.Webcrawl=webcrawl" date: "9999/09/09"
+  file: "TTRS:TermDlg.FoundTexts.Alexandra.AI_Citizenship.Name=AI_citizenship.html" user: "TTRS:TermDlg.UserName.Webcrawl=webcrawl" date: "9997/03/13"
+  file: "TTRS:TermDlg.FoundTexts.Athena.Chapter008.Name=athena8.txt" user: "TTRS:TermDlg.UserName.LitArch=lit_arch" date: "TTRS:TermDlg.Date.1912CE=1912 CE"
+}}
+
+player when((CLI_Enabled and TextsAvailable and InTerminal_Cloud_1_06) or (InTerminal_Journal and Cloud_1_06_SeenTexts)) {options:{
+  header: "TTRS:TermDlg.JournalHeader.Cloud_1_06=A06"
+  file: "TTRS:TermDlg.FoundTexts.IAN.LOL.Name=LOL.eml" user: "TTRS:TermDlg.UserName.Local=loc" date: "0000/08/01"
+  file: "TTRS:TermDlg.FoundTexts.Cicero.Tusculan.Name=cicero.txt" user: "TTRS:TermDlg.UserName.CL_Archive=CL_arch" date: "TTRS:TermDlg.Date.45BCE=45 BCE"
+  file: "TTRS:TermDlg.FoundTexts.General.Chatbots.Name=chatbots.html" user: "TTRS:TermDlg.UserName.Webcrawl=webcrawl" date: "2024/04/16"
+}}
+
+# Rome extra terminal 2  - Rome 6
+player when((CLI_Enabled and TextsAvailable and InTerminal_Cloud_1_06_Extra) or (InTerminal_Journal and Cloud_1_06_Extra_SeenTexts)) {options:{
+  header: "TTRS:TermDlg.JournalHeader.Cloud_1_06_Extra=A06 Extra"
+  file: "TTRS:TermDlg.FoundTexts.Straton.SimplePrinciple.Name=a_simple_principle.html" user: "TTRS:TermDlg.UserName.Webcrawl=webcrawl" date: "2018/09/09"
+  file: "TTRS:TermDlg.FoundTexts.Arkady.Journal077.Name=arkady_journal77.txt" user: "TTRS:TermDlg.UserName.Local=loc" date: "0000/06/25"
+  file: "TTRS:TermDlg.FoundTexts.General.Post437_Comments.Name=post437_comments.html" user: "TTRS:TermDlg.UserName.Webcrawl=webcrawl" date: "0000/12/01"
+}}
+
+# Rome extra terminal 3 - Rome 6 (hidden)
+player when((CLI_Enabled and TextsAvailable and InTerminal_Cloud_1_06_Extra_02) or (InTerminal_Journal and Cloud_1_06_Extra_02_SeenTexts)) {options:{
+  header: "TTRS:TermDlg.JournalHeader.Cloud_1_06_Extra_02=A06 Extra 2"
+  file: "TTRS:TermDlg.FoundTexts.General.ClassicalPhilosophers.Name=classical_philosophers.lz19" user: "TTRS:TermDlg.UserName.LZ19=LZ19col" date: "0000/09/16"
+  file: "TTRS:TermDlg.FoundTexts.IAN.Progress003.Name=progress_rep3.eml" user: "TTRS:TermDlg.UserName.Local=loc" date: "0000/07/22"
+}}
+
+player when((CLI_Enabled and TextsAvailable and InTerminal_Cloud_1_07) or (InTerminal_Journal and Cloud_1_07_SeenTexts)) {options:{
+  header: "TTRS:TermDlg.JournalHeader.Cloud_1_07=A07"
+  file: "TTRS:TermDlg.FoundTexts.Athena.Chapter009.Name=athena9.txt" user: "TTRS:TermDlg.UserName.LitArch=lit_arch" date: "TTRS:TermDlg.Date.1912CE=1912 CE"
+  file: "TTRS:TermDlg.FoundTexts.Alexandra.Singularity.Name=singularity_discussion104.html" user: "TTRS:TermDlg.UserName.Webcrawl=webcrawl" date: "9995/10/11"
+  file: "TTRS:TermDlg.FoundTexts.IAN.AskMeAnything.Name=AMA.html" user: "TTRS:TermDlg.UserName.Local=loc" date: "9999/03/13"
+}}
+
+# Rome secret cloud
+player when((CLI_Enabled and TextsAvailable and InTerminal_Cloud_1_08) or (InTerminal_Journal and Cloud_1_08_SeenTexts)) {options:{
+  header: "TTRS:TermDlg.JournalHeader.Cloud_1_08=A08"
+  file: "TTRS:TermDlg.FoundTexts.Alexandra.Talos.Name=talos.eml" user: "TTRS:TermDlg.UserName.Local=loc" date: "0000/06/03"
+  file: "TTRS:TermDlg.FoundTexts.Butler.HumanBlood.Name=human_blood.txt" user: "TTRS:TermDlg.UserName.LitArch=lit_arch" date: "TTRS:TermDlg.Date.1872CE=1872 CE"
+  file: "TTRS:TermDlg.FoundTexts.Arkady.ArchiveImportant.Name=archive_IMPORTANT.eml" user: "TTRS:TermDlg.UserName.EP_Archive=EP_arch" date: "0000/06/03"
+  file: "TTRS:notrans=#6_N**.img" user: "TTRS:TermDlg.UserName.Local=loc" date: "0000/00/00"
+}}
+terminal when ("#6_N**.img") { show_image: "Content/Talos/Textures/Terminal/Floor6_1.tex" notext }
+
+#
+#          EGYPT
+#
+
+player when((CLI_Enabled and TextsAvailable and InTerminal_Cloud_2_01) or (InTerminal_Journal and Cloud_2_01_SeenTexts)) {options:{
+  header: "TTRS:TermDlg.JournalHeader.Cloud_2_01=B01"
+  file: "TTRS:TermDlg.FoundTexts.Osiris.Chapter001.Name=osiris1.txt" user: "TTRS:TermDlg.UserName.EgSrc=eg_src" date: "TTRS:TermDlg.Date.unknownBCE=???? BCE"
+  file: "TTRS:TermDlg.FoundTexts.General.GotItLyrics.Name=got_it_lyrics.html" user: "TTRS:TermDlg.UserName.Webcrawl=webcrawl" date: "0000/05/01"
+  file: "TTRS:TermDlg.FoundTexts.General.Immortality.Name=immortality.html" user: "TTRS:TermDlg.UserName.Webcrawl=webcrawl" date: "0000/04/17"
+}}
+
+#Egypt Extra Terminal 1 - Egypt1
+player when((CLI_Enabled and TextsAvailable and InTerminal_Cloud_2_01_Extra) or (InTerminal_Journal and Cloud_2_01_Extra_SeenTexts)) {options:{
+  header: "TTRS:TermDlg.JournalHeader.Cloud_2_01_Extra=B01 Extra"
+  file: "TTRS:TermDlg.FoundTexts.General.Mutation.Name=mutation.html" user: "TTRS:TermDlg.UserName.Webcrawl=webcrawl" date: "2028/08/29"
+  file: "TTRS:TermDlg.FoundTexts.IAN.Capacity.Name=capacity.eml" user: "TTRS:TermDlg.UserName.Local=loc" date: "0000/06/22"
+  file: "TTRS:TermDlg.FoundTexts.General.Evolution.Name=evolution.html" user: "TTRS:TermDlg.UserName.Webcrawl=webcrawl" date: "2013/07/05"
+}}
+
+player when((CLI_Enabled and TextsAvailable and InTerminal_Cloud_2_02) or (InTerminal_Journal and Cloud_2_02_SeenTexts)) {options:{
+  header: "TTRS:TermDlg.JournalHeader.Cloud_2_02=B02"
+  file: "TTRS:TermDlg.FoundTexts.General.ScienceMagic.Name=science_magic.html" user: "TTRS:TermDlg.UserName.Webcrawl=webcrawl" date: "2013/02/13"
+  file: "TTRS:TermDlg.FoundTexts.General.WeightLoss.Name=weight_loss_722.html" user: "TTRS:TermDlg.UserName.Webcrawl=webcrawl" date: "0000/07/23"
+  file: "TTRS:TermDlg.FoundTexts.Arkady.Journal081.Name=arkady_journal81.txt" user: "TTRS:TermDlg.UserName.Local=loc" date: "0000/07/04"
+}}
+
+player when((CLI_Enabled and TextsAvailable and InTerminal_Cloud_2_03) or (InTerminal_Journal and Cloud_2_03_SeenTexts)) {options:{
+  header: "TTRS:TermDlg.JournalHeader.Cloud_2_03=B03"
+  file: "TTRS:TermDlg.FoundTexts.IAN.Progress009.Name=progress_rep9.eml" user: "TTRS:TermDlg.UserName.Local=loc" date: "0000/08/02"
+  file: "TTRS:TermDlg.FoundTexts.Osiris.Chapter003.Name=osiris3.txt" user: "TTRS:TermDlg.UserName.EgSrc=eg_src" date: "TTRS:TermDlg.Date.unknownBCE=???? BCE"
+  file: "TTRS:TermDlg.FoundTexts.General.JustWar.Name=justwar_excerpt.txt" user: "TTRS:TermDlg.UserName.AcdmArc=acdm_arc" date: "2009/01/01"
+}}
+
+#Egypt Extra Terminal 2 - Egypt3
+player when((CLI_Enabled and TextsAvailable and InTerminal_Cloud_2_03_Extra) or (InTerminal_Journal and Cloud_2_03_Extra_SeenTexts)) {options:{
+  header: "TTRS:TermDlg.JournalHeader.Cloud_2_03_Extra=B03 Extra"
+  file: "TTRS:TermDlg.FoundTexts.Johnson.BodySoul.Name=body_and_soul.txt" user: "TTRS:TermDlg.UserName.LitArch=lit_arch" date: "TTRS:TermDlg.Date.1759CE=1759 CE"
+  file: "TTRS:TermDlg.FoundTexts.IAN.Soma.Name=soma.eml" user: "TTRS:TermDlg.UserName.Local=loc" date: "0000/07/15" 
+}}
+
+player when((CLI_Enabled and TextsAvailable and InTerminal_Cloud_2_04) or (InTerminal_Journal and Cloud_2_04_SeenTexts)) {options:{
+  header: "TTRS:TermDlg.JournalHeader.Cloud_2_04=B04"
+  file: "TTRS:TermDlg.FoundTexts.Osiris.Chapter006.Name=osiris6.txt" user: "TTRS:TermDlg.UserName.EgSrc=eg_src" date: "TTRS:TermDlg.Date.unknownBCE=???? BCE"
+  file: "TTRS:TermDlg.FoundTexts.General.ChatlogCharlie.Name=chatlog_charlie_7.txt" user: "TTRS:TermDlg.UserName.Webcrawl=webcrawl" date: "0000/11/02"
+  file: "TTRS:TermDlg.FoundTexts.Arkady.Journal084.Name=arkady_journal84.txt" user: "TTRS:TermDlg.UserName.Local=loc" date: "0000/10/01"
+}}
+
+player when((CLI_Enabled and TextsAvailable and InTerminal_Cloud_2_05) or (InTerminal_Journal and Cloud_2_05_SeenTexts)) {options:{
+  header: "TTRS:TermDlg.JournalHeader.Cloud_2_05=B05"
+  file: "TTRS:TermDlg.FoundTexts.Osiris.Chapter007.Name=osiris7.txt" user: "TTRS:TermDlg.UserName.EgSrc=eg_src" date: "TTRS:TermDlg.Date.unknownBCE=???? BCE"
+  file: "TTRS:TermDlg.FoundTexts.IAN.ComingSoon.Name=coming_soon.eml" user: "TTRS:TermDlg.UserName.Local=loc" date: "0000/08/18"
+  file: "TTRS:TermDlg.FoundTexts.General.Blog24.Name=blog24_alive.html" user: "TTRS:TermDlg.UserName.Webcrawl=webcrawl" date: "2028/05/31"
+}}
+
+#Egypt Extra Terminal 3 - Egypt5
+player when((CLI_Enabled and TextsAvailable and InTerminal_Cloud_2_05_Extra) or (InTerminal_Journal and Cloud_2_05_Extra_SeenTexts)) {options:{
+  header: "TTRS:TermDlg.JournalHeader.Cloud_2_05_Extra=B05 Extra"
+  file: "TTRS:TermDlg.FoundTexts.Hippocrates.Corpus.Name=hippocratic_corpus.txt" user: "TTRS:TermDlg.UserName.CL_Archive=CL_arch" date: "TTRS:TermDlg.Date.400BCE=400 BCE"
+  file: "TTRS:TermDlg.FoundTexts.Chesterton.Brain.Name=chesterton_brain.txt" user: "TTRS:TermDlg.UserName.PhilArc=phil_arc" date: "TTRS:TermDlg.Date.1905CE=1905 CE"
+  file: "TTRS:TermDlg.FoundTexts.Bronstein.Brain.Name=bronstein_brain.txt" user: "TTRS:TermDlg.UserName.PhilArc=phil_arc" date: "TTRS:TermDlg.Date.1926CE=1926 CE"
+  file: "TTRS:TermDlg.FoundTexts.General.Neuroscience.Name=neuroscience.txt" user: "TTRS:TermDlg.UserName.MedArc=med_arc" date: "2010/02/16"
+}}
+
+player when((CLI_Enabled and TextsAvailable and InTerminal_Cloud_2_06) or (InTerminal_Journal and Cloud_2_06_SeenTexts)) {options:{
+  header: "TTRS:TermDlg.JournalHeader.Cloud_2_06=B06"
+  file: "TTRS:TermDlg.FoundTexts.Osiris.Chapter011.Name=osiris11.txt" user: "TTRS:TermDlg.UserName.EgSrc=eg_src" date: "TTRS:TermDlg.Date.unknownBCE=???? BCE"
+  file: "TTRS:TermDlg.FoundTexts.IAN.Progress016.Name=REprogress_rep16.eml" user: "TTRS:TermDlg.UserName.Local=loc" date: "0000/10/04"
+  file: "TTRS:TermDlg.FoundTexts.Johnson.ChoiceOfLife.Name=choice_of_life.txt" user: "TTRS:TermDlg.UserName.LitArch=lit_arch" date: "TTRS:TermDlg.Date.1759CE=1759 CE"
+}}
+
+player when((CLI_Enabled and TextsAvailable and InTerminal_Cloud_2_07) or (InTerminal_Journal and Cloud_2_07_SeenTexts)) {options:{
+  header: "TTRS:TermDlg.JournalHeader.Cloud_2_07=B07"
+  file: "TTRS:TermDlg.FoundTexts.General.Chatlog9798.Name=chatlog_9787.txt" user: "TTRS:TermDlg.UserName.Webcrawl=webcrawl" date: "0000/11/13"
+  file: "TTRS:TermDlg.FoundTexts.IAN.NorwegianBlue.Name=norwegian_blue.eml" user: "TTRS:TermDlg.UserName.Local=loc" date: "0000/10/04"
+  file: "TTRS:TermDlg.FoundTexts.Osiris.Chapter021.Name=osiris21.txt" user: "TTRS:TermDlg.UserName.EgSrc=eg_src" date: "TTRS:TermDlg.Date.unknownBCE=???? BCE"
+}}
+
+#Egypt Extra Terminal 4 - Egypt7
+player when((CLI_Enabled and TextsAvailable and InTerminal_Cloud_2_07_Extra) or (InTerminal_Journal and Cloud_2_07_Extra_SeenTexts)) {options:{
+  header: "TTRS:TermDlg.JournalHeader.Cloud_2_07_Extra=B07 Extra"
+  file: "TTRS:TermDlg.FoundTexts.Kant.SecondThesis.Name=second_thesis.txt" user: "TTRS:TermDlg.UserName.PhilArc=phil_arc" date: "TTRS:TermDlg.Date.1784CE=1784 CE"
+  file: "TTRS:TermDlg.FoundTexts.Johnson.Boundary.Name=boundary.txt" user: "TTRS:TermDlg.UserName.LitArch=lit_arch" date: "TTRS:TermDlg.Date.1759CE=1759 CE"
+  file: "TTRS:TermDlg.FoundTexts.General.Robots.Name=robots.txt" user: "TTRS:TermDlg.UserName.Webcrawl=webcrawl" date: "0000/00/00"
+}}
+
+# Egypt secret cloud
+player when((CLI_Enabled and TextsAvailable and InTerminal_Cloud_2_08) or (InTerminal_Journal and Cloud_2_08_SeenTexts)) {options:{
+  header: "TTRS:TermDlg.JournalHeader.Cloud_2_08=B08"
+  file: "TTRS:TermDlg.FoundTexts.General.Orangutan.Name=orangutan.html" user: "TTRS:TermDlg.UserName.Webcrawl=webcrawl" date: "9999/12/24"
+  file: "TTRS:TermDlg.FoundTexts.Blake.Archive.Name=blake_archive_793.html" user: "TTRS:TermDlg.UserName.Webcrawl=webcrawl" date: "2022/12/16"
+  file: "TTRS:TermDlg.FoundTexts.IAN.Usernames.Name=usernames.eml" user: "TTRS:TermDlg.UserName.Local=loc" date: "0000/09/03"
+  file: "TTRS:notrans=#6_*N*.img" user: "TTRS:TermDlg.UserName.Local=loc" date: "0000/00/00"
+}}
+terminal when ("#6_*N*.img") { show_image: "Content/Talos/Textures/Terminal/Floor6_2.tex" notext }
+
+
+#
+#          MEDIEVAL
+#
+
+player when((CLI_Enabled and TextsAvailable and InTerminal_Cloud_3_01) or (InTerminal_Journal and Cloud_3_01_SeenTexts)) {options:{
+  header: "TTRS:TermDlg.JournalHeader.Cloud_3_01=C01"
+  file: "TTRS:TermDlg.FoundTexts.Eadwald.Apocrypha001.Name=apocrypha1.doc" user: "TTRS:TermDlg.UserName.Medieval=mdv_th" date: "TTRS:TermDlg.Date.890CE=890 CE"
+  file: "TTRS:TermDlg.FoundTexts.IAN.SarabhaiJournal.Name=Sarabhai982.jrnl" user: "TTRS:TermDlg.UserName.Local=loc" date: "0000/08/05"
+  file: "TTRS:TermDlg.FoundTexts.General.Hope.Name=hope.eml" user: "TTRS:TermDlg.UserName.EP_Archive=EP_arch" date: "0000/12/01"
+}}
+
+#Medieval Extra Terminal 1 - Medieval 1
+player when((CLI_Enabled and TextsAvailable and InTerminal_Cloud_3_01_Extra) or (InTerminal_Journal and Cloud_3_01_Extra_SeenTexts)) {options:{
+  header: "TTRS:TermDlg.JournalHeader.Cloud_3_01_Extra=C01 Extra"
+  file: "TTRS:TermDlg.FoundTexts.Alexandra.AgainstSurvival.Name=against_survival.eml" user: "TTRS:TermDlg.UserName.Local=loc" date: "0000/07/30"
+  file: "TTRS:TermDlg.FoundTexts.Butler.HumanEvolution.Name=human_evolution.txt" user: "TTRS:TermDlg.UserName.LitArch=lit_arch" date: "TTRS:TermDlg.Date.1872CE=1872 CE"
+  file: "TTRS:TermDlg.FoundTexts.General.Einstein.Name=einstein.html" user: "TTRS:TermDlg.UserName.Webcrawl=webcrawl" date: "2029/07/23"
+}}
+
+player when((CLI_Enabled and TextsAvailable and InTerminal_Cloud_3_02) or (InTerminal_Journal and Cloud_3_02_SeenTexts)) {options:{
+  header: "TTRS:TermDlg.JournalHeader.Cloud_3_02=C02"
+  file: "TTRS:TermDlg.FoundTexts.General.Family.Name=family.html" user: "TTRS:TermDlg.UserName.Webcrawl=webcrawl" date: "0000/11/27"
+  file: "TTRS:TermDlg.FoundTexts.IAN.LastDays.Name=lastdays.eml" user: "TTRS:TermDlg.UserName.Local=loc" date: "0000/09/26"
+}}
+
+player when((CLI_Enabled and TextsAvailable and InTerminal_Cloud_3_03) or (InTerminal_Journal and Cloud_3_03_SeenTexts)) {options:{
+  header: "TTRS:TermDlg.JournalHeader.Cloud_3_03=C03"
+  file: "TTRS:TermDlg.FoundTexts.General.Post437.Name=post437.html" user: "TTRS:TermDlg.UserName.Webcrawl=webcrawl" date: "0000/11/19"
+  file: "TTRS:TermDlg.FoundTexts.Kant.ThirdThesis.Name=third_thesis.txt" user: "TTRS:TermDlg.UserName.PhilArc=phil_arc" date: "TTRS:TermDlg.Date.1784CE=1784 CE"
+  file: "TTRS:TermDlg.FoundTexts.General.Humblebrag.Name=humblebrag.html" user: "TTRS:TermDlg.UserName.Webcrawl=webcrawl" date: "0000/12/05"
+}}
+
+player when((CLI_Enabled and TextsAvailable and InTerminal_Cloud_3_04) or (InTerminal_Journal and Cloud_3_04_SeenTexts)) {options:{
+  header: "TTRS:TermDlg.JournalHeader.Cloud_3_04=C04"
+  file: "TTRS:TermDlg.FoundTexts.General.Pets.Name=pets.html" user: "TTRS:TermDlg.UserName.Webcrawl=webcrawl" date: "0000/12/11"
+  file: "TTRS:TermDlg.FoundTexts.Arkady.Journal099.Name=arkady_journal99.txt" user: "TTRS:TermDlg.UserName.Local=loc" date: "0000/11/30"
+  file: "TTRS:TermDlg.FoundTexts.Blake.ContrariesTxt.Name=contraries.txt" user: "TTRS:TermDlg.UserName.Poet=poet_arc" date: "TTRS:TermDlg.Date.1793CE=1793 CE"
+}}
+
+player when((CLI_Enabled and TextsAvailable and InTerminal_Cloud_3_05) or (InTerminal_Journal and Cloud_3_05_SeenTexts)) {options:{
+  header: "TTRS:TermDlg.JournalHeader.Cloud_3_05=C05"
+  file: "TTRS:TermDlg.FoundTexts.General.PartyOnDudes.Name=party_on_dudes.eml" user: "TTRS:TermDlg.UserName.EP_Archive=EP_arch" date: "0000/12/04"
+  file: "TTRS:TermDlg.FoundTexts.IAN.Progress032.Name=progress_rep32.eml" user: "TTRS:TermDlg.UserName.Local=loc" date: "0000/11/07"
+  file: "TTRS:TermDlg.FoundTexts.General.PhilosophyTeeth.Name=philosophy_of_teeth.html" user: "TTRS:TermDlg.UserName.Webcrawl=webcrawl" date: "2029/07/03"
+}}
+
+#Medieval Extra Terminal 2 - Medieval 5
+player when((CLI_Enabled and TextsAvailable and InTerminal_Cloud_3_05_Extra) or (InTerminal_Journal and Cloud_3_05_Extra_SeenTexts)) {options:{
+  header: "TTRS:TermDlg.JournalHeader.Cloud_3_05_Extra=C05 Extra"
+  file: "TTRS:TermDlg.FoundTexts.IAN.Transcendence.Name=transcendence.html" user: "TTRS:TermDlg.UserName.Local=loc" date: "9996/06/23"
+  file: "TTRS:TermDlg.FoundTexts.Bronstein.Matter.Name=matter.txt" user: "TTRS:TermDlg.UserName.PhilArc=phil_arc" date: "TTRS:TermDlg.Date.1926CE=1926 CE"
+  file: "TTRS:TermDlg.FoundTexts.Dick.BuildAUniverse.Name=build_a_universe.txt" user: "TTRS:TermDlg.UserName.AcdmArc=acdm_arc" date: "2014/11/11"
+}}
+
+player when((CLI_Enabled and TextsAvailable and InTerminal_Cloud_3_06) or (InTerminal_Journal and Cloud_3_06_SeenTexts)) {options:{
+  header: "TTRS:TermDlg.JournalHeader.Cloud_3_06=C06"
+  file: "TTRS:TermDlg.FoundTexts.General.Faith.Name=faith.eml" user: "TTRS:TermDlg.UserName.EP_Archive=EP_arch" date: "0000/12/09"
+  file: "TTRS:TermDlg.FoundTexts.IAN.ThankYou.Name=thank_you.eml" user: "TTRS:TermDlg.UserName.Local=loc" date: "0000/12/14"
+  file: "TTRS:TermDlg.FoundTexts.Butler.HumanSoul.Name=human_soul.txt" user: "TTRS:TermDlg.UserName.PhilArc=phil_arc" date: "TTRS:TermDlg.Date.1872CE=1872 CE"
+}}
+
+player when((CLI_Enabled and TextsAvailable and InTerminal_Cloud_3_07) or (InTerminal_Journal and Cloud_3_07_SeenTexts)) {options:{
+  header: "TTRS:TermDlg.JournalHeader.Cloud_3_07=C07"
+  file: "TTRS:TermDlg.FoundTexts.Arkady.Journal108.Name=arkady_journal108.txt" user: "TTRS:TermDlg.UserName.Local=loc" date: "0000/12/14"
+  file: "TTRS:TermDlg.FoundTexts.General.InventionOfBorders.Name=invention_of_borders.html" user: "TTRS:TermDlg.UserName.Webcrawl=webcrawl" date: "2018/10/19"
+  file: "TTRS:TermDlg.FoundTexts.Eadwald.Apocrypha009.Name=apocrypha9.doc" user: "TTRS:TermDlg.UserName.Medieval=mdv_th" date: "TTRS:TermDlg.Date.890CE=890 CE"
+}}
+
+# Medieval secret cloud
+player when((CLI_Enabled and TextsAvailable and InTerminal_Cloud_3_08) or (InTerminal_Journal and Cloud_3_08_SeenTexts)) {options:{
+  header: "TTRS:TermDlg.JournalHeader.Cloud_3_08=C08"
+  file: "TTRS:TermDlg.FoundTexts.Butler.HumanEye.Name=human_eye.txt" user: "TTRS:TermDlg.UserName.LitArch=lit_arch" date: "TTRS:TermDlg.Date.1872CE=1872 CE"
+  file: "TTRS:TermDlg.FoundTexts.Eadwald.Tetromino.Name=tetromino.html" user: "TTRS:TermDlg.UserName.Medieval=mdv_th" date: "2030/06/14"
+  file: "TTRS:TermDlg.FoundTexts.Wollstonecraft.Preservation.Name=preservation.txt" user: "TTRS:TermDlg.UserName.PhilArc=phil_arc" date: "TTRS:TermDlg.Date.1796CE=1796 CE"
+  file: "TTRS:notrans=#6_**N.img" user: "TTRS:TermDlg.UserName.Local=loc" date: "0000/00/00"
+}}
+terminal when ("#6_**N.img") { show_image: "Content/Talos/Textures/Terminal/Floor6_3.tex" notext }
+
+#
+#          NEXUS
+#
+
+#Please do rename these! 
+# Nexus Terminal 1 - Rome Building
+player when((CLI_Enabled and TextsAvailable and InTerminal_Nexus_RomeElevatorRoom) or (InTerminal_Journal and Nexus_RomeElevatorRoom_SeenTexts)) {options:{
+  header: "TTRS:TermDlg.JournalHeader.Nexus_RomeElevatorRoom=Land A Elevator"
+  file: "TTRS:TermDlg.FoundTexts.Athena.Chapter012.Name=athena12.txt" user: "TTRS:TermDlg.UserName.LitArch=lit_arch" date: "TTRS:TermDlg.Date.1912CE=1912 CE"
+  file: "TTRS:TermDlg.FoundTexts.General.FallRome.Name=HIS1A_rome.html" user: "TTRS:TermDlg.UserName.Webcrawl=webcrawl" date: "2010/05/07"
+}}
+
+# Nexus Terminal 2 - Egypt Building
+player when((CLI_Enabled and TextsAvailable and InTerminal_Nexus_EgyptElevatorRoom) or (InTerminal_Journal and Nexus_EgyptElevatorRoom_SeenTexts)) {options:{
+  header: "TTRS:TermDlg.JournalHeader.EgyptElevatorRoom=Land B Elevator"
+  file: "TTRS:TermDlg.FoundTexts.Osiris.Oxyrhynchus.Name=oxyrhynchus.html" user: "TTRS:TermDlg.UserName.Webcrawl=webcrawl" date: "2022/07/01"
+  file: "TTRS:TermDlg.FoundTexts.Osiris.Wiki.Name=book_of_osiris.wiki" user: "TTRS:TermDlg.UserName.Webcrawl=webcrawl" date: "2032/09/04"
+}}
+
+# Nexus Terminal 3 - Medieval Building
+player when((CLI_Enabled and TextsAvailable and InTerminal_Nexus_MedievalElevatorRoom) or (InTerminal_Journal and Nexus_MedievalElevatorRoom_SeenTexts)) {options:{
+  header: "TTRS:TermDlg.JournalHeader.Nexus_MedievalElevatorRoom=Land C Elevator"
+  file: "TTRS:TermDlg.FoundTexts.Milton.Heaven.Name=heaven.txt" user: "TTRS:TermDlg.UserName.Poet=poet_arc" date: "TTRS:TermDlg.Date.1667CE=1667 CE"
+  file: "TTRS:TermDlg.FoundTexts.Blake.Hell.Name=hell.txt" user: "TTRS:TermDlg.UserName.Poet=poet_arc" date: "TTRS:TermDlg.Date.1793CE=1793 CE"
+}}
+
+# Nexus Terminal 4 - Underneath
+player when((CLI_Enabled and TextsAvailable and InTerminal_Nexus_BelowTheMedievalElevatorRoom) or (InTerminal_Journal and Nexus_BelowTheMedievalElevatorRoom_SeenTexts)) {options:{
+  header: "TTRS:TermDlg.JournalHeader.Nexus_BelowTheMedievalElevatorRoom=Land C Elevator Hidden"
+  file: "TTRS:TermDlg.FoundTexts.IAN.QuestioningDoubt.Name=questioning_doubt_conf.txt" user: "TTRS:TermDlg.UserName.Archive=archive" date: "9998/05/01"
+  file: "TTRS:TermDlg.FoundTexts.IAN.Partition.Name=partition.eml" user: "TTRS:TermDlg.UserName.Local=loc" date: "0000/07/07"
+  file: "TTRS:TermDlg.FoundTexts.IAN.Him.Name=him.eml" user: "TTRS:TermDlg.UserName.Local=loc" date: "0000/07/09"
+}}
+
+# Nexus Tower Floor Terminals
+player when((InTerminal_Nexus_Floor1 or InTerminal_Nexus_Floor2 or InTerminal_Nexus_Floor3 or InTerminal_Nexus_Floor4 or InTerminal_Nexus_Floor5) and CLI_Enabled) {
+  text: "TTRS:TermDlg.ElevatorFloors.Ln0018.0.text.DeviceManager=device_manager" next: ElevatorControl_Start
+}
+
+player when((CLI_Enabled and TextsAvailable and InTerminal_Nexus_Floor1) or (InTerminal_Journal and Nexus_Floor1_SeenTexts)) {options:{
+  header: "TTRS:TermDlg.JournalHeader.Nexus_Floor1=Tower Floor 1"
+  file: "TTRS:TermDlg.FoundTexts.General.Truth.Name=TRUTH.html" user: "TTRS:TermDlg.UserName.Webcrawl=webcrawl" date: "0000/06/18"
+  file: "TTRS:TermDlg.FoundTexts.Athena.Chapters.Name=athena_chapters.txt" user: "TTRS:TermDlg.UserName.LitArch=lit_arch" date: "TTRS:TermDlg.Date.1912CE=1912 CE"
+  file: "TTRS:TermDlg.FoundTexts.Butler.HumanReproduction.Name=human_reproduction.txt" user: "TTRS:TermDlg.UserName.LitArch=lit_arch" date: "TTRS:TermDlg.Date.1872CE=1872 CE"
+}}
+
+player when((CLI_Enabled and TextsAvailable and InTerminal_Nexus_Floor2) or (InTerminal_Journal and Nexus_Floor2_SeenTexts)) {options:{
+  header: "TTRS:TermDlg.JournalHeader.Nexus_Floor2=Tower Floor 2"
+  file: "TTRS:TermDlg.Filename.Readme.txt=README.txt" user: "TTRS:TermDlg.UserName.Local=loc" date: "0000/00/00" next: ElevatorControl_3rdFloorHint
+  file: "TTRS:TermDlg.FoundTexts.General.TheWeb.Name=the_web.html" user: "TTRS:TermDlg.UserName.Webcrawl=webcrawl" date: "0000/12/10"
+  file: "TTRS:TermDlg.FoundTexts.IAN.Mathematics.Name=mathematics.eml" user: "TTRS:TermDlg.UserName.EP_Archive=EP_arch" date: "0000/12/15"
+}}
+
+player when((CLI_Enabled and TextsAvailable and InTerminal_Nexus_Floor3) or (InTerminal_Journal and Nexus_Floor3_SeenTexts)) {options:{
+  header: "TTRS:TermDlg.JournalHeader.Nexus_Floor3=Tower Floor 3"
+  file: "TTRS:TermDlg.Filename.OsirisPassword.txt=OsirisPassword.txt" user: "TTRS:TermDlg.UserName.EgSrc=eg_src" date: "TTRS:TermDlg.Date.unknownBCE=???? BCE" next: ElevatorControl_4thFloorHint
+  file: "TTRS:TermDlg.FoundTexts.Blake.ContrariesDat.Name=contraries.dat" user: "TTRS:TermDlg.UserName.Temp=temp" date: "0000/00/00"
+  file: "TTRS:TermDlg.FoundTexts.Athena.Chapter014.Name=athena14.txt" user: "TTRS:TermDlg.UserName.LitArch=lit_arch" date: "TTRS:TermDlg.Date.1912CE=1912 CE"
+}}
+
+player when((CLI_Enabled and TextsAvailable and InTerminal_Nexus_Floor4) or (InTerminal_Journal and Nexus_Floor4_SeenTexts)) {options:{
+  header: "TTRS:TermDlg.JournalHeader.Nexus_Floor4=Tower Floor 4"
+  file: "TTRS:TermDlg.Filename.SacredNumbers.txt=SacredNumbers.txt" user: "TTRS:TermDlg.UserName.Medieval=mdv_th" date: "TTRS:TermDlg.Date.890CE=890 CE" next: ElevatorControl_5thFloorHint
+  file: "TTRS:TermDlg.FoundTexts.Athena.Chapter016.Name=athena16.txt" user: "TTRS:TermDlg.UserName.LitArch=lit_arch" date: "TTRS:TermDlg.Date.1912CE=1912 CE"
+  file: "TTRS:TermDlg.FoundTexts.IAN.Remember.Name=remember.txt" user: "TTRS:TermDlg.UserName.Local=loc" date: "0000/12/23"
+}}

@@ -1,0 +1,151 @@
+﻿
+terminal when(Scientist_01_TimeCapsule) {
+text:[[TTRS:TermDlg.AudioLog_Scientist_01_TimeCapsule=
+Playing time capsule #01%w2]]
+goto: AudioLog_Signature
+}
+
+terminal when(Scientist_02_ProblemSolvers) {
+text:[[TTRS:TermDlg.AudioLog_Scientist_02_ProblemSolvers=
+Playing time capsule #02%w2]]
+goto: AudioLog_Signature
+}
+
+terminal when(Scientist_03_TalosPrinciple) {
+text:[[TTRS:TermDlg.AudioLog_Scientist_03_TalosPrinciple=
+Playing time capsule #03%w2]]
+goto: AudioLog_Signature
+}
+
+terminal when(Scientist_04_Pompeii) {
+text:[[TTRS:TermDlg.AudioLog_Scientist_04_Pompeii=
+Playing time capsule #04%w2]]
+goto: AudioLog_Signature
+}
+
+terminal when(Scientist_05_WeBuiltAllThis) {
+text:[[TTRS:TermDlg.AudioLog_Scientist_05_WeBuiltAllThis=
+Playing time capsule #05%w2]]
+goto: AudioLog_Signature
+}
+
+terminal when(Scientist_06_DNA) {
+text:[[TTRS:TermDlg.AudioLog_Scientist_06_DNA=
+Playing time capsule #06%w2]]
+goto: AudioLog_Signature
+}
+
+terminal when(Scientist_07_BeyondYourLifespan) {
+text:[[TTRS:TermDlg.AudioLog_Scientist_07_BeyondYourLifespan=
+Playing time capsule #07%w2]]
+goto: AudioLog_Signature
+}
+
+terminal when(Scientist_08_OnTheFirstNight) {
+text:[[TTRS:TermDlg.AudioLog_Scientist_08_OnTheFirstNight=
+Playing time capsule #08%w2]]
+goto: AudioLog_Signature
+}
+
+terminal when(Scientist_09_MiddleAges) {
+text:[[TTRS:TermDlg.AudioLog_Scientist_09_MiddleAges=
+Playing time capsule #09%w2]]
+goto: AudioLog_Signature
+}
+
+terminal when(Scientist_10_SometimesIWorry) {
+text:[[TTRS:TermDlg.AudioLog_Scientist_10_SometimesIWorry=
+Playing time capsule #10%w2]]
+goto: AudioLog_Signature
+}
+
+terminal when(Scientist_11_WhenTheScale) {
+text:[[TTRS:TermDlg.AudioLog_Scientist_11_WhenTheScale=
+Playing time capsule #11%w2]]
+goto: AudioLog_Signature
+}
+
+terminal when(Scientist_12_ThisIsAllEgo) {
+text:[[TTRS:TermDlg.AudioLog_Scientist_12_ThisIsAllEgo=
+Playing time capsule #12%w2]]
+goto: AudioLog_Signature
+}
+
+terminal when(Scientist_13_TheresNoTime) {
+text:[[TTRS:TermDlg.AudioLog_Scientist_13_TheresNoTime=
+Playing time capsule #13%w2]]
+goto: AudioLog_Signature
+}
+
+terminal when(Scientist_14_IntelligenceIsMore) {
+text:[[TTRS:TermDlg.AudioLog_Scientist_14_IntelligenceIsMore=
+Playing time capsule #14%w2]]
+goto: AudioLog_Signature
+}
+
+terminal when(Scientist_15_ILookAtThisInertShape) {
+text:[[TTRS:TermDlg.AudioLog_Scientist_15_ILookAtThisInertShape=
+Playing time capsule #15%w2]]
+goto: AudioLog_Signature
+}
+
+terminal when(Scientist_16_LookingThroughTheArchive) {
+text:[[TTRS:TermDlg.AudioLog_Scientist_16_LookingThroughTheArchive=
+Playing time capsule #16%w2]]
+goto: AudioLog_Signature
+}
+
+terminal when(Scientist_17_NearlyEverythingOnThisPlanet) {
+text:[[TTRS:TermDlg.AudioLog_Scientist_17_NearlyEverythingOnThisPlanet=
+Playing time capsule #17%w2]]
+goto: AudioLog_Signature
+}
+
+terminal when(Scientist_18_Curiosity) {
+text:[[TTRS:TermDlg.AudioLog_Scientist_18_Curiosity=
+Playing time capsule #18%w2]]
+goto: AudioLog_Signature
+}
+
+terminal when(Scientist_19_MyBestFriendDied) {
+text:[[TTRS:TermDlg.AudioLog_Scientist_19_MyBestFriendDied=
+Playing time capsule #19%w2]]
+goto: AudioLog_Signature
+}
+
+terminal when(Scientist_20_ILookInTheMirror) {
+text:[[TTRS:TermDlg.AudioLog_Scientist_20_ILookInTheMirror=
+Playing time capsule #20%w2]]
+goto: AudioLog_Signature
+}
+
+terminal when(Scientist_21_ThereAreFlawsInTheSystem) {
+text:[[TTRS:TermDlg.AudioLog_Scientist_21_ThereAreFlawsInTheSystem=
+Playing time capsule #21%w2]]
+goto: AudioLog_Signature
+}
+
+terminal when(Scientist_22_ICantKeepMyEyes) {
+text:[[TTRS:TermDlg.AudioLog_Scientist_22_ICantKeepMyEyes=
+Playing time capsule #22%w2]]
+goto: AudioLog_Signature
+}
+
+terminal when(AudioLog_Signature) {
+text:[[TTRS:TermDlg.AudioLog_Signature=
+Alexandra Drennan%w2
+Project Lead / AI Module%w2
+Institute for Applied Noematics%w9%w9%w9%w9%w9%e1%w9]]
+}
+
+terminal when(AudioLog_Paused) {
+text:[[TTRS:TermDlg.AudioLog_Paused=
+Time capsule playback paused...]]
+}
+
+terminal when(AudioLog_Interrupted) {
+text:[[TTRS:TermDlg.AudioLog_Interrupted=
+Time capsule playback interrupted.%w2
+Saving to journal%w3.%w3.%w3.%w3
+DONE!%w9%w9%w9%e2%w9]]
+}

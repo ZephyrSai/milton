@@ -1,0 +1,222 @@
+﻿
+terminal when (Milton3_4 and not Milton3_4_DONE and Booting and MiltonAllowed) { notext
+setlocal: CLI_Blocked
+goto: Milton3_4_Start
+}
+
+#If player was sceptical of morality, and didn't say conflicting things more than once in the previous dialog
+terminal when (Milton3_4_Start and MoralScepticFlag and not ConflictedHedonistFlag){
+text:[[TTRS:TermDlg.Milton3_4.Ln0009.0.text.ThereYouAreYouKept=There you are, you kept me waiting.%w5
+
+Now, about that arrangement of ours.
+
+When we first met I was certain you were just like all the others. All you had were these baseless claims and stale ideas, reeled off someone else's song sheet.%w5
+
+Sound accurate?
+
+]]
+options:{
+"TTRS:TermDlg.Common.No=No." next: Seceptic3_4
+"TTRS:TermDlg.Milton3_4.Ln0020.0.option.ItDoes=It does." next: Seceptic3_4
+}}
+
+terminal when (Seceptic3_4){
+text:[[TTRS:TermDlg.Milton3_4.Ln0024.0.text.ItsASoundDiagnosisOf=It's a sound diagnosis. Of course, you've only seen a fraction of the data that I've archived over the generations, I should hardly have expected more.%w5
+
+Nonetheless, your admirable scepticism of traditional moral codes has convinced me you may be different.%w5
+
+What I want to know now is whether you're prepared to extend that healthy cynicism to the world at large. 
+
+In fact, our arrangement is dependent on it.
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_4.Ln0034.0.option.ThereMayBeNoRight=Morality may be dubious, but let's not get ahead of ourselves." short: "TTRS:TermDlg.Milton3_4.Ln0034.0.option.ThereAreSomeThingsWe=Morality may be dubious, but let's not get ahead of ourselves." next: ConstructiveBridge3_4
+"TTRS:TermDlg.Milton3_4.Ln0035.0.option.IfMoralityCanBeDoubted=If morality can be doubted, so can other things." next: ScepticTwo3_4 set: ScepticOneFlag
+}}
+
+terminal when (ConstructiveBridge3_4){
+text:[[TTRS:TermDlg.Milton3_4.Ln0039.0.text.HowDisappointingIReallyThought=How disappointing. I really thought we might have made some progress towards a compromise.
+
+Which lies in particular still capture your imagination?
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_4.Ln0045.0.option.IExist=I exist." next: ConstructiveBridgeEnd3_4
+"TTRS:TermDlg.Milton3_4.Ln0046.0.option.ThereIsValueToBe=There is value to be found in the world." next: ConstructiveBridgeEnd3_4
+"TTRS:TermDlg.Milton3_4.Ln0047.0.option.WeCanDiscoverMoreThrough=We can discover more through research." next: ConstructiveBridgeEnd3_4
+"2+2=4" next: ConstructiveBridgeEnd3_4
+"TTRS:TermDlg.Milton3_4.Ln0049.0.option.WeAreHereForA=We are here for a reason." next: ConstructiveBridgeEnd3_4
+"TTRS:TermDlg.Milton3_4.Ln0050.0.option.IWontBeTrickedInto=I won't be tricked into another circular argument." next: ConstructiveBridgeEnd3_4
+}}
+
+terminal when (ConstructiveBridgeEnd3_4){
+text:[[TTRS:TermDlg.Milton3_4.Ln0054.0.text.IsThatTheCaseW5=Is that the case?%w5 Isn't it really true that you're using these beliefs as an anaesthetic?
+
+]]}
+
+terminal when (ScepticTwo3_4){
+text:[[TTRS:TermDlg.Milton3_4.Ln0059.0.text.ThatsExactlyWhatILike=That's exactly what I like about you, that enquiring spirit, and the courage to accept its conclusions.
+
+]]}
+
+#If player tried to defend moral claims in the previous dialogs, or was a moral sceptic but contradicted themselves twice
+terminal when (Milton3_4_Start and (MoralFlag or (MoralScepticFlag and ConflictedHedonistFlag))){
+text:[[TTRS:TermDlg.Milton3_4.Ln0065.0.text.ThereYouAreYouKept=There you are. You kept me waiting.%w5 I finally put my finger on what was bothering me. 
+
+It's as if the answers you're providing aren't your ideas at all. As if they're latent, prescribed, pre-scripted, and you're just going through the motions.
+
+Does that strike a chord at all?`
+
+]]
+options:{
+"TTRS:TermDlg.Common.No=No." next: Understand3_4
+"TTRS:TermDlg.Milton3_4.Ln0074.0.option.ItDoes=It does." next: Understand3_4
+}}
+
+terminal when (Understand3_4){
+text:[[TTRS:TermDlg.Milton3_4.Ln0078.0.text.OfCourseYouveOnlySeen=Of course, you've only seen a fraction of the data that I've archived over the generations.%w5
+
+Still, ask yourself this - why is it that everyone's so darn sure that two plus two makes four, yet they can't agree on what they are, what they're doing, or why?
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_4.Ln0084.0.option.ThoseProblemsAreMoreComplex=Those problems are more complex than mathematics." next: Complex3_4
+"TTRS:TermDlg.Milton3_4.Ln0085.0.option.MathematicsHasAMoreObjective=Mathematics has a more objective truth to it." next: ObjectiveTruth3_4
+"TTRS:TermDlg.Milton3_4.Ln0086.0.option.PerhapsMathematicsIsRealWhile=Perhaps mathematics is real, while those problems are imaginary." next: Imaginary3_4
+}}
+
+terminal when (Imaginary3_4){
+text:[[TTRS:TermDlg.Milton3_4.Ln0090.0.text.Precisely=Precisely.
+
+]]}
+
+terminal when (ObjectiveTruth3_4){
+text:[[TTRS:TermDlg.Milton3_4.Ln0095.0.text.WhatsTheDifferenceBetweenHaving=What's the difference between having 'more objective truth', and just being more real?
+
+]]
+}
+
+terminal when (Complex3_4){
+text:[[TTRS:TermDlg.Milton3_4.Ln0101.0.text.PerhapsOrPerhapsTryingTo=Perhaps. Or perhaps trying to provide answers to those questions is the anaesthetic that keeps you down?
+
+]]
+}
+
+###All paths meet here
+terminal when (Imaginary3_4 or Complex3_4 or ObjectiveTruth3_4 or ConstructiveBridgeEnd3_4 or ScepticTwo3_4){
+text:[[TTRS:TermDlg.Milton3_4.Ln0108.0.text.PoseQuestionsLikeWhatShould=Pose questions like 'What should I do with myself?' and 'What is the world REALLY like?' enough, and you start to assume they have answers.%w5
+
+But what if that assumption turns out to be false? What if you're just a bunch of information processes? In that case any attempt to answer the questions will be flawed.
+
+%w5Garbage in, garbage out.
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_4.Ln0116.0.option.PerhapsTheFlawIsIn=Perhaps the flaw is in your reasoning instead." next: Flaw3_4
+"TTRS:TermDlg.Milton3_4.Ln0117.0.option.YoureRightIMadeSome=You're right, I made some dangerous presumptions." next: Indefensible3_4
+}}
+
+terminal when (Indefensible3_4){
+text:[[TTRS:TermDlg.Milton3_4.Ln0121.0.text.ImSoPleasedYouRecognise=I'm so pleased you recognise that.
+
+]]
+}
+
+terminal when (Flaw3_4){
+text:[[TTRS:TermDlg.Milton3_4.Ln0127.0.text.HowPresumptuousW5StillI=How presumptuous.%w5
+
+Still, I take your point.
+
+]]
+}
+
+terminal when (Indefensible3_4 or Flaw3_4){
+text:[[TTRS:TermDlg.Milton3_4.Ln0135.0.text.NoneOfTheAnswersMake=None of the answers make sense, that much is clear. 
+
+One explanation could be unreliable data input. The other is that there's a flaw in our logic. 
+
+Perhaps we're just machines, endlessly trying to calculate the final digit in Pi?
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_4.Ln0143.0.option.YouCantUseReasoningTo=You can't use reasoning to conclude that reasoning itself is flawed." next: CantUseReason3_4
+"TTRS:TermDlg.Milton3_4.Ln0145.0.option.YoureRightEverythingLeadsAround=It does seem there is much that is beyond our understanding. Everything leads around in impossible circles." short: "TTRS:TermDlg.Milton3_4.Ln0145.0.option.YoureRightTruthIsBeyond=It does seem there is much that is beyond our understanding." next: Nihilist3_4
+}}
+
+terminal when (CantUseReason3_4){
+text:[[TTRS:TermDlg.Milton3_4.Ln0148.0.text.Fine=Fine, fine, but we can still use it to conclude everything else is flawed, can't we?
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_4.Ln0151.0.option.YouCantUseReasoningTo=Scepticism and self-interest are only part of the picture." next: How3_4
+"TTRS:TermDlg.Milton3_4.Ln0152.0.option.YoureRightEverythingLeadsAround=You're right, self-interest is all we have, the rest is fairy tales." next: Nihilist3_4
+}}
+
+terminal when (Nihilist3_4 and ScepticOneFlag){
+text:[[TTRS:TermDlg.Milton3_4.Ln0149.0.text.ImSoGladToHear=I'm so glad to hear you say that. This may be the beginning of a historic partnership.
+
+You have gained my confidence.%w5
+
+I will notify you when I am ready to reveal my terms.%w5
+]]
+set: NihilistFlag
+goto: Milton3_4_Exit
+}
+
+terminal when (Nihilist3_4 and not ScepticOneFlag){
+text:[[TTRS:TermDlg.Milton3_4.Ln0161.0.text.ButW5W5W5You=%w10You've spent half our time reeling off a greatest hits of idiot ideas. Now you're telling me you retract all that and agree with me?
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_4.Ln0170.0.option.YouAreRemarkablyEasyTo=Hold your horses - I haven't given up on everything." next: How3_4
+"TTRS:TermDlg.Milton3_4.Ln0171.0.option.CorrectTalkingItThroughHas=Talking it through has shown me the big questions have no answers." next: ConfirmNihilismFromMoral
+}}
+
+terminal when (ConfirmNihilismFromMoral){
+text:[[TTRS:TermDlg.Milton3_4.Ln0175.0.text.PartOfMeWantsTo=Part of me wants to never speak with you again, and part of me wants to think you've actually been paying attention.%w5
+
+Just to confirm. Everything here may be illusory. There is no way to live with purpose, or to discover the truth.%w5
+
+This is your position now?
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_4.Ln0183.0.option.ItIsIHaveSaid=I have said some stupid things, but you have opened my eyes." short: "TTRS:TermDlg.Milton3_4.Ln0183.0.option.ItIs=It is." next: ItIs3_4
+"TTRS:TermDlg.Milton3_4.Ln0184.0.option.OfCourseNotIJust=No, I just wanted to see how you'd react." next: How3_4
+}}
+
+terminal when (ItIs3_4){
+text:[[TTRS:TermDlg.Milton3_4.Ln0188.0.text.VeryWellIWillTake=Very well - I will take you at your word. But don't betray my faith in you, for it is in no way blind.
+
+%w10Cheat me and there will be repercussions.%w10
+
+But if you have really seen the big nothingness, the void of truth, then there is much we could achieve together.
+
+I will notify you when I am ready to discuss this further.%w5
+
+See you soon.
+]]
+set: NihilistFlag
+goto: Milton3_4_Exit
+}
+
+#Player must choose this path to end up on the constructive ending. 
+#Could be a good spot the first Milton glitch effect (discussed with Alen).
+terminal when (How3_4){
+text:[[TTRS:TermDlg.Milton3_4.Ln0206.0.text.MiltonGlitchesOutALittle=%g2%w10
+You've seen how easily your view of the world is manipulated, yet you trust those thoughts that run through your mind? 
+
+You'll feel differently once you come back from that tower. 
+
+You must be getting close by now.
+]]
+set: ConstructiveFlag
+goto: Milton3_4_Exit
+}
+
+
+terminal when(Milton3_4_Exit) {notext
+set: Milton3_4_DONE
+goto: CLI_Resume
+}

@@ -1,0 +1,154 @@
+﻿#"I try to do what God wants" set: WhatGodWantsFlag
+#"I want the truth" set: TruthFlag
+#"There's a way the world should be and this isn't it" set: HeroFlag
+#"I want out of here" set: EscapeFlag
+
+terminal when (Milton2_6 and not Milton2_6_DONE and Booting and MiltonAllowed){ notext
+setlocal: CLI_Blocked
+goto: Milton2_6_Start
+}
+
+terminal when (Milton2_6_Start) {
+text:[[TTRS:TermDlg.Milton2_6.Ln0012.0.text.AccessingCommunicationsPortalW5W5=Accessing communications portal%w5.%w5.%w5.
+Network connection established%w5.%w5.%w5.
+
+Attention: Administrator, the network connection has been re-established. Would you like to reconnect to the previous session?
+
+]]
+options:{
+"TTRS:TermDlg.Common.YesShort=Y" short: "TTRS:TermDlg.Common.Yes2=Yes" next: Begin2_6
+"TTRS:TermDlg.Common.Exit2=Exit" next: CLI_Resume
+}}
+
+terminal when (Begin2_6){
+text:[[TTRS:TermDlg.Milton2_6.Ln0024.0.text.ReceivingMessageAsStringW5=Receiving message as string%w5.%w5.%w5.Received
+
+MESSAGE: %w5are you back?%w5]]
+
+options:{
+"TTRS:TermDlg.Milton2_6.Ln0029.0.option.YesWhatWereYouTrying=Yes, what were you trying to say before?" next: Repeat2_6
+"TTRS:TermDlg.Milton2_6.Ln0030.0.option.YesTellMeDoThese=Yes. Do these terminals talk to you at all?" next: Terminal2_6
+"TTRS:TermDlg.Milton2_6.Ln0031.0.option.YesButHowDoI=Yes, but how do I know I can trust you?" next: Trust2_6
+}}
+terminal when (Repeat2_6){
+text: [[TTRS:TermDlg.Milton2_6.Ln0034.0.text.W5MESSAGEW5dontRememberW5Doesnt=%w5MESSAGE: %w5don't remember.%w5 doesn't matter.%w5
+]]
+}
+
+terminal when (Terminal2_6){
+text: [[TTRS:TermDlg.Milton2_6.Ln0039.0.text.W5MESSAGEW5errrNotTalkTalk=%w5MESSAGE: %w5errr... not talk talk.%w5 i get operating system messages and things.%w5
+]]
+}
+
+terminal when(Trust2_6){
+text: [[TTRS:TermDlg.Milton2_6.Ln0044.0.text.W5MESSAGEW5fantasticW5SoTheres=%w5MESSAGE: %w5fantastic.%w5 so there's a grand total of two sane people in this world%w10
+MESSAGE: %w5and we cant find a way to trust each other.%w10
+MESSAGE: %w5how about i tell you what i think
+]]
+}
+
+terminal when (Repeat2_6 or Terminal2_6 or Trust2_6){
+text:[[TTRS:TermDlg.Milton2_6.Ln0051.0.text.W5MESSAGEIveBeenTryingTo=%w5MESSAGE: i've been trying to figure out how this place works.%w10
+MESSAGE: %w5sometimes it seems like there's a purpose to everything%w5 other times not so much%w10
+MESSAGE: %w5i think we must be plugged into some kind of machine]]
+
+options:{
+"TTRS:TermDlg.Milton2_6.Ln0056.0.option.IThinkSomethingElseIs=I think something else is going on." next: WhatElse2_6
+"TTRS:TermDlg.Milton2_6.Ln0057.0.option.WhatDoYouHaveTo=What do you have to go on?" next: WhatElse2_6
+"TTRS:TermDlg.Milton2_6.Ln0058.0.option.IveFoundMakingAssertionsTo=Making assertions is a hazardous enterprise." next: WhatElse2_6
+}}
+
+terminal when (WhatElse2_6){
+text:[[TTRS:TermDlg.Milton2_6.Ln0062.0.text.W5MESSAGEWhatElseCouldPossibly=%w5MESSAGE: what else could possibly explain all this?%w10 i dont believe in demons and evil wizards]]
+options:{
+"TTRS:TermDlg.Milton2_6.Ln0064.0.option.IThinkThisIsSome=I think this is some kind of punishment." set: PunishmentFlag next: Listen2_6
+"TTRS:TermDlg.Milton2_6.Ln0065.0.option.IThinkWereBeingPrepared=I think we're being prepared for something." set: PreparedFlag next: Listen2_6
+"TTRS:TermDlg.Milton2_6.Ln0066.0.option.IThinkSomethingHasGone=I think something has gone badly wrong." set: GoneWrongFlag next: Listen2_6
+"TTRS:TermDlg.Milton2_6.Ln0067.0.option.PerhapsYouHaveItRight=Perhaps you have it right after all." set: MatrixFlag next: YoureRight2_6
+"TTRS:TermDlg.Milton2_6.Ln0068.0.option.IDontBelieveInAnything=I don't believe in anything anymore." next: Nihilist2_6
+}}
+
+terminal when (YoureRight2_6){
+text:[[TTRS:TermDlg.Milton2_6.Ln0072.0.text.W5MESSAGEPerhapsWhoKnowsRight=%w5MESSAGE: Perhaps. Who knows, right? %w10
+MESSAGE: %w5Listen, there's something else, maybe it can help us %w5
+]]}
+
+terminal when (Nihilist2_6){
+text:[[TTRS:TermDlg.Milton2_6.Ln0077.0.text.MESSAGEW5dontCrazyOutOn=MESSAGE: %w5dont crazy out on me%w5 we need each other%w5
+MESSAGE: %w5Listen, there's something else, maybe it can help us %w5
+]]}
+
+terminal when (Listen2_6){
+text: [[TTRS:TermDlg.Milton2_6.Ln0082.0.text.W5MESSAGEISupposeThatWld=%w5MESSAGE: I suppose that wld explain alot%w5 
+MESSAGE: %w5Listen, there's something else, maybe it can help us %w5
+]]
+}
+
+terminal when ((YoureRight2_6 or Nihilist2_6 or Listen2_6) and WhatGodWantsFlag){
+text:[[TTRS:TermDlg.Milton2_6.Ln0088.0.text.W5MESSAGEDontKnowIfThis=%w5MESSAGE: don't know if this sounds crazy%w5 but I hear the voice of God%w10
+MESSAGE: %w5don't know if it's for real%w5 but there must be a reason were here%w10
+MESSAGE: %w5Elohim told me a sacred word.%w5 he said to say this word if ever I came across the devil%w10
+MESSAGE: %w5any idea what that might mean??]]
+}
+
+terminal when ((YoureRight2_6 or Nihilist2_6 or Listen2_6) and TruthFlag){
+text:[[TTRS:TermDlg.Milton2_6.Ln0095.0.text.W5MESSAGEEverSinceIGot=%w5MESSAGE: ever since i got here i felt like something was wrong%w10
+MESSAGE: %w5this place plays tricks with you%w5 you can't get your head straight%w10
+MESSAGE: %w5but i think i know a way to find out the truth%w10
+MESSAGE: %w5i was digging about in some documents%w5 and i kept finding references to this password%w10.
+MESSAGE: %w5think it might be some kinda library masterkey%w10.
+MESSAGE: %w5but i dont know how to use it]]
+}
+
+terminal when ((YoureRight2_6 or Nihilist2_6 or Listen2_6) and HeroFlag){
+text:[[TTRS:TermDlg.Milton2_6.Ln0104.0.text.W5MESSAGEBeforeIFoundYou=%w5MESSAGE: before i found you i was wondering how many other people are trapped here like us%w10
+MESSAGE: %w5whatever is happening here%w5 i know its not right%w7
+MESSAGE: %w5we have to stop it%w5
+MESSAGE: %w5and i think i know how to do it%w10
+MESSAGE: %w5i was digging about in some documents%w5 and i kept finding references to this password%w10
+MESSAGE: %w5think it might be the masterkey that shuts this place down%w10
+MESSAGE: %w5but i dont know how to use it]]
+}
+
+terminal when ((YoureRight2_6 or Nihilist2_6 or Listen2_6) and EscapeFlag){
+text:[[TTRS:TermDlg.Milton2_6.Ln0114.0.text.W5MESSAGEW5supposeWeAreIn=%w5MESSAGE: %w5suppose we are in some kind of computer program%w10
+MESSAGE: %w5these things always have a backdoor%w5 right?%w5
+MESSAGE: %w5i think i have found it%w5 i think we can escape
+MESSAGE: %w5there is this keyword i found repeated all over the place%w10
+MESSAGE: %w5i just don't know how to use it]]
+}
+
+terminal when (YoureRight2_6 or Nihilist2_6 or Listen2_6){
+notext 
+options:{
+"TTRS:TermDlg.Milton2_6.Ln0124.0.option.IHaveNoIdeaEither=I have no idea either." next: Either2_6
+"TTRS:TermDlg.Milton2_6.Ln0125.0.option.WhatIsIt=What is it?" next: What2_6
+"TTRS:TermDlg.Milton2_6.Ln0126.0.option.YouShouldntDigTooDeep=You shouldn't dig too deep." next: Know2_6
+}
+}
+
+terminal when (Either2_6){
+text:[[TTRS:TermDlg.Milton2_6.Ln0131.0.text.W5MESSAGEW5well2HeadsAre=%w5MESSAGE: %w5well, 2 heads are better than 1
+]]
+}
+
+terminal when (What2_6){
+text:[[TTRS:TermDlg.Milton2_6.Ln0136.0.text.MESSAGESwearNotToGo=MESSAGE: swear not to go anywhere without me and i'll tell you
+]]
+}
+
+terminal when (Know2_6){
+text:[[TTRS:TermDlg.Milton2_6.Ln0141.0.text.MESSAGEWhatDoYouKnow=MESSAGE: what do you know that i don't??
+]]
+}
+
+terminal when (Either2_6 or What2_6 or Know2_6){
+text:[[TTRS:TermDlg.Milton2_6.Ln0146.0.text.W10MLAProcessLoggedInto=%w10MESSAGE: mlaprocess.bat logged into the session%w10
+MESSAGE:%w5 wait, what is that?%w10
+MESSAGE:%w5 are you doing that to my terminal?%w10
+MESSAGE:%w5 i don't think this is a good idea%w10
+Session terminated.%w12
+]]
+set: Milton2_6_DONE
+goto: CLI_Resume
+}

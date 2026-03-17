@@ -1,0 +1,60 @@
+﻿# 
+# This dialog includes all separate dialog part files to form one dialog for the entire game
+#
+
+terminal when (Booting and not MiltonAllowed and not MiltonNotAllowed and
+  (InTerminal_Ending_Gates or InTerminal_Ending_Crypt or InTerminal_Ending_Tower or
+   InTerminal_Nexus_Floor1 or InTerminal_Nexus_Floor2 or InTerminal_Nexus_Floor3 or InTerminal_Nexus_Floor4) ) { notext
+  setlocal: MiltonNotAllowed
+  goto: Booting
+}
+terminal when (Booting and not MiltonAllowed and not MiltonNotAllowed and not
+  (InTerminal_Ending_Gates or InTerminal_Ending_Crypt or InTerminal_Ending_Tower or
+   InTerminal_Nexus_Floor1 or InTerminal_Nexus_Floor2 or InTerminal_Nexus_Floor3 or InTerminal_Nexus_Floor4) ) { notext
+  setlocal: MiltonAllowed
+  goto: Booting
+}
+  
+
+# used for floor unlocking in nexus
+include "Content/Talos/Databases/ComputerTerminalDialogs/ElevatorFloors.dlg"
+
+include "Content/Talos/Databases/ComputerTerminalDialogs/QueryMLA.dlg"
+#include "Content/Talos/Databases/ComputerTerminalDialogs/MLA_RecoveryMode.dlg" move this into a secret terminal!
+include "Content/Talos/Databases/ComputerTerminalDialogs/MLA_CommPortal.dlg"
+
+
+include "Content/Talos/Databases/ComputerTerminalDialogs/MiltonTower1.dlg"
+include "Content/Talos/Databases/ComputerTerminalDialogs/MiltonTower2.dlg"
+
+# Milton must come before cloud terminal texts, to be able to override them
+include "Content/Talos/Databases/ComputerTerminalDialogs/Milton1_1.dlg"
+include "Content/Talos/Databases/ComputerTerminalDialogs/Milton1_2.dlg"
+include "Content/Talos/Databases/ComputerTerminalDialogs/Milton2_1.dlg"
+include "Content/Talos/Databases/ComputerTerminalDialogs/Milton2_2.dlg"
+include "Content/Talos/Databases/ComputerTerminalDialogs/Milton2_3.dlg"
+include "Content/Talos/Databases/ComputerTerminalDialogs/Milton2_4.dlg"
+include "Content/Talos/Databases/ComputerTerminalDialogs/Milton2_5.dlg"
+include "Content/Talos/Databases/ComputerTerminalDialogs/Milton2_6.dlg"
+include "Content/Talos/Databases/ComputerTerminalDialogs/Milton3_1.dlg"
+include "Content/Talos/Databases/ComputerTerminalDialogs/Milton3_2.dlg"
+include "Content/Talos/Databases/ComputerTerminalDialogs/Milton3_3.dlg"
+include "Content/Talos/Databases/ComputerTerminalDialogs/Milton3_4.dlg"
+include "Content/Talos/Databases/ComputerTerminalDialogs/Milton3_5.dlg"
+# endings behave similar to Milton, as they override the CLI
+include "Content/Talos/Databases/ComputerTerminalDialogs/Ending_Tower.dlg"
+include "Content/Talos/Databases/ComputerTerminalDialogs/Ending_Gates.dlg"
+include "Content/Talos/Databases/ComputerTerminalDialogs/Ending_Crypt.dlg"
+
+# references to which texts are in which terminal
+include "Content/Talos/Databases/ComputerTerminalDialogs/CloudTerminals.dlg"
+# collection of texts referenced by terminals
+include "Content/Talos/Databases/ComputerTerminalDialogs/FoundTexts.dlg"
+
+# global CLI commands must be shown on the bottom of each choice list (after found texts), so we include this last
+include "Content/Talos/Databases/ComputerTerminalDialogs/CLI_Global.dlg"
+
+# overlays are not dependent on other scripts, so it doesn't really matter where they come
+include "Content/Talos/Databases/ComputerTerminalDialogs/Overlay_Intro.dlg"
+include "Content/Talos/Databases/ComputerTerminalDialogs/Overlay_Tutorial.dlg"
+include "Content/Talos/Databases/ComputerTerminalDialogs/Overlay_AudioLog.dlg"

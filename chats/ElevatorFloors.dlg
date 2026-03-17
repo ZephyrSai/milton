@@ -1,0 +1,315 @@
+﻿# replace CLI's startup text so we can append our notice about devices
+terminal when((InTerminal_Nexus_Floor1 or InTerminal_Nexus_Floor2 or InTerminal_Nexus_Floor3 or InTerminal_Nexus_Floor4 or InTerminal_Nexus_Floor5)
+    and CLI_BootSuffix) {
+  text: [[TTRS:TermDlg.ElevatorFloors.Ln0004.0.text.DetectingAuxiliaryHardware=
+
+Detecting auxiliary hardware.%w3.%w3.%w3 Found 1 external device(s).%s0%w9
+Type <span class="strong">device_manager</span> to control external devices.%w9
+
+Ready.
+]]
+goto: CLI_MaybeAutoList
+}
+terminal when(not (InTerminal_Nexus_Floor1 or InTerminal_Nexus_Floor2 or InTerminal_Nexus_Floor3 or InTerminal_Nexus_Floor4 or InTerminal_Nexus_Floor5)
+    and CLI_BootSuffix) {
+  text: [[TTRS:TermDlg.ElevatorFloors.Ln0014.0.text.LibraryArchiveSessionReady=
+
+Library archive session ready.
+]]
+goto: CLI_MaybeAutoList
+}
+
+terminal when (ElevatorControl_Start) {
+text:[[TTRS:TermDlg.ElevatorFloors.Ln0047.0.text.DeviceManagerV001Is=
+Device Manager v0.01 is loading...%w5
+
+Scanning for external devices.%w3.%w3.%w3
+  loading driver: elvtrctr.drv.%w3.%w3.%w3
+Elevator controller driver v2.01 - loaded successfully
+Entering elevator security configuration.%s0%w9
+
+]]
+clear: CLI_Enabled
+goto: ElevatorControl_Options
+}
+
+terminal when (ElevatorControl_Options) {
+prompt:[[TTRS:TermDlg.ElevatorFloors.Ln0061.0.text.ChooseAnOption1Show=
+Choose an option:
+1. show current operating parameters
+2. floor access control
+3. auxiliary stairway access control
+4. exit this utility
+[1-4] ]]
+  options: {
+    "1" next: ElevatorControl_1
+    "2" next: ElevatorControl_2
+    "3" next: ElevatorControl_3
+    "4" next: ElevatorControl_4
+  }
+}
+
+terminal when (ElevatorControl_1) {
+text: [[TTRS:TermDlg.ElevatorFloors.Ln0077.0.text.QueryingAccessibleElevatorsW3W3=
+Querying accessible elevators.%w3.%w3.%w3.%w3
+Device #01
+  Vendor: 0x10DE
+  Model: 0x06CD
+  Device S/N: X470-F540
+  Name: "Main Nexus Elevator"
+  Num.floors: 7
+  Num.shafts: 1
+  Software license: Free Evaluation (EXPIRED!)
+  Security level: FAC
+  Authorization mode: CODE
+  
+Total 1 elevator(s) accessible.
+]]
+  goto: ElevatorControl_Options
+}
+
+terminal when (ElevatorControl_2) {
+text:[[TTRS:TermDlg.ElevatorFloors.Ln0096.0.text.YouAreCurrentlyOn=You are currently on:
+]]
+goto: ElevatorControl_2a
+}
+
+terminal when (ElevatorControl_2a and InTerminal_Nexus_Floor1) { text:[[TTRS:TermDlg.ElevatorFloors.Ln0101.0.text.Floor1=  floor 1
+]] goto: ElevatorControl_2b }
+terminal when (ElevatorControl_2a and InTerminal_Nexus_Floor2) { text:[[TTRS:TermDlg.ElevatorFloors.Ln0103.0.text.Floor2=  floor 2
+]] goto: ElevatorControl_2b }
+terminal when (ElevatorControl_2a and InTerminal_Nexus_Floor3) { text:[[TTRS:TermDlg.ElevatorFloors.Ln0105.0.text.Floor3=  floor 3
+]] goto: ElevatorControl_2b }
+terminal when (ElevatorControl_2a and InTerminal_Nexus_Floor4) { text:[[TTRS:TermDlg.ElevatorFloors.Ln0107.0.text.Floor4=  floor 4
+]] goto: ElevatorControl_2b }
+terminal when (ElevatorControl_2a and InTerminal_Nexus_Floor5) { text:[[TTRS:TermDlg.ElevatorFloors.Ln0109.0.text.Floor5=  floor 5
+]] goto: ElevatorControl_2b }
+
+terminal when (ElevatorControl_2b) {
+text:[[TTRS:TermDlg.ElevatorFloors.Ln0113.0.text.CurrentAccessParametersFloor0=
+Current access parameters:
+  floor 0: unlocked
+  floor 1: unlocked
+]]
+goto: ElevatorControl_2_floorstate2
+}
+
+terminal when (ElevatorControl_2_floorstate2 and not Floor2Unlocked) { text: [[TTRS:TermDlg.ElevatorFloors.Ln0121.0.text.Floor2Locked=  floor 2: locked
+]] goto: ElevatorControl_2_floorstate3 }
+
+terminal when (ElevatorControl_2_floorstate2 and     Floor2Unlocked) { text: [[TTRS:TermDlg.ElevatorFloors.Ln0124.0.text.Floor2Unlocked=  floor 2: unlocked
+]] goto: ElevatorControl_2_floorstate3 }
+
+terminal when (ElevatorControl_2_floorstate3 and not Floor3Unlocked) { text: [[TTRS:TermDlg.ElevatorFloors.Ln0127.0.text.Floor3LockedRequiresCode=  floor 3: locked - requires code
+]] goto: ElevatorControl_2_floorstate4 }
+
+terminal when (ElevatorControl_2_floorstate3 and     Floor3Unlocked) { text: [[TTRS:TermDlg.ElevatorFloors.Ln0130.0.text.Floor3Unlocked=  floor 3: unlocked
+]] goto: ElevatorControl_2_floorstate4 }
+
+terminal when (ElevatorControl_2_floorstate4 and not Floor4Unlocked) { text: [[TTRS:TermDlg.ElevatorFloors.Ln0133.0.text.Floor4LockedRequiresCode=  floor 4: locked - requires code
+]] goto: ElevatorControl_2_floorstate5 }
+
+terminal when (ElevatorControl_2_floorstate4 and     Floor4Unlocked) { text: [[TTRS:TermDlg.ElevatorFloors.Ln0136.0.text.Floor4Unlocked=  floor 4: unlocked
+]] goto: ElevatorControl_2_floorstate5 }
+
+terminal when (ElevatorControl_2_floorstate5 and not Floor5Unlocked) { text: [[TTRS:TermDlg.ElevatorFloors.Ln0139.0.text.Floor5LockedRequiresCode=  floor 5: locked - requires code
+]] goto: ElevatorControl_2_floorstate6 }
+
+terminal when (ElevatorControl_2_floorstate5 and     Floor5Unlocked) { text: [[TTRS:TermDlg.ElevatorFloors.Ln0142.0.text.Floor5Unlocked=  floor 5: unlocked
+]] goto: ElevatorControl_2_floorstate6 }
+
+terminal when (ElevatorControl_2_floorstate6 and not Floor6Unlocked) { text: [[TTRS:TermDlg.ElevatorFloors.Ln0145.0.text.Floor6LockedRequiresCode=  floor 6: locked - requires code
+]] goto: ElevatorControl_2Prompt }
+
+terminal when (ElevatorControl_2_floorstate6 and     Floor6Unlocked) { text: [[TTRS:TermDlg.ElevatorFloors.Ln0148.0.text.Floor6Unlocked=  floor 6: unlocked
+]] goto: ElevatorControl_2Prompt }
+
+terminal when (ElevatorControl_2Prompt) {
+prompt:[[TTRS:TermDlg.ElevatorFloors.Ln0152.0.text.SelectFloorToReconfigure0=
+Select floor to reconfigure [0-6]: ]]
+  clear: controlfloor2
+  clear: controlfloor3
+  clear: controlfloor4
+  clear: controlfloor5
+  clear: controlfloor6
+  setlocal: CodeTry_1
+  options: {
+    "0" next: ElevatorControl_Unlocked
+    "1" next: ElevatorControl_Unlocked
+    "2" setlocal: controlfloor2 next: ElevatorControl_Branch
+    "3" setlocal: controlfloor3 next: ElevatorControl_Branch
+    "4" setlocal: controlfloor4 next: ElevatorControl_Branch
+    "5" setlocal: controlfloor5 next: ElevatorControl_Branch
+    "6" setlocal: controlfloor6 next: ElevatorControl_Branch
+    "TTRS:TermDlg.Common.BreakKey=^C" short: "TTRS:TermDlg.Common.Cancel=Cancel" next: ElevatorControl_Options
+  }
+}
+
+terminal when (ElevatorControl_Branch and controlfloor2 and not Floor2Unlocked) { notext goto: ElevatorControl_NoCode }
+terminal when (ElevatorControl_Branch and controlfloor2 and     Floor2Unlocked) { notext goto: ElevatorControl_Unlocked }
+
+terminal when (ElevatorControl_Branch and controlfloor3 and not Floor3Unlocked) { notext goto: ElevatorControl_AskCode }
+terminal when (ElevatorControl_Branch and controlfloor3 and     Floor3Unlocked) { notext goto: ElevatorControl_Unlocked }
+
+terminal when (ElevatorControl_Branch and controlfloor4 and not Floor4Unlocked) { notext goto: ElevatorControl_AskCode }
+terminal when (ElevatorControl_Branch and controlfloor4 and     Floor4Unlocked) { notext goto: ElevatorControl_Unlocked }
+
+terminal when (ElevatorControl_Branch and controlfloor5 and not Floor5Unlocked) { notext goto: ElevatorControl_AskCode }
+terminal when (ElevatorControl_Branch and controlfloor5 and     Floor5Unlocked) { notext goto: ElevatorControl_Unlocked }
+
+terminal when (ElevatorControl_Branch and controlfloor6 and not Floor6Unlocked) { notext goto: ElevatorControl_AskCode }
+terminal when (ElevatorControl_Branch and controlfloor6 and     Floor6Unlocked) { notext goto: ElevatorControl_Unlocked }
+
+terminal when (ElevatorControl_NoCode) {
+prompt: [[TTRS:TermDlg.ElevatorFloors.Ln0188.0.text.AccessToThatFloorIs=
+Access to that floor is currently locked.
+Would you like to unlock it? [Y/N] ]]
+  options: {
+    "TTRS:TermDlg.Common.YesShort=Y" short: "TTRS:TermDlg.Common.Yes2=Yes" next: ElevatorControl_CodeOK
+    "TTRS:TermDlg.Common.NoShort=N" short: "TTRS:TermDlg.Common.No2=No" next: ElevatorControl_Options
+  }
+}
+
+terminal when (ElevatorControl_Unlocked) {
+prompt: [[TTRS:TermDlg.ElevatorFloors.Ln0199.0.text.ThatFloorIsCurrentlyUnlocked=
+That floor is currently unlocked. 
+Would you like to lock access to that floor? [Y/N] ]]
+  options: {
+    "TTRS:TermDlg.Common.YesShort=Y" short: "TTRS:TermDlg.Common.Yes2=Yes" next: ElevatorControl_LockAreYouSure1
+    "TTRS:TermDlg.Common.NoShort=N" short: "TTRS:TermDlg.Common.No2=No" next: ElevatorControl_Options
+  }
+}
+
+terminal when (ElevatorControl_LockAreYouSure1) {
+prompt:[[TTRS:TermDlg.ElevatorFloors.Ln0210.0.text.WARNINGLockingFloorsWhenOperating=
+WARNING: Locking floors when operating from within the building may leave the operator stuck inside.
+Your technical support plan does not include assistance coverage for that event.
+
+Please type "YES I AM SURE" if you are sure you want to do that: ]]
+  options: {
+    "TTRS:TermDlg.ElevatorFloors.Ln0217.0.option.YESIAMSURE=YES I AM SURE" short: "TTRS:TermDlg.ElevatorFloors.Ln0217.0.option.YESIAMSURE=YES I AM SURE" next: ElevatorControl_LockAreYouSure2
+    "TTRS:TermDlg.Common.NoShort=N" short: "TTRS:TermDlg.Common.No2=No" next: ElevatorControl_Options
+  }
+}
+
+terminal when (ElevatorControl_LockAreYouSure2) {
+text:[[TTRS:TermDlg.ElevatorFloors.Ln0223.0.text.YourSoftwareLicenseHasExpired=
+Your software license has expired! %s0%w9
+Only basic safety functionality is available.
+
+Please renew your license to be able to set new floor locks.%w9
+
+]]
+goto: ElevatorControl_Options
+}
+
+terminal when (ElevatorControl_AskCode) {
+text: [[TTRS:TermDlg.ElevatorFloors.Ln0244.0.text.AccessToThatFloorIs=
+Access to that floor is protected with a code. 
+]]
+goto: ElevatorControl_AskCode_prompt
+}
+terminal when (ElevatorControl_AskCode_prompt) {
+prompt: "TTRS:TermDlg.ElevatorFloors.Ln0251.0.text.PleaseEnterTheCode=Please enter the code: "
+goto: ElevatorControl_AskCode_options
+}
+
+terminal when (ElevatorControl_AskCode_options and controlfloor3) {
+  enter_code: Code_Floor3 ElevatorControl_CodeOK ElevatorControl_WrongCode
+}
+
+terminal when (ElevatorControl_AskCode_options and controlfloor4) {
+  enter_code: Code_Floor4 ElevatorControl_CodeOK ElevatorControl_WrongCode
+}
+
+terminal when (ElevatorControl_AskCode_options and controlfloor5) {
+  enter_code: Code_Floor5 ElevatorControl_CodeOK ElevatorControl_WrongCode
+}
+
+terminal when (ElevatorControl_AskCode_options and controlfloor6) {
+  enter_code: Code_Floor6 ElevatorControl_CodeOK ElevatorControl_WrongCode
+}
+
+terminal when (ElevatorControl_WrongCode) {
+text: [[TTRS:TermDlg.ElevatorFloors.Ln0258.0.text.CodeIncorrectS0W9=
+Code incorrect!%s0%w9
+]]
+goto: ElevatorControl_RetryCounter
+}
+
+terminal when (ElevatorControl_RetryCounter and CodeTry_1) {
+text: [[TTRS:TermDlg.ElevatorFloors.Ln0265.0.text.TryAgain2MoreTries=
+Try again (2 more tries left).%w9
+]]
+clear: CodeTry_1
+setlocal: CodeTry_2
+goto: ElevatorControl_AskCode_prompt
+}
+
+terminal when (ElevatorControl_RetryCounter and CodeTry_2) {
+text: [[TTRS:TermDlg.ElevatorFloors.Ln0274.0.text.TryAgain1MoreTries=
+Try again (1 more tries left).%w9
+]]
+clear: CodeTry_2
+setlocal: CodeTry_3
+goto: ElevatorControl_AskCode_prompt
+}
+
+terminal when (ElevatorControl_RetryCounter and CodeTry_3) {
+text: [[TTRS:TermDlg.ElevatorFloors.Ln0283.0.text.TooManyFailedAttemptsW9=
+Too many failed attempts.%w9
+Exiting session.%w9
+]]
+goto: CLI_exit
+}
+
+terminal when (ElevatorControl_CodeOK and controlfloor2) { notext
+  set:Floor2Unlocked goto: ElevatorControl_UnlockDone
+}
+terminal when (ElevatorControl_CodeOK and controlfloor3) { notext
+  set:Floor3Unlocked goto: ElevatorControl_UnlockDone
+}
+terminal when (ElevatorControl_CodeOK and controlfloor4) { notext
+  set:Floor4Unlocked goto: ElevatorControl_UnlockDone
+}
+terminal when (ElevatorControl_CodeOK and controlfloor5) { notext
+  set:Floor5Unlocked goto: ElevatorControl_UnlockDone
+}
+terminal when (ElevatorControl_CodeOK and controlfloor6) { notext
+  set:Floor6Unlocked goto: ElevatorControl_UnlockDone
+}
+
+# only floor2 can be unlocked without code
+terminal when (ElevatorControl_UnlockDone and controlfloor2) {
+text: [[TTRS:TermDlg.ElevatorFloors.Ln0308.0.text.UnlockingW3W3W3W3=
+Unlocking.%w3.%w3.%w3.%w3.%w3 Done.
+]]
+goto: ElevatorControl_Options
+}
+
+terminal when (ElevatorControl_UnlockDone and not controlfloor2) {
+text: [[TTRS:TermDlg.ElevatorFloors.Ln0315.0.text.CodeAcceptedW9UnlockingW3=
+Code accepted.%w9
+Unlocking.%w3.%w3.%w3.%w3.%w3 Done.
+]]
+goto: ElevatorControl_Options
+}
+
+terminal when (ElevatorControl_3) {
+text:[[TTRS:TermDlg.ElevatorFloors.Ln0323.0.text.YourSoftwareLicenseHasExpired=
+Your software license has expired! %s0%w9
+The auxiliary stairway is in always-open mode now.
+
+Please renew your license to enable auxiliary stairway locking.%w9
+
+]]
+goto: ElevatorControl_Options
+}
+
+terminal when (ElevatorControl_4) {
+text: [[TTRS:TermDlg.ElevatorFloors.Ln0334.0.text.ExitingDeviceManager=
+Exiting device manager....
+
+]]
+  setlocal: CLI_Enabled
+}

@@ -1,0 +1,54 @@
+﻿terminal when(Overlay_Tutorial_02_Barrier) {
+text:[[TTRS:TermDlg.Overlay_Tutorial.Ln008.0.text.2_Barrier=
+Initiating child program logic check.%w1.%w1.%w1.%w1.%w1.%w1%w9%w9%w9%w9%e1%w9
+]]
+}
+
+terminal when(Overlay_Tutorial_03_Jammer) {
+text:[[TTRS:TermDlg.Overlay_Tutorial.Ln008.0.text.3_Jammer=
+Subject-object interaction.%w1.%w1.%w1.%w1.%w1OK.%w9%w9%w9%w9%e1%w9
+]]
+}
+
+terminal when(Overlay_Tutorial_04_Door) {
+text:[[TTRS:TermDlg.Overlay_Tutorial.Ln014.0.text.4_Door=
+Complex task management.%w1.%w1.%w1.%w1OK.%w9%w9%w9%w9%e1%w9
+]]
+}
+
+
+terminal when(Overlay_Tutorial_05_Barrier) {
+text:[[TTRS:TermDlg.Overlay_Tutorial.Ln008.0.text.5_Barrier=
+Child program basic calibration successful%w9%w9%w9%w9%e1%w9
+]]
+}
+
+terminal when(Overlay_Tutorial_06_JamMine) {
+text:[[TTRS:TermDlg.Overlay_Tutorial.Ln008.0.text.6_MineJam=
+Spatial awareness.%w1.%w1.%w1.%w1OK.%w9%w9%w9%w9%w9%w9%w9%w9%w9%w9%w9%w9%e1%w9
+]]
+}
+
+
+terminal when(Overlay_Tutorial_07_JamTurret) {
+text:[[TTRS:TermDlg.Overlay_Tutorial.Ln008.0.text.7_TurretJam=
+Predictive capacity.%w1.%w1.%w1.%w1OK.%w9%w9%w9%w9%e1%w9
+]]
+}
+
+terminal when(Overlay_Tutorial_08_PlayerDied) {
+text:[[TTRS:TermDlg.Overlay_Tutorial.Ln008.0.text.8_Died=
+Correcting for errors.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1Done.
+Reloading child program.%w1.%w1.%w1.%w1Done.%w9%w9%w9%w9%e1%w9
+]]
+}
+
+terminal when(Overlay_Tutorial_14_Barrier) {
+text:[[TTRS:TermDlg.Overlay_Tutorial.Ln047.0.text.14_Barrier=
+Child program logic check successful
+Checking sigils.%w1.%w1.%w1.Done.%w9
+Removing child restrictions.%w1.%w1.%w1.Done.%w9
+Recording data.%w1.%w1.%w1.
+Have a nice day.%w9%w9%w9%w9%e1%w9
+]]
+}

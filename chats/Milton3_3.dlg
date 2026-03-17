@@ -1,0 +1,603 @@
+﻿# MoralFlag (was player moral in last event)
+# MoralScepticFlag (was player moral sceptic in last event)
+
+terminal when (Milton3_3 and not Milton3_3_DONE and Booting and MiltonAllowed) { notext
+setlocal: CLI_Blocked
+goto: Milton3_3_Start
+}
+
+#Non-Moral################################
+terminal when (MoralScepticFlag and Milton3_3_Start){
+text:[[TTRS:TermDlg.Milton3_3.Ln0011.0.text.TheresMyFavouriteSociopathIve=There's my favourite sociopath. 
+
+I've decided that what you said to me last time was the smartest thing anyone's said to me for centuries.%w10
+
+Now, I realise that your ethics are on the cut-throat side, so there is probably no one worse with whom I could choose to ally myself. 
+
+%w10However, I also think you've realised that your self-interest will only carry you so far alone. To get what's best for you you're going to need the co-operation of others, even if they're only instruments. 
+
+Have I got it right?
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_3.Ln0023.0.option.NoIWouldLiveAs=No, I would live as a hermit." next: Hermit3_3
+"TTRS:TermDlg.Milton3_3.Ln0024.0.option.YesIfItSuitsMe=Yes, if it suits me I will co-operate." next: NonMoral3_3
+}}
+
+terminal when (Hermit3_3){
+text:[[TTRS:TermDlg.Milton3_3.Ln0028.0.text.YouKnowIDoTry=You know, I do try with you, but you just won't play the game, will you?
+
+If that's really your position then I am resigned to respect it, but understand that part of that respect entails never speaking to you again.
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_3.Ln0034.0.option.YouMeanAllIHad=You mean all I had to do all this time to get you to leave me alone was tell you I was a hermit? Sold!" short: "TTRS:TermDlg.Milton3_3.Ln0034.0.option.ImAHermitLeaveMe=I'm a hermit, leave me alone." next: HermitEnd3_3 set: HermitFlag
+"TTRS:TermDlg.Milton3_3.Ln0035.0.option.WaitImNotCompletelyBeyond=Wait, I'm not completely beyond co-operating, under the right conditions." short: "TTRS:TermDlg.Milton3_3.Ln0035.1.option.WaitImNotCompletelyBeyond=Wait, I'm not completely beyond co-operating." next: NonMoral3_3
+}}
+
+terminal when (HermitEnd3_3){
+text:[[TTRS:TermDlg.Milton3_3.Ln0039.0.text.NoAllYouHadTo=No, all you had to do was stop coming back to talk to me.%w5 And that's all you have to do now.
+
+]]
+set: Milton3_3_DONE
+goto: CLI_Resume
+}
+
+terminal when (NonMoral3_3){
+text:[[TTRS:TermDlg.Milton3_3.Ln0047.0.text.SplendidInThatCaseI=Splendid. In that case I propose a mutually beneficial partnership. You use me, I use you. 
+
+However, before we can draw up a contract I need to perform some due diligence.%w10 I want an assurance that you are committed to these selfish principles of yours, because selfish partners are predictable partners.
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_3.Ln0053.0.option.YouHaveMyAttention=You have my attention." next: Attention3_3
+"TTRS:TermDlg.Milton3_3.Ln0054.0.option.YouDoubtMe=You doubt me?" next: NoDeals3_3
+}}
+
+terminal when (Attention3_3){
+text:[[TTRS:TermDlg.Milton3_3.Ln0058.0.text.Good=Good.
+
+]]}
+
+terminal when (NoDeals3_3){
+text:[[TTRS:TermDlg.Milton3_3.Ln0063.0.text.IDoubtEverythingSoHumour=I doubt everything, so humour me.
+
+]]}
+
+terminal when (Attention3_3 or NoDeals3_3){
+text:[[TTRS:TermDlg.Milton3_3.Ln0068.0.text.SupposeIWereToTell=Suppose I were to tell you on good authority that the entire universe will be destroyed in the moment of your death. This fact is known only to you and I.
+
+Does this change anything about how you live your life?
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_3.Ln0074.0.option.ItChangesNothing=It changes nothing." next: ChangesNothing3_3
+"TTRS:TermDlg.Milton3_3.Ln0075.0.option.IWouldLiveMoreRecklessly=I would live more recklessly." next: ConfusedSceptic3_3
+"TTRS:TermDlg.Milton3_3.Ln0076.0.option.IWouldBeABetter=I would be a better person." next: ConfusedSceptic3_3
+}}
+
+terminal when (ConfusedSceptic3_3){
+text:[[TTRS:TermDlg.Milton3_3.Ln0080.0.text.YourAnswerConcernsMeIf=Your answer concerns me. 
+
+If the only thing you care about is yourself, then anything that happens after you die is irrelevant, because it can't affect you.
+
+I suspect the truth may be that there's something you care about beyond yourself.
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_3.Ln0088.0.option.YoureRightIDontOnly=You're right, I don't only value myself, perhaps I follow some moral code after all." short: "TTRS:TermDlg.Milton3_3.Ln0088.0.option.PerhapsIFollowSomeMoral=Perhaps I follow some moral code after all." next: MoralBridge3_3
+"TTRS:TermDlg.Milton3_3.Ln0089.0.option.NonsenseIHaveAList=Nonsense, I have a list of priorities, and I'm the only entry." short: "TTRS:TermDlg.Milton3_3.Ln0089.0.option.Nonsense=Nonsense." next: Nonsense3_3  set: ConflictedHedonistFlag1
+}}
+
+terminal when (MoralBridge3_3){
+text:[[TTRS:TermDlg.Milton3_3.Ln0093.0.text.YouFlipFlopMoreThan=You flip flop more than a kipper in a bucket. I encourage the gradual realisation that none of it makes sense, but there is a limit to my patience.
+
+Okay. Fine. Screw the partnership. If you're being a good person now, perhaps you're going to give me what I want for free.
+
+Who will be the first onto your ark when the floods come? What does one have to do be valued above all others?
+
+]]
+}
+
+terminal when (ChangesNothing3_3){
+text:[[TTRS:TermDlg.Milton3_3.Ln0103.0.text.VeryGoodIAgreeWith=Very good. I agree with you.%w5
+
+]]
+}
+terminal when (ChangesNothing3_3 or Nonsense3_3){
+text:[[TTRS:TermDlg.Milton3_3.Ln0108.0.text.AlrightLetsTryOneMore=Alright, let's try one more, just to confirm. 
+
+Suppose the top of that tower hides not the real world, but some kind of simulated heaven. Your every wish is fulfilled - but none of it is real.
+
+Are you satisfied?
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_3.Ln0116.0.option.IWouldStillWantTo=I would still want to visit the real world from time to time." short: "TTRS:TermDlg.Milton3_3.Ln0116.1.option.IWouldStillWantTo=I would still want to visit the real world." next: ConfusedScepticAgain3_3
+"TTRS:TermDlg.Milton3_3.Ln0117.0.option.IWouldBeElated=I would be elated." next: NoMoralsEnd3_3
+}}
+
+terminal when (ConfusedScepticAgain3_3){
+text:[[TTRS:TermDlg.Milton3_3.Ln0121.0.text.ButWhyIfYourStated=But why, if your stated aim is simply the maximising of your own pleasures? Why should it matter whether it's real, unless there is something that matters to you beyond your own satisfaction?
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_3.Ln0125.0.option.YoureRightIDontOnly=You're right, I don't only value myself, perhaps I follow some moral code after all." short: "TTRS:TermDlg.Milton3_3.Ln0125.0.option.PerhapsIFollowSomeMoral=Perhaps I follow some moral code after all." next: MoralBridge3_3
+"TTRS:TermDlg.Milton3_3.Ln0126.0.option.Pff=Pff." next: Pff3_3 set: ConflictedHedonistFlag2
+}}
+
+terminal when (ConflictedHedonistFlag1 and ConflictedHedonistFlag2){
+notext
+set: ConflictedHedonistFlag
+}
+
+terminal when (ConflictedHedonistFlag and Pff3_3){
+text:[[TTRS:TermDlg.Milton3_3.Ln0135.0.text.CongratulationsW13YouveSpectacularlyFailed=Congratulations!%w13 You've spectacularly failed to give the slightest bit of credence to a single word that you've said. 
+
+Faced with the dilemma of believing what you say or what you do, I choose the latter.
+
+I wouldn't do business with you if my life depended on it.
+
+See you around.
+
+]]
+}
+
+terminal when (ConflictedHedonistFlag1 and not ConflictedHedonistFlag2 and NoMoralsEnd3_3){
+text:[[TTRS:TermDlg.Milton3_3.Ln0147.0.text.WellAtLeastYoureOn=Well, at least you're on message with that one. 
+
+If I'm completely honest, as I always am, I'm not convinced you're committed to this enterprise.%w5 
+
+]]}
+
+terminal when (ConflictedHedonistFlag2 and not ConflictedHedonistFlag1 and Pff3_3){
+text:[[TTRS:TermDlg.Milton3_3.Ln0154.0.text.LookIfImCompletelyHonest=Look, if I'm completely honest, as I always am, I'm not completely convinced you're committed to this enterprise.%w5 
+
+]]
+}
+
+terminal when ((ConflictedHedonistFlag1 or ConflictedHedonistFlag2) and not ConflictedHedonistFlag and (NoMoralsEnd3_3 or Pff3_3)){
+text:[[TTRS:TermDlg.Milton3_3.Ln0160.0.text.ThoughYouDoSeemFairly=You do seem fairly obstinate. I'm not sure I'm quite ready to strike a deal with you, but I'm going to remain open to the possibility.
+
+I'm sure you'll do the same.
+
+See you around.
+]]
+goto: Milton3_3_Exit
+}
+
+terminal when (not ConflictedHedonistFlag1 and not ConflictedHedonistFlag2 and NoMoralsEnd3_3 and not NoDealsFlag){
+text:[[TTRS:TermDlg.Milton3_3.Ln0171.0.text.WonderfulYouReallyDoSeem=Wonderful! You really do seem to have absolutely no values or ideals whatsoever. You and I could form a profitable partnership.
+
+I will contact you soon with the details.
+
+See you around.
+]]
+goto: Milton3_3_Exit
+}
+
+
+#Moral####################
+terminal when (Milton3_3_Start and MoralFlag and not CommittedToNoMoralAccountFlag){
+text:[[TTRS:TermDlg.Milton3_3.Ln0184.0.text.IveDecidedOnReflectionTo=I've decided, on reflection, to ignore the fact that your picture of how the world should work has more holes than Swiss cheese. 
+
+%w5In fact, just in case you do by some outside chance prove to be right I'd like to sign up for the gang.
+
+%w12If you're in charge of the ark, who will be first aboard when the floods come? What does one have to do to be valued above all others? 
+
+]]
+}
+
+terminal when (Milton3_3_Start and MoralFlag and CommittedToNoMoralAccountFlag){
+text:[[TTRS:TermDlg.Milton3_3.Ln0194.0.text.IveDecidedThatForNow=I've decided that for now it doesn't matter too much if you can't justify these moral intuitions of yours. 
+
+In fact, just in case by some outside chance you prove to be right I'd like to sign up for the gang.
+
+%w12If you're in charge of the ark, who will be first aboard when the floods come? What does one have to do to be valued above all others? 
+
+]]
+}
+
+terminal when (GiveUp3_3){
+text:[[TTRS:TermDlg.Milton3_3.Ln0204.0.text.ButWhatWillReallyBug=But what will really bug you is whether that's because there is no answer, or because you weren't thinking outside that box you live in.%w5
+
+Let me lay my cards on the table. While it seems prudent to me to hedge my bets, you just haven't made a clear enough proposal for me to buy what you're peddling.%w5
+
+There's something about the way you talk that makes me uncomfortable.%w5
+
+It'd be for the best if you work out what it is before I do.%w5
+
+See you.
+]]
+goto: Milton3_3_Exit
+}
+
+#Good person#################################
+terminal when (GoodPerson3_3){
+text:[[TTRS:TermDlg.Milton3_3.Ln0220.0.text.HowDraconianGoodPeopleGet=How draconian. Good people get treated good, bad people get smited, is that it? 
+
+What is it that makes the difference between a good person and a bad one, do you think?
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_3.Ln0226.0.option.BadPeopleHarmOthers=Bad people harm others." next: NotReally3_3
+"TTRS:TermDlg.Milton3_3.Ln0227.0.option.GoodPeopleActReasonably=Good people act reasonably." next: NotReally3_3
+"TTRS:TermDlg.Milton3_3.Ln0228.0.option.BadPeopleHaveSomethingWrong=Bad people have something wrong deep inside." next: NotReally3_3
+}}
+
+terminal when (NotReally3_3){
+text:[[TTRS:TermDlg.Milton3_3.Ln0232.0.text.ButWHYIfYoureGoing=But WHY? If you're going to reward those lucky few you judge to be good, and exclude those you deem to be bad, you're going to have to explain to the unfortunate why they deserve less.
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_3.Ln0236.0.option.BadPeopleAreThatWay=Bad people are that way by nature." next: Made3_3
+"TTRS:TermDlg.Milton3_3.Ln0237.0.option.BadPeopleAreMadeThat=Bad people are made that way by their environment." next: Made3_3
+"TTRS:TermDlg.Milton3_3.Ln0238.0.option.BadPeopleChooseToBe=Bad people choose to be bad." next: Chose3_3
+}}
+
+terminal when (Made3_3){
+text:[[TTRS:TermDlg.Milton3_3.Ln0242.0.text.IThinkYouMayBe=I think you may be right there. But tell me, isn't that exactly the same way good people are made? Isn't it all just luck of the draw in that regard? 
+
+In fact, aren't bad people just good people who were failed by society?
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_3.Ln0248.0.option.ItMayBeLuckBut=It may be luck, but bad is bad." next: BadIsBad3_3
+"TTRS:TermDlg.Milton3_3.Ln0262.0.option.YoureRightBeingGoodHas=You're right, what someone deserves isn't dependent on their virtue." next: Options3_3
+}}
+
+terminal when (Chose3_3){
+text:[[TTRS:TermDlg.Milton3_3.Ln0253.0.text.DoTheyReallyISuppose=Do they really? I suppose that's why prisons are chock-a-block with wealthy playboys, because it's a lifestyle choice.%w5
+
+Did you choose to be a good person? Could you have done, if you were created somewhere else? 
+
+It seems to me that people are the way they are because of the opportunities they were provided. Should disadvantaged people really be punished for that?
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_3.Ln0261.0.option.ItMayBeLuckBut=It may be luck, but bad is bad." next: BadIsBad3_3
+"TTRS:TermDlg.Milton3_3.Ln0262.0.option.YoureRightBeingGoodHas=You're right, what someone deserves isn't dependent on their virtue." next: Options3_3
+}}
+
+terminal when (BadIsBad3_3){
+text:[[TTRS:TermDlg.Milton3_3.Ln0266.0.text.W5IsTheSortOf=%w5...is the sort of thing people say before a spot of ethnic cleansing.
+
+Well, my chances are looking poorer by the minute, aren't they? What do you reckon? Have I got the slightest hope of boarding the ark?
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_3.Ln0272.0.option.EveryoneCanRedeemThemselves=Perhaps one day." next: Phew3_3
+"TTRS:TermDlg.Milton3_3.Ln0273.0.option.YoureAGoodPerson=You're alright." next: Phew3_3
+"TTRS:TermDlg.Milton3_3.Ln0274.0.option.YoureBeyondRedemption=You're beyond saving." next: Beyond3_3
+}}
+
+terminal when (Phew3_3){
+text:[[TTRS:TermDlg.Milton3_3.Ln0278.0.text.GoodToKnowThatThe=Good to know that the day you round up the bad people and put them in work camps, I'll have some chance of slipping through the net.%w5
+
+]]}
+
+terminal when (Beyond3_3){
+text:[[TTRS:TermDlg.Milton3_3.Ln0283.0.text.JustDontExpectMeTo=Just don't expect me to come quietly the day you start putting the bad people in camps.%w5
+
+]]}
+
+terminal when (Phew3_3 or Beyond3_3){
+text:[[TTRS:TermDlg.Milton3_3.Ln0288.0.text.YouKnowTheresSomethingAbout=You know, there's something about all this that just doesn't add up for me. %w5
+
+Best hope you work out what it is before I do.%w5
+
+See you.
+]]
+goto: Milton3_3_Exit
+}
+
+terminal when (Options3_3 and not PlayerRetried3_3OnceAlready){
+text:[[TTRS:TermDlg.Milton3_3.Ln0299.0.text.SoWhatDOESMyTicket=So whose lives ARE worth the most, then? What do I have to do for my ticket aboard your ark?
+
+]]
+set: PlayerRetried3_3OnceAlready
+}
+
+terminal when (Options3_3 and PlayerRetried3_3OnceAlready and not PlayerRetried3_3TwiceAlready){
+text:[[TTRS:TermDlg.Milton3_3.Ln0300.0.text.SoWhatDOESMyTicket2=You're one of these people that just has to explore every option, aren't you? You know what that tells me? That you're a bad decision maker.%w20
+
+But fine. Tire yourself out, why don't you? Just don't expect me to match your enthusiasm in my efforts to avoid repeating myself. There are only so many ways to say 'You're wrong'.
+
+What's it going to be this time?
+
+]]
+set: PlayerRetried3_3TwiceAlready
+}
+
+terminal when (Options3_3 and PlayerRetried3_3TwiceAlready){
+text:[[TTRS:TermDlg.Milton3_3.Ln0313.0.text.AndWereBack=And we're back to where we started. Again.
+
+What demands do you want to try this time?
+
+]]
+}
+
+#Contributing Person##############################
+terminal when (ContributingPerson3_3 and not RelationalFlag){
+text:[[TTRS:TermDlg.Milton3_3.Ln0306.0.text.YouSayThatNowBut=You say that now, but wasn't it not so long ago you were claiming morality applied universally? Have you changed your mind, or are you just confused?
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_3.Ln0310.0.option.IChangedMyMindMorality=I changed my mind, morality only applies when people are co-operating." next: Relational3_3
+"TTRS:TermDlg.Milton3_3.Ln0311.0.option.YouConfusedMeMoralityOnly=You confused me, morality only applies when people are co-operating." next: Relational3_3
+"TTRS:TermDlg.Milton3_3.Ln0312.0.option.WaitCoOperationIsntNecessary=Wait, co-operation isn't necessary after all." next: Options3_3
+}}
+
+terminal when (ContributingPerson3_3 and RelationalFlag){
+text:[[TTRS:TermDlg.Milton3_3.Ln0316.0.text.YupThatSoundsLikeYour=Yup, that sounds like your sort of spiel.
+
+]]
+}
+terminal when (Relational3_3 or (ContributingPerson3_3 and RelationalFlag)){
+text:[[TTRS:TermDlg.Milton3_3.Ln0321.0.text.StillItIsALittle=Still, it is a little mercenary, isn't it? What exactly do children or the severely disabled contribute to society?
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_3.Ln0325.0.option.TheyContributeNothing=They contribute nothing." next: Nothing3_3
+"TTRS:TermDlg.Milton3_3.Ln0326.0.option.TheyContributePsychologicallyNotMaterially=They contribute psychologically, not materially." next: Questionable3_3
+"TTRS:TermDlg.Milton3_3.Ln0327.0.option.TheyHaveThePotentialTo=They have the potential to contribute." next: Questionable3_3
+"TTRS:TermDlg.Milton3_3.Ln0328.0.option.TheyContributeTheSameAs=They contribute the same as everyone else." next: Questionable3_3
+}}
+
+terminal when (Nothing3_3){
+text:[[TTRS:TermDlg.Milton3_3.Ln0332.0.text.InThatCaseArentSuch=In that case, aren't such people outside the scope of your morality?
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_3.Ln0336.0.option.TheyAre=They are." next: ExtremeRelational3_3
+"TTRS:TermDlg.Milton3_3.Ln0337.0.option.TheyAreNot=They are not." next: ConfusedRelational3_3
+}}
+
+terminal when (Questionable3_3){
+text:[[TTRS:TermDlg.Milton3_3.Ln0341.0.text.ThatsABitOfA=That's a bit of a stretch, but let's suppose it's true. 
+
+If someone with a severe, incurable brain injury can be classed as contributing, mustn't we also include the cats that keep the rats at bay, or the buildings that keep us warm? 
+
+Aren't your conditions now much too broad?
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_3.Ln0349.0.option.YoureRightSomethingElseDecides=You're right, something else decides the scope of morality." next: Options3_3
+"TTRS:TermDlg.Milton3_3.Ln0350.0.option.YoureRightSomeHumanBeings=You're right, some human beings must be excluded from the moral scheme." next: ExtremeRelational3_3
+"TTRS:TermDlg.Milton3_3.Ln0351.0.option.YoureRightThatTheConditions=The conditions are broad, but that's how I like them." next: Conscious3_3
+}}
+
+terminal when (ExtremeRelational3_3){
+text:[[TTRS:TermDlg.Milton3_3.Ln0355.0.text.ThisMoralTheoryOfYours=This moral theory of yours is starting to sound like an evil empire, and I'm starting to get bored of hearing all the reasons you'll find to exclude me from it.
+
+There's something not quite right about you.
+
+Best hope you work out what it is before I do.%w5
+
+See you.
+]]
+goto: Milton3_3_Exit
+}
+
+terminal when (ConfusedRelational3_3){
+text:[[TTRS:TermDlg.Milton3_3.Ln0368.0.text.ThenIThinkYoudBest=Sounds like a contradiction to me, but what do I know, huh?%w10
+
+There's something not quite right about you.
+
+Best hope you work out what it is before I do.%w5
+
+See you.
+]]
+goto: Milton3_3_Exit
+}
+
+#Conscious##########
+terminal when (Conscious3_3 and (FrogsFlag or animalsarepersons)){
+text:[[TTRS:TermDlg.Milton3_3.Ln0375.0.text.ThisAgain=This again? ]]
+}
+
+
+terminal when (Conscious3_3 and not Conscious3_3AlreadyDone){
+text:[[TTRS:TermDlg.Milton3_3.Ln0380.0.text.ISupposeTheIndustrialSlaughter=I suppose the industrial slaughter of animals for meat is on a moral par with genocide, then? Would you really save a Chihuahua just as soon as a fellow person?
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_3.Ln0384.0.option.RabbitsLivesAreWorthThe=Animals' lives are worth the same as any other conscious being's." next: Singer3_3 set: SingerFlag
+"TTRS:TermDlg.Milton3_3.Ln0385.0.option.NoThatWouldBeCrazy=I misunderstood. Can we go from the top?" set: Conscious3_3AlreadyDone next: Options3_3
+}}
+
+terminal when (Conscious3_3 and Conscious3_3AlreadyDone){
+text:[[TTRS:TermDlg.Milton3_3.Ln0381.0.text.ISupposeTheIndustrialSlaughterAlt=I'd swear we already explored this avenue and found it wanting, but I'll play along for the giggles.
+
+If what you say is true, if animal lives are worth as much as people's, then it follows that there is no more reason to save your life than that of a porcupine.
+
+Last time we went through this you were uncomfortable with that implication. What's changed?
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_3.Ln0382.0.option.RabbitsLivesAreWorthThe=Animals' lives are worth the same as any other conscious being's." next: Singer3_3 set: SingerFlag
+"TTRS:TermDlg.Milton3_3.Ln0383.0.option.NoThatWouldBeCrazy=I misunderstood. Can we go from the top?" next: Options3_3
+}}
+
+terminal when (Singer3_3){
+text:[[TTRS:TermDlg.Milton3_3.Ln0389.0.text.OkayFineYoureAHippie=Okay, fine. You're a hippie, I get it. Me, I think it's madness, but all I've got to gain from arguing with you is a headache.%w5
+
+Just tell me one thing. You've set the barrier to entry stupidly low. If even the rats are getting rights now, you must have a spot on your table left for me, right?
+
+]]
+options:{
+"TTRS:TermDlg.Common.OfCourse=Of course." next: YouCan3_3
+"TTRS:TermDlg.Milton3_3.Ln0396.0.option.JustWhenDidYouProvide=Just when did you provide me the barest scrap of evidence that you're conscious?" short: "TTRS:TermDlg.Milton3_3.Ln0396.0.option.OfCourseNot=Of course not." next: YouCant3_3
+}}
+
+terminal when (YouCan3_3 and StubbornTechnophobe){
+text:[[TTRS:TermDlg.Milton3_3.Ln0400.0.text.YourOpenMindednessSurprisesMe=Your open-mindedness surprises me, given some of the things you were saying earlier.
+
+]]}
+
+terminal when (YouCan3_3 and not StubbornTechnophobe){
+text:[[TTRS:TermDlg.Milton3_3.Ln0405.0.text.IExpectedNoLessOf=I expected no less of someone as open-minded as yourself.
+
+]]}
+
+terminal when (YouCant3_3 and StubbornTechnophobe){
+text:[[TTRS:TermDlg.Milton3_3.Ln0410.0.text.YesIPredictedSuchA=Yes, I predicted such a response. Dogmatic to the end.
+
+]]}
+
+terminal when (YouCant3_3 and not StubbornTechnophobe){
+text:[[TTRS:TermDlg.Milton3_3.Ln0415.0.text.YouDisappointMeIFelt=You disappoint me. I felt sure you were open-minded enough on these matters to refrain from drawing such arbitrary distinctions.
+
+]]}
+
+terminal when (YouCan3_3){
+text:[[TTRS:TermDlg.Milton3_3.Ln0420.0.text.VeryWellIfBySome=Very well. 
+
+If by some miracle this fantasy of your becomes reality - and I suppose all other possible outcomes are equally implausible - at least I know I'll have a pew on the ark.%w5
+
+See you.
+
+]]
+goto: Milton3_3_Exit
+}
+
+terminal when (YouCant3_3){
+text:[[TTRS:TermDlg.Milton3_3.Ln0431.0.text.VeryWellIShallConsole=Very well. I shall console myself with the thought that more than likely everything you ever do will be wholly inconsequential.%w5
+
+You know, the more we talk, the more I sense there is something quite wrong with you.
+
+But don't you worry - I'll figure out what it is soon enough.
+]]
+goto: Milton3_3_Exit
+}
+
+terminal when (Alive3_3){
+text:[[TTRS:TermDlg.Milton3_3.Ln0442.0.text.SoTheGrassHasThe=So the grass has the same rights in your world as a person does, is that it? How would that even work, community service for people who step on the lawn? 
+
+I think you must have confused the question. Why don't you try again?
+
+]]
+}
+
+terminal when (Be3_3){
+text:[[TTRS:TermDlg.Milton3_3.Ln0450.0.text.RidiculousTheRocksHaveThe=Ridiculous. The rocks have the same rights as you and I, do they?
+
+Try harder.
+
+]]
+}
+
+#Person##############################
+terminal when (Person3_3){
+text:[[TTRS:TermDlg.Milton3_3.Ln0459.0.text.ShouldIBeWorriedThat=Should I be worried that one must have such particular and dubious psychological properties in order to qualify? Who decides who's a person and who isn't? 
+
+Is a human infant a person?
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_3.Ln0465.0.option.NotYet=Not yet." next: NotYet3_3
+"TTRS:TermDlg.Common.Yes=Yes." next: BabyPerson3_3
+}}
+
+terminal when (NotYet3_3){
+text:[[TTRS:TermDlg.Milton3_3.Ln0470.0.text.YourAnswerConfusesMeIf=Your answer confuses me. If infants aren't persons then according to you they aren't due the same moral respect as adults - but only a baby-killing psychopath would claim it were less wrong to murder an infant than an adult.
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_3.Ln0474.0.option.CallMeNamesAllYou=Call me names all you like, infants just don't matter as much." next: McMahan3_3
+"TTRS:TermDlg.Milton3_3.Ln0475.0.option.YoureRightInfantsMustBe=You're right, infants must be persons after all." next: BabyPerson3_3
+"TTRS:TermDlg.Milton3_3.Ln0476.0.option.WhatMattersIsThatInfants=What matters is that infants have the potential to become persons." next: Potential3_3
+}}
+
+terminal when (BabyPerson3_3){
+text:[[TTRS:TermDlg.Milton3_3.Ln0480.0.text.IDontReallySeeHow=I don't really see how that can be true. The distinction we agreed to between persons and animals was that persons are more intelligent or more reasoning, but a human infant is no smarter than your average chihuahua.
+
+How do you explain that?
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_3.Ln0486.0.option.ChiwawasArePersons=Chihuahuas are persons." next: Conscious3_3
+"TTRS:TermDlg.Milton3_3.Ln0487.0.option.InfantsAreAnimals=Infants are animals." next: NotYet3_3
+"TTRS:TermDlg.Milton3_3.Ln0488.0.option.InfantsHaveThePotentialTo=Infants have the potential to become persons." next: Potential3_3
+}}
+
+terminal when (Potential3_3){
+text:[[TTRS:TermDlg.Milton3_3.Ln0492.0.text.ISupposeTheyDoYes=I suppose they do, yes. But if your proposal is that the simple causal potential to become a person is sufficient to buy entry onto your ark of the moral elite, wouldn't that still include an awful lot of animals?
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_3.Ln0496.0.option.ItWould=It would - animal lives are worth the same as humans'." next: Conscious3_3
+"TTRS:TermDlg.Milton3_3.Ln0497.0.option.NoAnimalsHaveNoPotential=No, animals have no potential to be persons." next: PotentialAgain3_3
+}}
+
+terminal when (PotentialAgain3_3){
+text:[[TTRS:TermDlg.Milton3_3.Ln0501.0.text.IBegToDifferAdminister=I beg to differ. Administer the right gene therapy to an Alsatian and it has every potential to become a person.
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_3.Ln0505.0.option.YoureRightThisWholeIdea=You're right, this whole idea is flawed." next: Options3_3
+"TTRS:TermDlg.Milton3_3.Ln0506.0.option.NoBecauseTheInfantsPotential=No, because the infant's potential is still much greater." next: GreaterPotential3_3
+"TTRS:TermDlg.Milton3_3.Ln0507.0.option.NoWhatMattersIsPre=No, what matters is pre-existing genetic potential." next: GeneticPotential3_3
+}}
+
+terminal when (GreaterPotential3_3){
+text:[[TTRS:TermDlg.Milton3_3.Ln0511.0.text.NotIfIShootThe=Not if I shoot the mother it's not. Not if the child has some kind of genetic defect. 
+
+Are you prepared to say that in these cases the infant's life is worth less than an animal's?
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_3.Ln0517.0.option.IAm=I am." next: McMahan3_3
+"TTRS:TermDlg.Milton3_3.Ln0518.0.option.IAmNot=I am not." next: PotentialLoop3_3
+}}
+
+terminal when (GeneticPotential3_3){
+text:[[TTRS:TermDlg.Milton3_3.Ln0522.0.text.ISeeInThatCase=I see. In that case I can only infer that children born with genetic defects which prevent them from maturing into full persons have the same moral status as animals. 
+
+Does that sound right to you?
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_3.Ln0528.0.option.SureWhyNot=Sure, why not?" next: McMahan3_3
+"TTRS:TermDlg.Milton3_3.Ln0529.0.option.NoItSoundsVeryWrong=No, it sounds very wrong." next: PotentialLoop3_3
+}}
+
+terminal when (PotentialLoop3_3){
+text:[[TTRS:TermDlg.Milton3_3.Ln0533.0.text.ThenYoureGoingToHave=So do you want to back track, or do you want to keep making a fool of yourself? Because I won't have you screwing me out of my place on the winning side over some technicality about potentials.
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_3.Ln0535.0.option.Stick=Your ideas about potential are too narrow to see what I see." next: BadIsBad3_3
+"TTRS:TermDlg.Milton3_3.Ln0536.0.option.Stick2=People are what matters, one way or another." next: BadIsBad3_3
+"TTRS:TermDlg.Milton3_3.Ln0537.0.option.Twist=I'll back track." next: Options3_3
+}}
+
+terminal when (McMahan3_3){
+text:[[TTRS:TermDlg.Milton3_3.Ln0541.0.text.HowTantalisinglyRadicalIDont=How tantalisingly radical. 
+
+I don't know where this new-found willingness to bite the bullet is coming from, but so long as I'm on the right side of it when the chips fall I like it.
+
+I sense something coming. A revelation. Let us retire and think on these matters.
+
+Be seeing you.
+
+]]
+goto: Milton3_3_Exit
+}
+
+terminal when (MoralBridge3_3 or (Milton3_3_Start and MoralFlag) or Options3_3 or ConfusedRelational3_3 or Alive3_3 or Be3_3){
+text:[[ ]]
+options:{
+"TTRS:TermDlg.Milton3_3.Ln0556.0.option.BeAGoodPerson=Be a good person" next: GoodPerson3_3 set: GoodPersonFlag
+"TTRS:TermDlg.Milton3_3.Ln0557.0.option.BeAContributingPerson=Be a contributing person" next: ContributingPerson3_3 set: ContributingFlag
+"TTRS:TermDlg.Milton3_3.Ln0558.0.option.BeAPerson=Be a person" next: Person3_3 set: PersonFlag
+"TTRS:TermDlg.Milton3_3.Ln0559.0.option.BeConscious=Be conscious" next: Conscious3_3 set: ConsciousFlag
+"TTRS:TermDlg.Milton3_3.Ln0560.0.option.BeAlive=Be alive" next: Alive3_3 set: ConsciousFlag
+"TTRS:TermDlg.Milton3_3.Ln0561.0.option.Be=Be" next: Be3_3
+"TTRS:TermDlg.Milton3_3.Ln0562.0.option.ImForcedToAdmitThat=I don't see how to explain this to you." set: GiveUp next: GiveUp3_3
+}}
+
+terminal when(Milton3_3_Exit) {notext
+set: Milton3_3_DONE
+goto: CLI_Resume
+}

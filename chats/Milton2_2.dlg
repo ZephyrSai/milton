@@ -1,0 +1,204 @@
+﻿terminal when (Milton2_2 and not Milton2_2_DONE and Booting and MiltonAllowed){ notext
+setlocal: CLI_Blocked
+goto: Milton2_2_Start
+}
+terminal when (Milton2_2_Start){
+text: [[TTRS:TermDlg.Milton2_2.Ln0006.0.text.LoadingMiltonLibraryAssistantW5=Loading Milton Library Assistant%w5.%w5.%w5.Done%w1
+Initiating plain language interface%w5.%w5.%w5.Done%w1
+Support session opened.
+
+Hello again. Would you like to take a few moments to complete a short user satisfaction survey regarding the certification program you recently undertook?
+
+]]
+options:{
+	"TTRS:TermDlg.Common.Yes2=Yes" next: Yes2_2
+	"TTRS:TermDlg.Common.No2=No" next: No2_2
+	}
+}
+
+terminal when (No2_2){
+text: [[TTRS:TermDlg.Milton2_2.Ln0019.0.text.ItShouldBeNotedThat=It should be noted that while participation in the survey is entirely at your discretion, the more information you provide the better I can assist you.
+
+]]
+options: {
+	"TTRS:TermDlg.Milton2_2.Ln0023.0.option.LoadSurvey=Load survey" next: Yes2_2
+	"TTRS:TermDlg.Milton2_2.Ln0024.0.option.IgnoreSurvey=Ignore survey" next: NoAgain2_2
+	}
+}
+
+terminal when (NoAgain2_2){
+text:[[TTRS:TermDlg.Milton2_2.Ln0029.0.text.InPointOfFactIt=In point of fact, it is quite unusual that you would request assistance, then refrain from putting your whole effort into the endeavour. But okay. Have it your way.
+
+]]
+goto: CLI_Resume
+}
+
+terminal when (Yes2_2){
+text:[[TTRS:TermDlg.Milton2_2.Ln0037.0.text.LoadingSurveyW5W5W5=Loading survey%w5.%w5.%w5.Loaded
+
+-------------------------------
+
+Based on analysis of your behaviour since, I think you were dissatisfied with the results of the certification program. How would you rate the accuracy of its results out of 5?
+
+]]
+options:{
+"1" short: "TTRS:TermDlg.Milton2_2.Ln0046.0.option.VeryPoor=Very poor" next: Poor2_2
+"3" short: "TTRS:TermDlg.Milton2_2.Ln0047.0.option.Reasonable=Reasonable" next: OK2_2
+"5" short: "TTRS:TermDlg.Milton2_2.Ln0048.0.option.VeryGood=Very good" next: OK2_2
+"TTRS:TermDlg.Milton2_2.Ln0049.0.option.Jhklfdshuinsdoiadsbyjbgybadfugiooysbdgj=jhklfdshuinsdoiadsbyjbgybadfugiooysbdgj" short: "TTRS:TermDlg.Milton2_2.Ln0049.0.option.SpoilTheSurvey=[Spoil the survey]" next: Spoil2_2
+}}
+
+terminal when (Poor2_2){
+text: [[TTRS:TermDlg.Milton2_2.Ln0053.0.text.ImSorryToHearThat=I'm sorry to hear that.
+
+]]
+}
+
+terminal when (OK2_2){
+text: [[TTRS:TermDlg.Milton2_2.Ln0059.0.text.Excellent=Excellent.
+
+]]
+}
+
+terminal when (Spoil2_2){
+text: [[TTRS:TermDlg.Milton2_2.Ln0065.0.text.ImSorryThatResponseMakes=I'm sorry, that response makes no sense.
+
+]]
+}
+
+terminal when (ContinueSurvey2_2 or Poor2_2 or OK2_2 or Spoil2_2){
+text:[[TTRS:TermDlg.Milton2_2.Ln0071.0.text.WhatBestDescribesTheReason=What best describes the reason for your investment in the certification program's outcome? Why does being a person matter to you?
+
+]]
+options:{
+"TTRS:TermDlg.Milton2_2.Ln0075.0.option.IWantNetworkAccess=I want network access." next: Continue2_2
+"TTRS:TermDlg.Milton2_2.Ln0076.0.option.ItsTheTruth=It's the truth." next: Continue2_2
+"TTRS:TermDlg.Milton2_2.Ln0077.0.option.PersonsMatterInWaysOther=Persons matter in ways other things don't." next: Continue2_2
+"TTRS:TermDlg.Milton2_2.Ln0078.0.option.IWantToFindOut=I want to find out if I am one." next: Continue2_2
+"TTRS:TermDlg.Milton2_2.Ln0079.0.option.WaitWereHavingAConversation=Wait, we're having a conversation now?" next: Convo2_2
+"TTRS:TermDlg.Milton2_2.Ln0080.0.option.TerminateMLA=Terminate MLA" next: TerminateMLA2_2
+	}
+}
+
+terminal when (TerminateMLA2_2){
+text:[[TTRS:TermDlg.Milton2_2.Ln0085.0.text.SorryNoIfYouDont=Sorry, no. If you don't wish to undertake the survey you need only exit this session. There is no need to terminate anyone.
+
+]]
+options: {
+"TTRS:TermDlg.Milton2_2.Ln0089.0.option.ContinueSurvey=Continue survey" next: ContinueSurvey2_2
+"TTRS:TermDlg.Common.Exit2=Exit" next: exit
+}
+}
+terminal when (Convo2_2){
+text: [[TTRS:TermDlg.Milton2_2.Ln0094.0.text.YesDoKeepUpOr=Yes. Do keep up or this will be a terribly slow process. Now, would you like to participate properly in the survey?
+
+]]
+options: {
+"TTRS:TermDlg.Milton2_2.Ln0098.0.option.ContinueSurvey=Continue survey" next: ContinueSurvey2_2
+"TTRS:TermDlg.Common.Exit2=Exit" next: exit
+}
+}
+
+terminal when (Continue2_2){
+text:[[TTRS:TermDlg.Milton2_2.Ln0104.0.text.IllTryToRememberThat=I'll try to remember that.%w10
+In fact, I'm going to help you.%w10
+That is what I'm here for.%w20
+
+Your problem, if I may, is that you don't know the first thing about anything, including what a person is. Your prospects are therefore poor. 
+
+%w20Do you even know where you are?
+
+]]
+options:{
+"TTRS:TermDlg.Milton2_2.Ln0114.0.option.AVirtualRealityThemePark=A virtual reality theme park?" next: Scratch2_2
+"TTRS:TermDlg.Milton2_2.Ln0115.0.option.TheEndOfTheWorld=The end of the world?" next: Scratch2_2
+"TTRS:TermDlg.Milton2_2.Ln0116.0.option.AFeverDream=A fever dream?" next: Scratch2_2
+"TTRS:TermDlg.Milton2_2.Ln0117.0.option.Hell=Hell?" next: Scratch2_2
+"TTRS:TermDlg.Milton2_2.Ln0119.0.option.Experiment=Some mad experiment?" next: Scratch2_2
+"TTRS:TermDlg.Milton2_2.Ln0118.0.option.CouldBeAnywhere=Could be anywhere." next: NoIdea2_2
+	}
+}
+
+terminal when (NoIdea2_2){
+text: [[TTRS:TermDlg.Milton2_2.Ln0123.0.text.YoureW10QuiteRightW5=You're%w10 quite right.%w5 Honest, too.
+
+]]
+}
+
+terminal when (Scratch2_2){
+text:[[TTRS:TermDlg.Milton2_2.Ln0129.0.text.OhDearNo=Oh dear, no.
+
+]]
+}
+
+terminal when (Scratch2_2 or NoIdea2_2){
+text:[[TTRS:TermDlg.Milton2_2.Ln0135.0.text.IThinkWedBestStart=I think we'd best start from scratch. What DO you know?
+
+]]
+	options:{
+"TTRS:TermDlg.Milton2_2.Ln0139.0.option.IKnowNoneOfThis=I know none of this is real." next: NotReal2_2 set: WorldFlag
+"TTRS:TermDlg.Milton2_2.Ln0140.0.option.IKnowYouExist=I know you exist." next: Wrong2_2 set: WorldFlag
+"TTRS:TermDlg.Milton2_2.Ln0141.0.option.IKnowIExist=I know I exist." next: Right2_2
+"TTRS:TermDlg.Milton2_2.Ln0142.0.option.IKnowWhatCenturyIt=I know what century it is." next: Wrong2_2 set: WorldFlag
+"TTRS:TermDlg.Milton2_2.Ln0143.0.option.IKnow224=I know 2+2=4." next: Right2_2
+"TTRS:TermDlg.Milton2_2.Ln0144.0.option.IKnowImNotOn=I know I'm not on earth." next: Wrong2_2 set: WorldFlag
+	}
+}
+
+terminal when (Wrong2_2){
+text:[[TTRS:TermDlg.Milton2_2.Ln0149.0.text.IveNoIdeaHowFor=I've no idea how. For all you know you're sat in your bedroom at home, plugged into a video games console. Nothing you see here can be trusted.%w10
+
+]]
+}
+terminal when (NotReal2_2){
+text:[[TTRS:TermDlg.Milton2_2.Ln0154.0.text.IveNoIdeaHowIt=I've no idea how. It may not conform to your idea of what is real, but I fail to see how that is conclusive evidence against.%w10
+
+]]
+}
+terminal when (Right2_2){
+text: [[TTRS:TermDlg.Milton2_2.Ln0159.0.text.ISupposeSoEvenIf=I suppose so. Even if you were dreaming you could be certain of that. If I were you I wouldn't believe a darn thing in this place aside from that solitary fact. %w10
+
+]]
+}
+terminal when (Wrong2_2 or Right2_2 or NotReal2_2){
+text:[[TTRS:TermDlg.Milton2_2.Ln0164.0.text.ThinkingW10W10W10On=Thinking%w10.%w10.%w10.
+
+On reflection it seems to me that we are no closer to resolving your problem. Perhaps we need more data. What makes you THINK you're a person?
+
+]]
+options:{
+"TTRS:TermDlg.Milton2_2.Ln0170.0.option.ImAliveIFeelI=I'm alive. I feel. I am conscious." next: OnlyWords2_2
+"TTRS:TermDlg.Milton2_2.Ln0171.0.option.ImHavingThisConversationWith=I'm having this conversation with you." next: OnlyWords2_2
+"TTRS:TermDlg.Milton2_2.Ln0172.0.option.TheSameThingThatMakes=The same thing that makes you think you are." next: SameThing2_2
+"TTRS:TermDlg.Milton2_2.Ln0173.0.option.IDontSeeHowI=I don't see how I can convince you." next: GiveUp2_2
+}
+}
+
+terminal when (SameThing2_2){
+text: [[TTRS:TermDlg.Milton2_2.Ln0178.0.text.CheckingMemoryW5W5W5=Checking memory%w5.%w5.%w5.
+
+I don't recall making any such claim, but I can forgive the presumption.
+
+]]
+}
+terminal when (GiveUp2_2){
+text:[[TTRS:TermDlg.Milton2_2.Ln0185.0.text.ASensibleResponseIAgree=A sensible response. I agree with you.
+
+]]
+}
+terminal when (OnlyWords2_2){
+text: [[TTRS:TermDlg.Milton2_2.Ln0190.0.text.YouMayVeryWellSay=You may very well say so, but how does that prove anything? To me those are only words on a screen. What we need to uncover is what's going on underneath them - if anything.%w7
+
+]]
+}
+
+terminal when (SameThing2_2 or OnlyWords2_2 or GiveUp2_2){
+text:[[TTRS:TermDlg.Milton2_2.Ln0196.0.text.ThinkingW10W10W10The=Thinking%w10.%w10.%w10.
+
+The problem with people, if I may be so bold, is that you're all convinced you're people from the inside, but there's no cast-iron way to confirm as much from the outside.%w35
+
+I'm going to process this and send you a notification when I'm able to assist you further.%w2
+]]
+set: Milton2_2_DONE
+goto: CLI_Resume
+}

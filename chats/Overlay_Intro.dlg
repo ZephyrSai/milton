@@ -1,0 +1,39 @@
+﻿# this parts shows only when arriving from Gates of Eternity
+terminal when(Overlay_Intro_AlreadyFinished) {
+text:[[TTRS:TermDlg.Overlay_Intro.Ln003.0.text.AfterGatesOfEternity=
+Suspending active process.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1Done.%w5
+Collecting experiment data.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1Done.%w5
+Analysing logic performance.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1Satisfactory.%w5
+Child program independence check.%w1.%w9.%w1.%w1%w9%s0<span class="red_invmul">FAILED!</span>%w9
+Storing memory dump.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1Done.%w5
+Submitting current version to repository.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1%vp stored.%w5
+Locking in successful child parameters.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1Done.%w5
+Randomly adjusting remaining parameters.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1Done.%w5
+Increasing version number.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1Done.
+Erasing memory banks.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.Done.%w5
+%w5
+%w5
+%w5
+%w5
+%e1
+%w9
+]]
+}
+
+# this just clears screen after credits, before restarting
+terminal when(Overlay_Intro_AfterCredits) {
+text: [[TTRS:TermDlg.Overlay_Intro.Ln010.0.text.Restarting=Restarting the simulation.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1%g1.%w1.%w1.%w1.Done.%g5%w5%c
+]]
+goto: Overlay_Intro_RealStart
+}
+
+# this part plays at start, and after the previous part
+terminal when(Overlay_Intro_RealStart) {
+text:[[TTRS:TermDlg.Overlay_Intro.Ln020.0.text.Initializing=
+Initializing firmware.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1Firmware functional.%w5
+Loading child program parameters.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1%vc Loaded.%w5
+System check.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1Passed.%w5
+Starting child process.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1
+Ready.%w9%e3%w9%w9%w9%w9%w9%w9%w9%w9
+]]
+}

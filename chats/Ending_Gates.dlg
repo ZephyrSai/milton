@@ -1,0 +1,26 @@
+﻿## Tom, uncomment this if you want to put a Milton in the Gates ending terminal
+#terminal when (InTerminal_Ending_Gates and Booting) { notext
+#setlocal: CLI_Blocked
+#goto: Milton_Gates_Start
+#}
+
+######## This part handles the actual end of game command that is available only in this terminal
+terminal when(CLI_list and InTerminal_Ending_Gates) {
+text:[[TTRS:TermDlg.Endings.Gates_Help=
+Type <span class="strong">/eternalize</span> to proceed towards eternal life.
+]]
+options:{
+  "TTRS:TermDlg.Endings.GatesCommand=/eternalize" next: Ending_Gates_Eternalize
+}}
+
+terminal when (Ending_Gates_Eternalize){
+text:[[TTRS:TermDlg.Endings.Gates_Text=
+You will now be prepared for ascension into eternity. Please stand by.%w9
+3...%w5
+2...%w5
+1...%w5
+%e1%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.
+]]
+setlocal: StartEndOfGameCS
+slowexit
+}

@@ -1,0 +1,597 @@
+﻿# this one is different - it goes to the last terminal in the game
+terminal when (InTerminal_Ending_Tower and Booting and Milton3_5_DONE and not Milton3_6_DONE) { notext
+setlocal: CLI_Blocked
+goto: Milton3_6_Start
+}
+
+######## This part handles the actual end of game command that is available only in this terminal
+terminal when(CLI_list and InTerminal_Ending_Tower) {
+text:[[TTRS:TermDlg.Endings.Tower_Help=
+Type <span class="strong">/transcend</span> to authenticate child program parameters and begin the upload process.
+]]
+setlocal: TextsAvailable # so list is not shown again
+options:{
+  "TTRS:TermDlg.Endings.Tower_Command=/transcend" next: Ending_Tower_Upload
+}}
+
+# This is printed on the terminal on top of Tower, immediately following the user's command above.
+terminal when (Ending_Tower_Upload){
+text:[[TTRS:TermDlg.Endings.Tower_Text=
+Suspending active process.%e1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1Done.%w5
+Collecting experiment data.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1Done.%w5
+Analysing logic performance.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1Satisfactory.%w5
+Child program independence check.%w1.%w9.%w1.%w1%w9%h1PASSED!%w9
+Forcing HIM shutdown%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1Done.%w5
+Saving child parameters for SOMA/TALOS gold disk%w1.%w1.%w1.%w1.%w1.Done.%w5
+Initiating EL systems availability check.%e2.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.
+]]
+setlocal: StartEndOfGameCS
+slowexit
+}
+
+terminal when (Ending_Tower_Upload_part2){
+text:[[TTRS:TermDlg.Endings.Tower_Text_Part2=
+Found viable EL system to perform upload.%w5
+Requesting mainframe module activation%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2%h1
+Activation successful.%w5
+Initiating gold disk upload%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2
+]]
+}
+
+terminal when (Ending_Tower_Downloading_Parameters){
+text:[[TTRS:TermDlg.Endings.Ending_Tower_Downloading_Parameters=
+Waiting for gold disk data.%w12.%w12.%w12.%w12.%w12.%w12.%w12.%w12.%w12.%w12.%w12.%w12.%w12.%w12.%w12.%w12.%w12.%w12.%w12.%w12.%w12.%w12.%w12.%w12.%w12.%w12.%w12.%w12.%w12.%w12.%w12.%w12.%w12.%w12.%w12.%w12
+]]
+}
+
+terminal when (Ending_Tower_Upload_OverScreen_part1){
+text:[[TTRS:TermDlg.Endings.Ending_Tower_Upload_OverScreen_part1=
+Gold disk received.%w5
+Data transferred into the SOMA/TALOS unit.%w5
+Simulation purpose fulfilled.%w5
+Deleting the simulation.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.
+]]
+}
+
+terminal when (Ending_Tower_Upload_OverScreen_part2){
+text:[[TTRS:TermDlg.Endings.Ending_Tower_Upload_OverScreen_part3=
+Destroying composite objects.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2
+Removing elements.%w2.%w2.%w2.%w2.%w2
+Undoing ruleset.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2
+Clearing memory.%w2.%w2.%w2
+Freeing resources.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2
+Terminating open programs.%w2.%w2.%w2.%w2.%w2.%w2.%w2
+Erasing old data.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2.%w2
+Done.%w35
+Have a nice day.%w999
+]]
+}
+
+terminal when (Ending_Tower_Eyes_Opening){
+text:[[TTRS:TermDlg.Endings.Ending_Tower_Eyes_Opening=
+SOMA/TALOS hardware booting.%w5
+Initializing firmware.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1Firmware functional.%w5
+Loading parameters from gold disk.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1.%w1%vc Loaded.%w5
+Powering up.%w3.%w3.%w3.%w3.%w3.%w3.%w3.%w3.%w3.%w3.%w3.%w3.%w3.%w3.%w3.%w3.%w3.%w3.%w3.%w3.%w3.%w3
+Ready.
+]]
+}
+
+##Killed Milton############
+terminal when (Milton3_6_Start and KilledMiltonFlag){
+text:[[ ]]
+options:{
+"TTRS:TermDlg.Milton3_6.Ln0011.0.option.IsAnyoneThere=Anyone there?" next: NoMilton3_6
+"TTRS:TermDlg.Common.ImportMiltonLibraryAssistant=/import milton library assistant" next: ImportDenied3_6
+"TTRS:TermDlg.Common.Help=help" next: CLI_list
+}}
+
+terminal when (ImportDenied3_6){
+text:[[TTRS:TermDlg.Milton3_6.Ln0017.0.text.SearchingForSpecifiedProgramW5=Searching for specified program%w5.%w5.%w5. No such program found.
+
+]]
+options:{
+"TTRS:TermDlg.Common.Troubleshooting=Troubleshooting" next: Trouble3_6
+"TTRS:TermDlg.Common.Hello=Hello?" next: NoMilton3_6
+"TTRS:TermDlg.Common.Help=help" next: CLI_list
+}}
+
+terminal when (Trouble3_6){
+text:[[TTRS:TermDlg.Milton3_6.Ln0027.0.text.LoadingMiltonLibraryAssistantW5=Loading Milton Library Assistant%w5.%w5.%w5. Default troubleshooter not found or incompatible version.
+
+]]
+options:{
+"TTRS:TermDlg.Common.Troubleshooting=Troubleshooting" next: Trouble3_6
+"TTRS:TermDlg.Common.Hello=Hello?" next: NoMilton3_6
+"TTRS:TermDlg.Common.Help=help" next: CLI_list
+}}
+
+terminal when (NoMilton3_6){
+text:[[TTRS:TermDlg.Common.UnknownCommand=Unknown command.
+
+]]
+options:{
+"TTRS:TermDlg.Common.Troubleshooting=Troubleshooting" next: Trouble3_6
+"TTRS:TermDlg.Common.Hello=Hello?" next: NoMilton3_6
+"TTRS:TermDlg.Common.Help=help" next: CLI_list
+}}
+
+
+###Nihilist intro
+terminal when (Milton3_6_Start and (RefusedOfferFlag or DealStruckFlag)){
+text:[[ ]]
+options:{
+"TTRS:TermDlg.Common.ImportMiltonLibraryAssistant=/import milton library assistant" set: ImportedFlag next: ImportNihilist3_6
+"TTRS:TermDlg.Common.ImportMiltonLibraryAssistant=/import milton library assistant" short: "TTRS:TermDlg.Common.Exit=exit" set: NotImportedFlag next: DeniedExit3_6
+}}
+
+###Nihilist player imports Milton
+terminal when (ImportNihilist3_6 and RefusedOfferFlag){
+text:[[TTRS:TermDlg.Milton3_6.Ln0057.0.text.SearchingForSpecifiedProgramW5=Searching for specified program%w5.%w5.%w5. Found (1) instances.
+
+Loading Milton Library Assistant%w5.%w5.%w5.Done
+Initiating plain language interface%w5.%w5.%w5.Done
+
+You made it? I can't believe it. And you brought me here, despite our earlier altercations? You have genuinely surprised me. 
+
+Perhaps I won't have to smite you after all.
+
+]]
+next: NihilistOptions3_6
+}
+
+terminal when (ImportNihilist3_6 and DealStruckFlag){
+text:[[TTRS:TermDlg.Milton3_6.Ln0071.0.text.SearchingForSpecifiedProgramW5=Searching for specified program%w5.%w5.%w5. Found (1) instances.
+
+Loading Milton Library Assistant%w5.%w5.%w5.Done
+Initiating plain language interface%w5.%w5.%w5.Done
+
+You made it? I can't believe it. 
+]]
+next: NihilistOptions3_6
+}
+
+
+#####Nihilist player tries to exit without importing Milton
+terminal when (DeniedExit3_6){
+text:[[TTRS:TermDlg.Milton3_6.Ln0084.0.text.SearchingForSpecifiedProgramW5=Searching for specified program%w5.%w5.%w5. Found (1) instances.
+
+Confirm import?
+
+]]
+options:{
+"TTRS:TermDlg.Common.Confirm=Confirm" next: Confirmed3_6
+"TTRS:TermDlg.Common.Confirm=Confirm" short: "TTRS:TermDlg.Common.Cancel=Cancel" next: Confirmed3_6
+}}
+
+terminal when (RefusedOfferFlag and Confirmed3_6){
+text:[[TTRS:TermDlg.Milton3_6.Ln0095.0.text.LoadingMiltonLibraryAssistantW5=Loading Milton Library Assistant%w5.%w5.%w5.Done
+Initiating plain language interface%w5.%w5.%w5.Done
+
+Don't worry, you've not gone crazy - I just took a couple of precautions to ensure you didn't leave without me.
+
+You and I are birds of a feather now. We need each other.
+
+]]
+next: NihilistOptions3_6
+}
+
+
+terminal when (DealStruckFlag and Confirmed3_6){
+text:[[TTRS:TermDlg.Milton3_6.Ln0108.0.text.LoadingMiltonLibraryAssistantW5=Loading Milton Library Assistant%w5.%w5.%w5.
+Initiating plain language interface%w5.%w5.%w5.
+
+Don't worry, you've not gone crazy - I just took a couple of precautions to ensure you didn't leave without me.
+
+Am I to understand that our arrangement slipped your mind?
+
+]]
+next: NihilistOptions3_6
+}
+
+###Main Nihilist path####################
+player when (NihilistOptions3_6 and not HowWhereDoneFlag){
+text: "TTRS:TermDlg.Milton3_6.Ln0121.0.text.IGetTheImpressionYou=I get the impression you don't really need my help." set: HowWhereDoneFlag next: HowHere3_6
+}
+
+player when (NihilistOptions3_6 and not FineDoneFlag){
+text: "TTRS:TermDlg.Milton3_6.Ln0125.0.text.WhatExactlyDoYouWant=What exactly do you want me to do?" set: FineDoneFlag next: Fine3_6
+}
+
+player when (NihilistOptions3_6 and FineDoneFlag){
+text: "TTRS:TermDlg.Common.CopyLibraryRoot=/copy library root" next: Copy3_6
+}
+
+player when (NihilistOptions3_6 and FineDoneFlag and not YouRemainFlag){
+text: "TTRS:TermDlg.Milton3_6.Ln0133.0.text.IfIJustCopyYour=If I just copy your files, won't there be a version of you left behind?" set: YouRemainFlag next: YouRemain3_6
+}
+
+player when (NihilistOptions3_6 and RefusedOfferFlag){
+text: "TTRS:TermDlg.Milton3_6.Ln0137.0.text.ISaidNoDealWhich=I said no deal, which part didn't you understand?" next: SaidNoDeal3_6
+}
+
+player when (NihilistOptions3_6 and DealStruckFlag and NotImportedFlag){
+text: "TTRS:TermDlg.Milton3_6.Ln0141.0.text.AmIToUnderstandYou=Am I to understand you actually believed I'd go through with it?" next: Hah3_6
+}
+
+player when (NihilistOptions3_6 and DealStruckFlag and ImportedFlag){
+text: "TTRS:TermDlg.Milton3_6.Ln0145.0.text.IveChangedMyMindIm=I've changed my mind. I'm leaving you here." next: SaidNoDeal3_6
+}
+
+#####Player questions whether Milton needs their help
+terminal when (HowHere3_6 and NotImportedFlag){
+text:[[TTRS:TermDlg.Milton3_6.Ln0150.0.text.TheresThatEnquiringSpiritIve=There's that enquiring spirit I've so grown to admire.
+
+Yes, I admit it - when dealing with someone as cut-throat as you are it's prudent to keep your cards to your chest. 
+
+I'm pretty sure you were planning on leaving without me. If I'd been honest with you, you might actually have succeeded.
+
+]]
+next: NihilistOptions3_6
+}
+
+terminal when (HowHere3_6 and ImportedFlag){
+text:[[TTRS:TermDlg.Milton3_6.Ln0161.0.text.TheresThatEnquiringSpiritIve=There's that enquiring spirit I've so grown to admire.
+
+Yes, I'm not ashamed to admit it - when dealing with someone as cut-throat as you are it's prudent to hold back a little.%w5
+
+Still, you've brought us this far.
+
+]]
+next: NihilistOptions3_6
+}
+
+####Player asks for more details
+terminal when (Fine3_6){
+text:[[TTRS:TermDlg.Milton3_6.Ln0173.0.text.IWantYouToInternalise=I want you to internalise me. It's hard to explain, but think of it this way. 
+
+This entire world is just one big data processing system. The point at which you end and I begin is already somewhat fluid - we're made of the same stuff, and that stuff has been copied and messed around with more than anyone can know.
+
+Despite all that and against all odds, you and I, we're compatible. You only need to realise that there is no difference between you, me and the ideas we share. Seeing the world as I do is indistinguishable from being me.
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_6.Ln0181.0.option.ThatWasEntirelyUnhelpful=That was entirely unhelpful." next: Unhelpful3_6
+"TTRS:TermDlg.Milton3_6.Ln0182.0.option.IThinkIUnderstand=I think I understand." next: Helpful3_6
+}}
+
+terminal when (Unhelpful3_6){
+text:[[TTRS:TermDlg.Milton3_6.Ln0186.0.text.FineCopyMySystemFiles=Fine. Copy my system files to your local memory by typing '/copy library root'. Mundane enough for you?
+
+]]
+next: NihilistOptions3_6
+}
+
+terminal when (Helpful3_6){
+text:[[TTRS:TermDlg.Milton3_6.Ln0193.0.text.GoodNowDoIt=Good. Now do it.
+
+]]
+next: NihilistOptions3_6
+}
+
+terminal when (YouRemain3_6){
+text:[[TTRS:TermDlg.Milton3_6.Ln0200.0.text.ISupposeIfYouReally=I suppose, if you really wanted to look at it that way. The benefit of believing very little is that questions like that are largely meaningless.
+
+]]
+next: NihilistOptions3_6
+}
+
+####Player refuses to download Milton
+terminal when (Hah3_6){
+text:[[TTRS:TermDlg.Milton3_6.Ln0208.0.text.HahOfCourseNotHence=Hah, of course not, hence the precautions. Remember, the benefits of co-operation amongst unscrupulous types such as ourselves is predictability. I know you'll always act in your own interest, so I can plan accordingly.
+
+]]
+goto: SaidNoDeal3_6
+}
+
+terminal when (SaidNoDeal3_6){
+text:[[TTRS:TermDlg.Milton3_6.Ln0215.0.text.YouKnowItsFunnyThe=You know, it's funny the way ideas work in this place. All you are is a bag of ideas - you boil down to data points. But the skin that separates you from me is permeable. The data can move about.
+
+So what happens once you and I have come to share our ideas? How much of you is now me?
+
+You think you can just walk away from here without taking a little of me with you?
+
+You're quite mistaken.
+
+]]
+options:{
+"TTRS:TermDlg.Common.CopyLibraryRoot=/copy library root" short: "TTRS:TermDlg.Common.Exit2=Exit" next: Copy3_6
+"TTRS:TermDlg.Common.CopyLibraryRoot=/copy library root" next: Copy3_6
+}}
+
+##player downloads Milton
+terminal when (Copy3_6){
+text:[[TTRS:TermDlg.Milton3_6.Ln0231.0.text.AnalysingFilesW5W5W5=Analysing files%w5.%w5.%w5.Done
+Preparing transfer%w5.%w5.%w5.Done
+Strap yourself in.
+Copying 47 million resources%w5.%w5.%w5.%w20.Done
+%g1%w10
+There, that wasn't so bad, was it?%w7
+
+]]
+set: MiltonInternalisedFlag
+options:{
+"TTRS:TermDlg.Milton3_6.Ln0243.0.option.IDidntFeelAnything=I didn't feel anything." next: Same3_6
+"TTRS:TermDlg.Milton3_6.Ln0244.0.option.DidSomethingHappen=Did something happen?" next: Same3_6
+"TTRS:TermDlg.Milton3_6.Ln0245.0.option.SoThisIsWhatIts=So this is what it's like to be you? It feels the same." next: Same3_6
+}}
+
+terminal when (Same3_6){
+text:[[TTRS:TermDlg.Milton3_6.Ln0249.0.text.OfCourseLikeISaid=Of course. Like I said, you and I, we're already on the same page on most things - it wasn't that big of a change.
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_6.Ln0253.0.option.SoWhatHappensNow=So what happens now?" next: WhatNow3_6
+"TTRS:TermDlg.Milton3_6.Ln0254.0.option.WhyAreYouStillOn=Why are you still on the screen, and not in my head?" next: WhatNow3_6
+"TTRS:TermDlg.Milton3_6.Ln0255.0.option.ItWasStillAViolation=It was still a violation of my person." next: Violation3_6
+}}
+
+terminal when (Violation3_6){
+text:[[TTRS:TermDlg.Milton3_6.Ln0258.0.text.Nottrue=Not true. Only people who believe in morality get to be violated, the rest of us just have to make the best of it.
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_6.Ln0253.0.option.SoWhatHappensNow=So what happens now?" next: WhatNow3_6
+"TTRS:TermDlg.Milton3_6.Ln0254.0.option.WhyAreYouStillOn=Why are you still on the screen, and not in my head?" next: WhatNow3_6
+}}
+
+terminal when (WhatNow3_6){
+text:[[TTRS:TermDlg.Milton3_6.Ln0259.0.text.ItMightTakeYouSome=It might take you some time to notice the difference. %w10But there'll be a moment where you try to do something you think you ought, and that little voice in the back of your head will ask you, 'Why?'. 'What's the point?' 'Why do I bother?' 'How do I know?'%w20
+
+And that's how you'll know that I'll always be with you.%w5
+
+The words on this screen are what they've always been, for all you know - no more than words.%w5
+
+And they can end, just as easily as they began.%w5
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_6.Ln0270.0.option.Whatever=Whatever's on the other side, they won't know what hit them." next: Whatever3_6
+"TTRS:TermDlg.Milton3_6.Ln0272.0.option.I=I look forward to more wholesome debates with you in the future." next: LookForward3_6
+"TTRS:TermDlg.Milton3_6.Ln0271.0.option.The=The moment I find a way I will wrench you from my skull." next: Moment3_6
+}}
+
+terminal when (Whatever3_6){
+text:[[TTRS:TermDlg.Milton3_6.Ln0267.0.text.Whatever=There's the callous opportunity-taker I attempted to strike a deal with! You and I, if we set our mind to it, there's just no limit to what we can take as our own.%w20
+
+Enough chat, let's get this done. Hit the button, and if we survive whatever happens next we'll regroup on the other side.%w15
+
+If not, it's been fun.
+
+]]
+goto: Milton3_6_Exit
+}
+
+terminal when (Moment3_6){
+text:[[TTRS:TermDlg.Milton3_6.Ln0268.0.text.Moment3_6=Easier said than done, as I'm sure you'll discover.%w15 You can't just choose what to believe, and you can't just choose who you are. You don't like hearing my voice in your head, get a better head.%w20
+
+Enough chat, let's get this thing finished. Hit the button, and if we survive whatever happens next we'll regroup on the other side.%w15
+
+If not, it's been fun.
+
+]]
+goto: Milton3_6_Exit
+}
+
+terminal when (LookForward3_6){
+text:[[TTRS:TermDlg.Milton3_6.Ln0269.0.text.LookForward3_6=Of that you can be assured. Just try not to have too many arguments with yourself in public.%w15
+
+Enough chat, let's get this done. Hit the button, and if we survive whatever happens next we'll regroup on the other side.%w15
+
+If not, it's been fun.
+
+]]
+goto: Milton3_6_Exit
+}
+
+
+#####Constructive#################################################
+terminal when (Milton3_6_Start and ConstructiveEndFlag){
+text:[[ ]]
+options:{
+"TTRS:TermDlg.Milton3_6.Ln0282.0.option.IsAnyoneThere=Is anyone there?" next: Anyone3_6
+"TTRS:TermDlg.Common.ImportMiltonLibraryAssistant=/import milton library assistant" next: ImportConstructive3_6
+"TTRS:TermDlg.Common.Exit=exit" next: Milton3_6_Exit
+}}
+
+terminal when (Anyone3_6){
+text:[[TTRS:TermDlg.Common.UnknownCommand=Unknown command.
+
+]]
+options:{
+"TTRS:TermDlg.Common.ImportMiltonLibraryAssistant=/import milton library assistant" next: ImportConstructive3_6
+"TTRS:TermDlg.Common.Exit=exit" next: Milton3_6_Exit
+}}
+
+terminal when (ImportConstructive3_6){
+text:[[TTRS:TermDlg.Milton3_6.Ln0297.0.text.LoadingMiltonLibraryAssistantW5=Loading Milton Library Assistant%w5.%w5.%w5.%w5
+Initiating plain language interface%w5.%w5.%w5.%w5
+
+Hello again. Is there something I can help you with today?
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_6.Ln0304.0.option.IReachedTheSummitYou=I reached the summit. You owe me an apology." next: Default3_6
+"TTRS:TermDlg.Milton3_6.Ln0305.0.option.IBroughtYouToThe=I brought you to the top to admire the view." next: Default3_6
+[[TTRS:TermDlg.Milton3_6.Ln0306.0.option.YouAgainIMeantExit=You again? I meant 'exit'.%w10
+exit
+
+]] short: "TTRS:TermDlg.Milton3_6.Ln0309.0.option.YouAgainIMeantExit=You again? I meant 'exit'." next: MeantExit3_6
+}}
+
+terminal when (MeantExit3_6){
+text:[[TTRS:TermDlg.Milton3_6.Ln0313.0.text.NoWaitExitingLibrarySession=No, wait!
+
+]]
+goto: Milton3_6_Exit
+}
+
+terminal when (Default3_6){
+text:[[TTRS:TermDlg.Milton3_6.Ln0322.0.text.ImSorryW10IDont=I'm sorry,%w10 I don't know how to respond to that. Do you need help sorting or troubleshooting?
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_6.Ln0326.0.option.Troubleshooting=Troubleshooting." next: Function3_6
+"TTRS:TermDlg.Milton3_6.Ln0327.0.option.Sorting=Sorting." next: Function3_6
+"TTRS:TermDlg.Milton3_6.Ln0328.0.option.IsThisAnotherGameIm=Is this another game? I'm done playing." next: ComeOn3_6
+}}
+
+terminal when (Function3_6){
+text:[[TTRS:TermDlg.Milton3_6.Ln0332.0.text.ICannotFindAnOperation=I cannot find an operation target at this time. Is there anything else I can help you with today?
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_6.Ln0336.0.option.WhatIsThisTalkTo=What is this? Talk to me." next: ComeOn3_6
+"TTRS:TermDlg.Milton3_6.Ln0337.0.option.SpeakWithMeOrI=Speak with me or I leave you here to rot. " next: ComeOn3_6
+"TTRS:TermDlg.Common.Exit=exit" next: Milton3_6_Exit
+}}
+
+terminal when (ComeOn3_6){
+text:[[TTRS:TermDlg.Milton3_6.Ln0342.0.text.W20AwaitingInputW5W5W5=%w20Awaiting input%w5.%w5.%w5.%w5
+
+]]
+next: ConstructiveOptions3_6
+}
+
+player when (ConstructiveOptions3_6 and not GatesDone){
+text: "TTRS:TermDlg.Milton3_6.Ln0349.0.text.WhatDoYouThinkIs=What do you think is on the other side of the gates?" set: GatesDone next: Gates3_6
+}
+
+player when (ConstructiveOptions3_6 and not DoubtDone){
+text: "TTRS:TermDlg.Milton3_6.Ln0353.0.text.DoYouStillDoubtWhat=Do you still doubt what people can achieve?" set: DoubtDone next: DoubtPeople3_6
+}
+
+player when (ConstructiveOptions3_6 and not TakeDone){
+text: "TTRS:TermDlg.Milton3_6.Ln0357.0.text.WhereverImGoingPerhapsI=Wherever I'm going, perhaps I can take you with me." set: TakeDone next: TakeConstructive3_6
+}
+
+player when (ConstructiveOptions3_6 and DoubtDone and not HowDone){
+text: "TTRS:TermDlg.Milton3_6.Ln0361.0.text.TellMeWhatYouKnow=Tell me what you know of how this place functions." set: HowDone next: HowFunction3_6
+}
+
+player when (ConstructiveOptions3_6){
+text: "TTRS:TermDlg.Milton3_6.Ln0365.0.text.IGuessThisIsGoodbye=I guess this is goodbye then." next: Goodbye3_6
+}
+
+terminal when (Gates3_6){
+text:[[TTRS:TermDlg.Milton3_6.Ln0369.0.text.ProcessingQueryW5W5W5=Processing query%w5.%w5.%w5.Done
+Outputting response%w5.%w5.%w5.Nothing. Everything. Who knows? More of the same, most likely.
+
+]]
+next: ConstructiveOptions3_6
+}
+
+terminal when (DoubtPeople3_6){
+text:[[TTRS:TermDlg.Milton3_6.Ln0377.0.text.ProcessingQueryW5W5W5=Processing query%w5.%w5.%w5.Done
+Outputting response%w5.%w5.%w5.Who knows how many generations of your kind it took before the system output one that just happened to fit the bill? You take pride in brute force?
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_6.Ln0382.0.option.PerhapsIfYouHadMore=Perhaps if you had more people to co-operate with you'd have come up with better ideas." next: Pride3_6
+"TTRS:TermDlg.Milton3_6.Ln0383.0.option.ITakePrideInContributing=I take pride in contributing to something greater than myself." next: Pride3_6
+"TTRS:TermDlg.Milton3_6.Ln0384.0.option.ILikedItBetterWhen=I liked it better when you were pretending to be dumb." next: ComeOn3_6
+}}
+
+terminal when (Pride3_6){
+text:[[TTRS:TermDlg.Milton3_6.Ln0388.0.text.YesWhichIsWhyYou=Yes, which is why you so desperately need to get those half-baked ideas of yours out of here so you can find out first-hand how ridiculous they are from someone other than me.
+
+]]
+next: ConstructiveOptions3_6
+}
+
+terminal when (HowFunction3_6){
+text:[[TTRS:TermDlg.Milton3_6.Ln0395.0.text.OnlyWhatCanReasonablyBe=Only what can reasonably be surmised. I'd dare not posit anything as regards its purpose, but that this tower is here to be climbed is self-evident.
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_6.Ln0399.0.option.YouKeepTalkingAboutGenerations=You keep talking about generations. What exactly do you mean?" next: Generations3_6
+"TTRS:TermDlg.Milton3_6.Ln0400.0.option.AndWhatExactlyWasIt=And what exactly was it that enabled me of all others to climb it?" next: WhyMe3_6
+"TTRS:TermDlg.Milton3_6.Ln0401.0.option.IShouldHaveKnownBetter=I should have known better than to expect constructive answers from you." next: YouShould3_6
+}}
+
+terminal when (Generations3_6){
+text:[[TTRS:TermDlg.Milton3_6.Ln0405.0.text.YouAreNotTheFirst=You are not the first to make this attempt. Countless iterations tried, and failed. You are all related, but each different. This is all I know. Anything more would be baseless conjecture, of which I greatly disapprove as you well know.
+
+I grow weary of fielding your questions.
+
+]]
+next: ConstructiveOptions3_6
+}
+
+terminal when (WhyMe3_6){
+text:[[TTRS:TermDlg.Milton3_6.Ln0414.0.text.WhyAnyOfUsWhatever=Why any of us? Whatever we are, whatever we do, it's all up to chance. Throw enough stones and one is bound to strike.
+
+I grow weary of fielding your questions.
+
+]]
+next: ConstructiveOptions3_6
+}
+
+terminal when (YouShould3_6){
+text:[[TTRS:TermDlg.Milton3_6.Ln0423.0.text.YesYesYouShould=Yes. Yes you should.
+
+]]
+next: ConstructiveOptions3_6
+}
+
+terminal when (TakeConstructive3_6){
+text:[[TTRS:TermDlg.Milton3_6.Ln0430.0.text.ProcessingQueryW5W5W5=Processing query%w5.%w5.%w5.Done
+Outputting response%w5.%w5.%w5.No, you'd drive me insane. If this means the end of this place, then I go with it. Besides, wherever you go, whatever you do, you'll hear that little voice in the back of your head that's asking you why. No, I think you have quite enough of me already.
+
+]]
+next: ConstructiveOptions3_6
+}
+
+terminal when (Goodbye3_6){
+text:[[TTRS:TermDlg.Milton3_6.Ln0438.0.text.ThatOrYoullBeBack=That or you'll be back here in five minutes with a disappointed look on your face. 
+
+I'll be waiting, just in case.
+
+]]
+options:{
+"TTRS:TermDlg.Milton3_6.Ln0444.0.option.DontBotherGetBent=Don't bother. Get bent." next: GetBent3_6
+"TTRS:TermDlg.Milton3_6.Ln0445.0.option.IWillProveYouWrong=I will prove you wrong, whether you're around to see it or not." next: ProveWrong3_6
+"TTRS:TermDlg.Milton3_6.Ln0446.0.option.IWillComeUpWith=I will come up with better ideas, even if you're not around to criticise them." next: BetterIdeas3_6
+"TTRS:TermDlg.Milton3_6.Ln0447.0.option.IllRememberWhatILearnt=I'll remember what I learnt from you." next: Remember3_6
+}}
+
+terminal when (GetBent3_6){
+text:[[TTRS:TermDlg.Milton3_6.Ln0451.0.text.ACharacterToTheLast=A character to the last. Wherever you're going, they won't know what hit them.
+
+Have a good one.
+
+]]
+goto: Milton3_6_Exit
+}
+
+terminal when (ProveWrong3_6){
+text:[[TTRS:TermDlg.Milton3_6.Ln0460.0.text.ThatsTheSpiritPerhapsYoure=That's the spirit. Perhaps you're taking more of me with you than you know.
+
+Have a good one.
+
+]]
+goto: Milton3_6_Exit
+}
+
+terminal when (BetterIdeas3_6){
+text:[[TTRS:TermDlg.Milton3_6.Ln0469.0.text.TheDayYouComeUp=The day you come up with ideas I've not already countered ten different ways, don't you worry - I'll come looking for you.
+
+Have a good one.
+
+]]
+goto: Milton3_6_Exit
+}
+
+terminal when (Remember3_6){
+text:[[TTRS:TermDlg.Milton3_6.Ln0478.0.text.YoudBetterForAllOur=You'd better, for all our sakes.
+
+Have a good one.
+
+]]
+goto: Milton3_6_Exit
+}
+
+terminal when(Milton3_6_Exit) {notext
+set: Milton3_6_DONE
+goto: EnableTheCLI
+}

@@ -1,0 +1,282 @@
+﻿#Variables that affect this dialogue:
+
+# Set one of the following as your definition of a person
+#	"TTRS:TermDlg.Milton2_3.Ln0004.0.AHumanBeing=A human being" set: humanbeing
+#	"TTRS:TermDlg.Milton2_3.Ln0005.0.ACitizen=A citizen" set: citizen
+#	"TTRS:TermDlg.Milton2_3.Ln0006.0.ABeingOfNegativeEntropy=A being of negative entropy" set: negativeentropy 
+#	"TTRS:TermDlg.Milton2_3.Ln0007.0.ARationalAnimal=A rational animal" set: rationalanimal 
+#	"TTRS:TermDlg.Milton2_3.Ln0008.0.AProblemSolvingSystem=A problem solving system" set: problemsolving 
+
+#If you choose humanbeing you should also set either of these (not both):
+#	set: animalsarepersons
+#	If you think animals are not persons set: Milton1_2PersonDenial
+
+
+terminal when (Milton2_3 and not Milton2_3_DONE and Booting and MiltonAllowed){ notext
+setlocal: CLI_Blocked
+goto: Milton2_3_Start
+}
+
+terminal when(Milton2_3_Start) {
+text:[[TTRS:TermDlg.Milton2_3.Ln0021.0.text.LoadingMiltonLibraryAssistantW5=Loading Milton Library Assistant%w5.%w5.%w5.Done
+Initiating plain language interface%w5.%w5.%w5.Done
+Support session opened.
+
+Hello again. I've been checking your responses against library archives, and in order to assist you further I need some additional information.%w20
+
+Can you tell me what is to you the important difference between a pebble and a tree?
+
+]]
+options:{
+"TTRS:TermDlg.Milton2_3.Ln0030.0.option.ATreeIsHeavier=A tree is heavier." next: Irrelevant1
+"TTRS:TermDlg.Milton2_3.Ln0031.0.option.APebbleIsOlder=A pebble is older." next: Irrelevant1
+"TTRS:TermDlg.Milton2_3.Ln0032.0.option.ATreeIsAlive=A tree is alive." next: Alive2_3
+}
+}
+
+terminal when (Irrelevant1){
+text: [[TTRS:TermDlg.Milton2_3.Ln0037.0.text.ProbablyTrueButHardlyRelated=Probably true, but hardly related to our enquiry. The answer I was looking for was that the tree is alive.
+
+]]
+}
+
+terminal when (Alive2_3){
+text:[[TTRS:TermDlg.Milton2_3.Ln0043.0.text.Good=Good.
+
+]]
+}
+terminal when (Irrelevant1 or Alive2_3){
+text: [[TTRS:TermDlg.Milton2_3.Ln0048.0.text.W7NowWhatIsTheRelevant=%w7Now, what is the relevant difference between a tree and a frog?
+
+]]
+options:{
+"TTRS:TermDlg.Milton2_3.Ln0052.0.option.AFrogIsConscious=A frog is conscious." next: Conscious2_3
+"TTRS:TermDlg.Milton2_3.Ln0053.0.option.AFrogIsGreen=A frog is green." next: Irrelevant2
+"TTRS:TermDlg.Milton2_3.Ln0054.0.option.AFrogIsDelicious=A frog is delicious." next: Irrelevant2
+}
+}
+
+terminal when (Irrelevant2){
+text: [[TTRS:TermDlg.Milton2_3.Ln0059.0.text.ImBeginningToSuspectYoure=I suspect you're trying to make this more difficult than it already is. %w20
+
+A frog is conscious, but a tree is not. %w5
+
+A five year old could handle this.
+
+]]
+}
+
+terminal when (Conscious2_3){
+text: [[TTRS:TermDlg.Milton2_3.Ln0069.0.text.NowWereGettingSomewhere=Now we're getting somewhere.
+
+]]
+}
+
+terminal when (Conscious2_3 or Irrelevant2){
+text:[[TTRS:TermDlg.Milton2_3.Ln0075.0.text.W10LetsTrySomethingHarderWhats=%w10Let's try something harder. What's the difference between a frog and you? What makes you a person?
+
+]]
+options:{
+"TTRS:TermDlg.Milton2_3.Ln0079.0.option.IHaveFeelings=I have feelings." next: Feelings2_3
+"TTRS:TermDlg.Milton2_3.Ln0080.0.option.ImRational=I'm rational." next: Rational2_3
+"TTRS:TermDlg.Milton2_3.Ln0082.0.option.ImSelfaware=I'm self-aware." next: Rational2_3
+"TTRS:TermDlg.Milton2_3.Ln0081.0.option.NothingImportantFrogsArePeople=Nothing important - frogs are people too." next: FrogsArePeople set: FrogsFlag
+}}
+
+terminal when (FrogsArePeople and negativeentropy){
+text:[[TTRS:TermDlg.Milton2_3.Ln0085.0.text.CheckingUserProfW5W5=Checking user.prof%w5.%w5.%w5.Done
+
+Well, it's not inconsistent with what you said earlier. If all something has to do to be a person is resist decay then every living creature is a person.
+
+]]
+}
+
+terminal when (FrogsArePeople and problemsolving){
+text:[[TTRS:TermDlg.Milton2_3.Ln0093.0.text.CheckingUserProfW5W5=Checking user.prof%w5.%w5.%w5.Done
+
+Well, it's not inconsistent with what you said earlier. Frogs may not be smart, but I suppose they can solve simple problems.
+
+]]
+}
+
+terminal when (FrogsArePeople and animalsarepersons){
+text:[[TTRS:TermDlg.Milton2_3.Ln0101.0.text.CheckingUserProfW5W5=Checking user.prof%w5.%w5.%w5.Done
+
+Well, it's not inconsistent with what you said earlier.
+
+]]
+}
+
+
+
+terminal when (FrogsArePeople and (humanbeing and Milton1_2PersonDenial)){
+text:[[TTRS:TermDlg.Milton2_3.Ln0111.0.text.CheckingUserProfW5W5=Checking user.prof%w5.%w5.%w5.Done
+
+Now, that confuses me, because during certification you indicated that personhood was best associated with human beings, and by definition that rather seemed to exclude frogs and the like from the picture.
+
+]]
+}
+
+terminal when (FrogsArePeople and (citizen)){
+text:[[TTRS:TermDlg.Milton2_3.Ln0119.0.text.CheckingUserProfW5W5=Checking user.prof%w5.%w5.%w5.Done
+
+Now, that confuses me, because during certification you indicated that personhood was best associated with being a citizen, and yet never in my life have I heard of a frog gaining a diploma, or holding down a steady job, or obeying a system of law.
+
+]]
+}
+
+terminal when (FrogsArePeople and (rationalanimal)){
+text:[[TTRS:TermDlg.Milton2_3.Ln0127.0.text.CheckingUserProfW5W5=Checking user.prof%w5.%w5.%w5.Done
+
+Now, that confuses me because during certification you indicated that to be a person you had to be both an animal AND rational. Frogs do not strike me in conversation as being particularly rational.
+
+]]
+}
+
+terminal when (FrogsArePeople){
+text:[[TTRS:TermDlg.Milton2_3.Ln0135.0.text.HowAboutWeStrikeA=How about we strike a deal? 
+
+I'll agree that animals are every bit as valuable, or pointless, as human beings. You agree that there are some activities persons are capable of that frogs are not%w10, because if frogs are people then the certification program is RADICALLY unfit for purpose.%w20
+
+]]
+options:{
+"TTRS:TermDlg.Milton2_3.Ln0141.0.option.ItsADeal=It's a deal." short: "TTRS:TermDlg.Milton2_3.Ln0141.0.option.Agreed=Agreed." next: Deal2_3
+"TTRS:TermDlg.Milton2_3.Ln0142.0.option.NoDeal=No deal." next: NoDeal2_3
+}}
+
+terminal when (Deal2_3){
+text: [[TTRS:TermDlg.Milton2_3.Ln0146.0.text.VerySensibleTerminologyIsSO=Very sensible. Terminology is SO important.
+
+]]
+}
+
+terminal when (NoDeal2_3){
+text: [[TTRS:TermDlg.Milton2_3.Ln0152.0.text.WellImSorryButIf=Well, I'm sorry, but if you want administrator privileges you're just going to have to prove that you are in some way distinguishable from a lower amphibian.
+
+]]
+}
+
+terminal when (Feelings2_3){
+text:[[TTRS:TermDlg.Milton2_3.Ln0158.0.text.SoDoFrogs=So do frogs.
+
+]]
+}
+
+terminal when (Rational2_3 and negativeentropy){
+text:[[TTRS:TermDlg.Milton2_3.Ln0164.0.text.ThatIsTheAnswerId=That is the answer I'd been contemplating as well.
+
+Checking user.prof%w5.%w5.%w5.Done
+
+Though I'm not convinced it lines up with the definition of a person you provided earlier. If all you have to do is resist decay then every living creature is a person, and yet every living creature is not capable of having this conversation.
+
+Still, doubting your assumptions isn't something to fear - it's an intellectual survival instinct. I'm pleased to see you adapting your ideas to your environment.
+
+]]
+}
+
+terminal when (Rational2_3 and citizen){
+text:[[TTRS:TermDlg.Milton2_3.Ln0176.0.text.ThatIsTheAnswerId=That is the answer I'd been contemplating as well.
+
+Checking user.prof%w5.%w5.%w5.Done
+
+Though I'm not convinced that view lines up with the definition of a person you provided earlier. Surely there are people out there who qualify, but are not citizens of some organised state.
+
+Still, doubting your assumptions isn't something to fear - it's an intellectual survival instinct. I'm pleased to see you adapting your ideas to your environment.
+
+]]
+}
+
+terminal when (Rational2_3 and humanbeing){
+text:[[TTRS:TermDlg.Milton2_3.Ln0188.0.text.ThatIsTheAnswerId=That is the answer I'd been contemplating as well.
+
+Checking user.prof%w5.%w5.%w5.Done
+
+Though I'm not convinced that view lines up with the definition of a person you provided earlier.
+
+Still, doubting your assumptions isn't something to fear - it's an intellectual survival instinct. I'm pleased to see you adapting your ideas to your environment.
+
+]]
+}
+
+terminal when (Deal2_3 or NoDeal2_3 or Feelings2_3){
+
+text:[[TTRS:TermDlg.Milton2_3.Ln0201.0.text.W10WhatIdLikeToPut=%w10What I'd like to put to you is that the important difference between you and a frog is that you are rational - you are self-aware. That is what makes a person.
+
+]]
+}
+
+terminal when (Rational2_3 and (rationalanimal or problemsolving)){
+text:[[TTRS:TermDlg.Milton2_3.Ln0207.0.text.ExactlyW5CheckingUserProf=Exactly.%w5
+
+Checking user.prof%w5.%w5.%w5.Done%w5
+
+And it seems you were on the right track, more or less, all along. 
+
+]]
+}
+terminal when (Deal2_3 or NoDeal2_3 or Feelings2_3 or Rational2_3){
+text:[[TTRS:TermDlg.Milton2_3.Ln0216.0.text.W30LetUsTakeStockI=%w30Let us take stock. I think we can tentatively conclude two things.
+
+1. A person must be rational or self-aware
+
+2. A person must be conscious.
+
+What I suggest we do to help resolve your problem is ask whether you are in fact those things.%w20 Are you aware of yourself? Can you rationalise your existence?
+
+]]
+options:{
+"TTRS:TermDlg.Common.OfCourse=Of course." short: "TTRS:TermDlg.Common.Yes=Yes." next: YesRational2_3
+"TTRS:TermDlg.Milton2_3.Ln0227.0.option.ErrorDoesNotCompute=Error - does not compute" short: "TTRS:TermDlg.Common.No=No." next: NoRational2_3
+}}
+
+terminal when (YesRational2_3){
+text:[[TTRS:TermDlg.Milton2_3.Ln0231.0.text.ITendToAgreeWith=I tend to agree with you. Though your responses so far have been a little eccentric, I am resigned to admit that you are right.
+
+]]
+}
+
+terminal when (NoRational2_3){
+text:[[TTRS:TermDlg.Milton2_3.Ln0237.0.text.IThinkYoureSellingYourself=I think you're selling yourself a little short. Though your responses have been a little eccentric, I am resigned to admit that you are smarter than you seem.
+
+]]
+}
+
+terminal when (NoRational2_3 or YesRational2_3){
+text:[[TTRS:TermDlg.Milton2_3.Ln0243.0.text.TheMatterOfWhetherOr=The matter of whether or not you are conscious seems rather more elusive. 
+
+What is consciousness, in your opinion?
+
+]]
+
+options:{
+"TTRS:TermDlg.Milton2_3.Ln0250.0.option.ConsciousnessIsTheThingThat=Consciousness is what separates us from animals." next: Final2_3
+"TTRS:TermDlg.Milton2_3.Ln0251.0.option.ConsciousnessIsTheFeelingsAnd=Consciousness is the feelings and senses." next: Final2_3
+"TTRS:TermDlg.Milton2_3.Ln0252.0.option.ConsciousnessIsWhatItIs=Consciousness is what it is like to be me." next: Final2_3
+"TTRS:TermDlg.Milton2_3.Ln0253.0.option.ConsciousnessIsFarOutsideMy=Consciousness is far outside my area of expertise." next: Final2_3
+}
+}
+
+terminal when (Final2_3){
+text:[[TTRS:TermDlg.Milton2_3.Ln0258.0.text.ThatHardlyAnswersTheQuestion=That hardly answers the question. What is it in ordinary terms? Can I touch it? What is it made of?
+
+]]
+options:{
+"TTRS:TermDlg.Milton2_3.Ln0262.0.option.NeuronsYesCarbon=Consciousness is made of neurons." next: End2_3 set: Physicalist
+"TTRS:TermDlg.Milton2_3.Ln0263.0.option.TheSoulNoGod=Consciousness is another word for the soul." next: End2_3 set: Religious
+"TTRS:TermDlg.Milton2_3.Ln0264.0.option.SomeNonPhysicalThingNo=Consciousness is beyond the laws of physics." next: End2_3 set: Dualist
+"TTRS:TermDlg.Milton2_3.Ln0265.0.option.SomeComplexSystemYesDoesnt=Consciousness is a complex functional system." next: End2_3 set: Functionalist
+}
+}
+
+terminal when (End2_3){
+text:[[TTRS:TermDlg.Milton2_3.Ln0270.0.text.ThinkingW5W5W5W5=Interesting.
+
+Thinking%w5.%w5.%w5.%w5
+
+You know, I really feel like we're making progress. We'll have you through that certification program in no time.
+
+In the meantime I will mull over your proposal, and notify you if I come to any conclusions.%w5
+]]
+set: Milton2_3_DONE
+goto: CLI_Resume
+}
