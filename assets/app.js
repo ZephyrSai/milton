@@ -1,7 +1,7 @@
 import { MiltonRuntime, loadCorpus, loadReferenceArchive } from "./engine.js";
 
 const STORAGE_KEY = "milton-reconstruction-state-v1";
-const CHAT_ROOT = "../chats/";
+const CHAT_ROOT = new URL("../chats/", import.meta.url);
 
 const MAIN_FILES = [
   "MLA_CommPortal.dlg",
@@ -20,7 +20,7 @@ const MAIN_FILES = [
   "Milton3_5.dlg",
   "MiltonTower1.dlg",
   "MiltonTower2.dlg",
-].map((fileName) => `${CHAT_ROOT}${fileName}`);
+].map((fileName) => new URL(fileName, CHAT_ROOT).href);
 
 const SESSIONS = [
   {
@@ -230,7 +230,7 @@ bootstrap().catch((error) => {
 async function bootstrap() {
   const [blocks, referenceArchive] = await Promise.all([
     loadCorpus(MAIN_FILES),
-    loadReferenceArchive((fileName) => fetchText(`${CHAT_ROOT}${fileName}`)),
+    loadReferenceArchive((fileName) => fetchText(new URL(fileName, CHAT_ROOT).href)),
   ]);
 
   archive = referenceArchive;
