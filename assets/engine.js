@@ -209,7 +209,7 @@ function parseBlock(fileName, kind, conditionSource, body, order) {
     contentType,
     content: contentValue ? cleanScalar(contentValue) : "",
     notext: /\bnotext\b/.test(body),
-    goto: extractBareAction(body, "goto"),
+    goto: extractBareAction(body, "goto") ?? extractBareAction(body, "next"),
     setFlags: extractRepeatedActions(body, "set"),
     setLocalFlags: extractRepeatedActions(body, "setlocal"),
     clearFlags: extractRepeatedActions(body, "clear"),
