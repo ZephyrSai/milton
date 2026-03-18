@@ -739,7 +739,8 @@ export class MiltonRuntime {
 
     const session = this.sessions[this.state.currentSessionIndex];
     const completed = session ? this.state.flags.has(session.doneFlag) : false;
-    const boundary = EXIT_NODES.has(this.state.currentNode)
+    const boundary = EXIT_NODES.has(this.state.currentNode) ||
+      (matching.length === 0 && completed)
       ? {
           completed,
           sessionLabel: session?.label ?? "Session",
